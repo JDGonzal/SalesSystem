@@ -4,7 +4,7 @@
 
 [![Crea y Despliega un Sistema de Ventas FULL STACK con REACT y PostgreSQL | 2025](images/2025-05-25_152207.png "Crea y Despliega un Sistema de Ventas FULL STACK con REACT y PostgreSQL | 2025")](https://www.youtube.com/watch?v=URG4rnmdThs&t=270s)
 
-## 1. Precondiciones (0:00:00)
+## 1. Precondiciones (00:00:00)
 
 1. Instalar `NODEJS` y `npm` en su sistema, usando el `nvm`:
   [Instalar múltiples versiones de Node.js en Windows](https://rafaelneto.dev/blog/instalar-multiples-versiones-nodejs-windows/).
@@ -34,7 +34,9 @@ nvm list
 * `Simple React Snippets` de `Burke Holland` 1.2.x
 * `TSLint` de `Microsoft` 1.3.x.
 
-## 2. Login / Creando el Proyecto (0:04:30)
+## 2. Login
+
+### Creando el Proyecto (00:04:30)
 
 1. Estando en la raíz de nuestro proyecto ejecutamos este comando
 usando `VITE`:
@@ -94,4 +96,67 @@ pnpm run dev
 * Así luce la página inicial:  
 ![Página Inicial de Vite + React](images/2025-05-25_161152.png "Página Inicial de Vite + React")
 
+
+
+
+
+### Instalar `Auto Barrel` (00:06:44)
+
+1. Instalar la extensión en `Visual Studio Code` de nombre
+`Auto Barrel for VSCode` de `Manuel Gil` 1.19.x
+
+
+### Configuración de `Auto Barrel` (00:07:37)
+
+>[!NOTE]  
+>El instructor habla de configurar el `Auto Barrel` por 
+>`Extension Settings`, pero este no requiere dicho cambio.
+
+### Organizando Carpetas (00:08:01)
+
+1. Creamos la carpeta **"components"** dentro de **"src"**.
+
+2. Creamos la carpeta **"pages"** dentro de **"src"**.
+
+3. Creamos la carpeta **"routes"** dentro de **"src"**.
+
+4. Creamos la carpeta **"styles"** dentro de **"src"**.
+
+5. Creamos la carpeta **"utils"** dentro de **"src"**.
+
+6. Creamos la carpeta **"supabase"** dentro de **"src"**.
+
+7. Creamos la carpeta **"store"** dentro de **"src"**.
+
+### Instalando dependencias básicas (00:09:32)
+
+1. Empezamos en una `TERMINAL` con 
+[`styled-components`](https://www.npmjs.com/package/styled-components) y su respectivo 
+[`@types`](https://www.npmjs.com/package/@types/styled-components):
+```bash
+pnpm add styled-components @types/styled-components -E
+```
+
+2. En la `TERMINAL` seguimos con
+[`react-router-dom`](https://www.npmjs.com/package/react-router-dom) y el respectivo
+[`@types`](https://www.npmjs.com/package/@types/react-router-dom):
+```bash
+pnpm add react-router-dom @types/react-router-dom -E
+```
+
+3. En la `TERMINAL` otra librería o dependencia,
+[`react-icons`](https://www.npmjs.com/package/react-icons) 
+y no requiere el adicional 
+[`@types`](https://www.npmjs.com/package/@types/react-icons)
+pues el sitio dice "`This is a stub types definition. react-icons provides its own type definitions, so you do not need this installed`":
+```bash
+pnpm add react-icons -E
+```
+
+4. En la `TERMINAL` esta dependencia
+[`Iconify for React`](https://www.npmjs.com/package/@iconify/react)
+, no requiere `@types`, este sitio no existe:
+```bash
+pnpm add --save-dev @iconify/react -E
+```
 
