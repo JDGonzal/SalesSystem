@@ -34,3 +34,64 @@ nvm list
 * `Simple React Snippets` de `Burke Holland` 1.2.x
 * `TSLint` de `Microsoft` 1.3.x.
 
+## 2. Login / Creando el Proyecto (0:04:30)
+
+1. Estando en la raíz de nuestro proyecto ejecutamos este comando
+usando `VITE`:
+```bash
+pnpm create vite@latest . --template react-ts
+```
+
+>[!NOTE]  
+>* El instructor sugiere el uso de `npm`, prefiereo el uso de `pnpm`.
+>* También sugiere usar `JavaScript`, pero lo prefiero en `TypeScript`. Es mas exigente y pone mas retos, pero me gusta mas.
+
+2. Nos consulta lo siguiente, en el proceso de instalación:
+```dos
+  Current directory is not empty. Please choose how to proceed:
+│  ○ Cancel operation
+│  ○ Remove existing files and continue
+│  ● Ignore files and continue
+```
+* Seleccionamos la tercera `Ignore files and continue`.
+```dos
+Package name:
+│  salessystem
+```
+* Lo dejamos así, con el `salessystem`.
+```dos
+◇  Scaffolding project in E:\tutorials\react\SalesSystem...
+│
+└  Done. Now run:
+
+  pnpm install
+  pnpm run dev
+```
+* Nos sugiere esto al final.
+
+3. Así luce nuestro proyecto hasta el momento:  
+![Proyecto recién creado](images/2025-05-25_155918.png "Proyecto recién creado")
+
+
+
+
+4. Abrimos el **`package.json`** y eliminamos todos los _carets_ (`^`).
+
+5. Ejecutamos en una `TERMINAL`, las dos líneas que nos sugirió al
+final del proceso de creación del proyecto en `react`:
+```bash
+pnpm install
+pnpm run dev
+```
+* Nos arroja esta respuesta:
+```bash
+  VITE v6.3.5  ready in 940 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+```
+* Así luce la página inicial:  
+![Página Inicial de Vite + React](images/2025-05-25_161152.png "Página Inicial de Vite + React")
+
+
