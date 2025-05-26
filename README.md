@@ -246,4 +246,67 @@ export default App;
 ```
 14.  Y así se ve la pantalla hasta el momento: <br> ![`App.tsx` con `GlobalStyles`](images/2025-05-26_165400.png "`App.tsx` con `GlobalStyles`")
 
- 
+
+
+
+### Primer maquetado (00:20:40)
+
+1. En el archivo **`src/App.tsx`**, agregamos esta importación: <br> `import styled from 'styled-components';`.
+2. Creamos una constante `Container` igual a `styled.main` al lado de `main` abrimos y cerramos la comilla invertida o en el teclado _ascii_ el [`ALT`]+[9]+[6]:
+```js
+import styled from 'styled-components';
+import { GlobalStyles } from './index.ts';
+
+const Container = styled.main`
+  // Es un componente de estilo
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: lightyellow;
+`;
+
+function App() {
+  return (
+    <Container>
+      <GlobalStyles />
+      <section className='leftSidebar'>
+        <p>uno</p>
+      </section>
+      <section className='mainMenu'>
+        <p>dos</p>
+      </section>
+      <section className='rightRoutes'>
+        <p>tres</p>
+      </section>
+    </Container>
+  );
+}
+
+export default App;
+```
+3. Creamos el archivo **`breakpoints.ts`** y copiamos el contenido del repositorio [breakpoints.jsx](https://github.com/Franklin369/pos-react-login/blob/main/src/styles/breakpoints.jsx). <br> Como explica el instructor, estos son _objetos_ No _componentes_ por ende la extensión debe ser `.ts`.
+4. En el archivo **`src/App.tsx`**, en la definición del componente `Container`, agregamos definiciones de cada clase usada en las `<section`:
+```css
+const Container = styled.main`
+  // Es un componente de estilo
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: lightyellow;
+  .leftSidebar{
+    display: none; /* Oculta la barra lateral izquierda */
+    background-color: lightblue;
+  };
+  .mainMenu{
+    position: absolute;
+    background-color: lightgreen;
+  };
+  .rightRoutes{
+    background-color: lightcoral;
+  };
+`;
+```
+5. Agregamos la importación de `./styles/breakpoints.ts` y de allí tomamos `{Device}`.
+6. Luego en la misma definición del `Container`, agregamos los `@media`, relacionando con cada _objeto_ de `Device`:
+```css
+
+```
+
