@@ -25,7 +25,7 @@ nvm list
 4. Instalar [Visual Studio Code](https://code.visualstudio.com/insiders/).
 
 5. Dentro de `Visual Studio Code`, se recomiendan estas extensiones:
-* `ES7+ React/Redux/React-Native ` de `dsznajder`.
+* `ES7+ React/Redux/React-Native snippets` de `dsznajder` 4.4.x.
 * `Better Comments` de `Aaron Bond` 3.0.x.
 * `ESLint` de `Microsoft` 3.0.x.
 * `Paste JSON as Code` de `quicktype` 23.0.x.
@@ -33,8 +33,25 @@ nvm list
 * `React Create Component` de `Javier Gutierrez` 1.5.x.
 * `Simple React Snippets` de `Burke Holland` 1.2.x
 * `TSLint` de `Microsoft` 1.3.x.
+* `vscode-styled-components` de `Styled Components` 1.7.x.
 
 ## 2. Login
+
+>[!IMPORTANT]  
+>### Temas puntuales de la sección  
+>**Descripción de la sección:**  
+>En esta sección exploraremos todo lo relacionado con el desarrollo del módulo de `Login`. Aprenderás desde la creación del proyecto hasta la implementación completa del sistema de autenticación utilizando herramientas modernas como `Zustand` y `Supabase`. Además, diseñaremos una interfaz intuitiva y funcional, enfocándonos en detalles como maquetado, estilos globales, y componentes reutilizables.
+>
+>Entre los temas que abordaremos están:
+>
+>* Configuración inicial del proyecto con herramientas como `Auto Barrel`.
+>* Organización del código y buenas prácticas en estructuras de carpetas.
+>* Diseño del login con componentes responsivos y ajustes de estilos.
+>* Implementación de un `AuthStore` para gestionar el estado global.
+>* Conexión del proyecto con `Supabase` para autenticar usuarios.
+>* Incorporación de funciones avanzadas como manejo del contexto y gestión de datos del usuario.
+>
+>Al finalizar esta sección, tendrás un módulo de login totalmente funcional y estilizado, listo para integrarse en cualquier aplicación.
 
 ### Creando el Proyecto (00:04:30)
 
@@ -46,7 +63,7 @@ pnpm create vite@latest . --template react-ts
 
 >[!NOTE]  
 >* El instructor sugiere el uso de `npm`, prefiereo el uso de `pnpm`.
->* También sugiere usar `JavaScript`, pero lo prefiero en `TypeScript`. Es mas exigente y pone mas retos, pero me gusta mas.
+>* También sugiere usar `JavaScript`, pero lo prefiero en `TypeScript`. Es mas exigente y pone mas retos, me gusta mas.
 
 2. Nos consulta lo siguiente, en el proceso de instalación:
 ```dos
@@ -102,15 +119,15 @@ pnpm run dev
 
 ### Instalar `Auto Barrel` (00:06:44)
 
-1. Instalar la extensión en `Visual Studio Code` de nombre
-`Auto Barrel for VSCode` de `Manuel Gil` 1.19.x
+1. Instalar la extensión en `Visual Studio Code` de nombre `Auto Barrel for VSCode` de `Manuel Gil` 1.19.x.
+2. Acá está el link para descargar el propuesto por el instructor: [auto-barrel-1.10.0](images/auto-barrel-1.10.0_vsixhub.com.zip).
 
 
 ### Configuración de `Auto Barrel` (00:07:37)
 
 >[!NOTE]  
 >El instructor habla de configurar el `Auto Barrel` por 
->`Extension Settings`, pero este no requiere dicho cambio.
+>`Extension Settings`, pero este no requiere dicho cambio en la versión 1.19.x.
 
 ### Organizando Carpetas (00:08:01)
 
@@ -160,3 +177,73 @@ pnpm add react-icons -E
 pnpm add --save-dev @iconify/react -E
 ```
 
+### Agregando Estilos Globales (00:11:55)
+
+1. Empezamos borrando el archivo **`src/App.css`**.
+2. Borramos también el **`src/index.css`**.
+3. Borramos el contenido del `return` del archivo **`src/App.tsx`**, dejando dentro de la etiqueta `<>` vacía, esto `<span>Hola mundo</span>`.
+4. Borramos de este mismo archivo el _hook_ `useState` y todos los `import`.
+5. Del archivo **`src\main.tsx`**, borramos la importación del `index.css`.
+6. Ajustamos también otras cosas en el archivo **`index.html`**:
+```html
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POSS 1.0.0</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+```
+7. Agrego la imagen de un ícono para nuestro proyecto en extensión `.PNG`, la obtengo con la _A.I_ de `Copilot`, y consigo dos imágens, esta ![](images/2025-05-25_192832.png) y esta ![](images/2025-05-25_192915.png), que la voy a copiar en las carpetas **"public"** y **"src/assets"**, en diferentes tamaños.
+8. En el archivo **`index.html`**, cambiamos la `url` del `<link rel="icon"`, por el de la imagen de 32x32:
+```html
+    <link rel="icon" type="image/png" href="/poss2_32x32.png" />
+```
+9. Creamos el archivo **`GlobalStyles.tsx`** en la carpeta **"src/styles"**.
+10. Empezamos importando el `'styled-components'` el elemento `{createGlobalStyle}`.
+11. Exportamos la constante `GlobalStyles` qu es igual al valor que recién importamos mas un grupo de valores dentro de comillas invertidas o en el teclado _ascii_ el [`ALT`]+[9]+[6]:
+```js
+import { createGlobalStyle } from 'styled-components';
+
+export const GlobalStyles = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+  body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    background-color: pink; /* #f4f4f4;*/
+    color: #333;
+  }
+`;
+```
+12.  Vamos a crear un `Auto Barrel`, en la carpeta **"src"**, esto crea un arhivo de nombre **`index.ts`**, el instructor sugiere que solo se utilice para _Componentes_, con esto por ahora:
+```js
+export { default as App } from './App';
+export * from './main';
+export * from './styles/GlobalStyles';
+```
+13.    En el archivo **`src/App.tsx`**, agregamos un `import` al `./index.ts` el elemento `{GlobalStyles}`, y el renderizado de `<GlobalStyles />`:
+```js
+import { GlobalStyles } from './index.ts';
+
+function App() {
+  return (
+    <div>
+      <GlobalStyles />
+      <h1>Hola mundo</h1>
+    </div>
+  );
+}
+
+export default App;
+```
+14.  Y así se ve la pantalla hasta el momento: <br> ![`App.tsx` con `GlobalStyles`](images/2025-05-26_165400.png "`App.tsx` con `GlobalStyles`")
+
+ 
