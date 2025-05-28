@@ -307,6 +307,166 @@ const Container = styled.main`
 5. Agregamos la importación de `./styles/breakpoints.ts` y de allí tomamos `{Device}`.
 6. Luego en la misma definición del `Container`, agregamos los `@media`, relacionando con cada _objeto_ de `Device`:
 ```css
+  @media ${Device.tablet} {
+    grid-template-columns: 88px 1fr ; /* una columnas */
+    .leftSidebar {
+      display: initial; /* Barra lateral izquierda en tablets */
+    }
+    .mainMenu {
+      position: none; /* Elimina la posición absoluta en tablets */
+      width: 100%;
+    }
+    .rightRoutes {
+      width: 100%;
+    }
+  }
+```
+
+
+
+### Definiendo secciones (00:32:29)
+
+1. Al archivo **`src/App.tsx`**, agregamos mas estilos a la constante `Container`:
+```css
+...
+  ...
+  .rightRoutes {
+    background-color: lightcoral;
+    grid-column: 1; /* Ocupa toda la fila */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  }
+  @media ${Device.tablet} {
+   ...
+    .rightRoutes {
+      width: 100%;
+      grid-column: 2; /* Ocupa la segunda columna */
+      width: calc(100% - 88px); /* Ajusta el ancho para ocupar el espacio restante */
+    }
+  }
+```
+2. En la carpeta **"src\pages"**, creamos el archivo **`Home.tsx`**, y ejecutamos el _snippet_ `rfce`:
+```js
+import React from 'react';
+
+function Home() {
+  return <div>Home</div>;
+}
+
+export default Home;
+```
+3. Cambiamos el único `import` por uno para tomar los dato de `"styled-components"` e igual creamos la constante `Container` para utilizarla como componente:
+```js
+import styled from 'styled-components';
+
+const Container = styled.div``;
+
+function Home() {
+  return (
+    <Container>
+      <span>Home</span>
+    </Container>
+  );
+}
+
+export default Home;
+```
+4. Creamos una cuatro carpetas dentro de **"src/components"**:
+* `atoms`
+* `molecules`
+* `organisms`
+* `templates`
+5. Dentro de la nueva carpeta **"src/components/templates"**, creamos el archivo **`HomeTemplate.tsx`**, ejecutamos el _snippet_, ajustamos la importación a 'styled-components' y añadimos la definición del componente `Container`:
+```js
+import styled from 'styled-components';
+
+const Container = styled.div``;
+
+function HomeTemplate() {
+  return (
+    <Container>
+      <span>HomeTemplate</span>
+    </Container>
+  );
+}
+
+export default HomeTemplate;
+```
+6. En la carpeta **"src/routes"** creamos el archivo **`routes.ts`**, con este código inicial:
+```js
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Home } from '../index.ts';
+
+function MyRoutes() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='*' element={<div>404 Not Found</div>} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default MyRoutes;
+```
+7. Actualizo el `Auto barrel`, es decir el archivo **`index.ts`** y esto es lo que debe mostrar hasta el momento:
+```js
+export { default as App } from './App';
+export { default as HomeTemplate } from './components/templates/HomeTemplate';
+export * from './main';
+export { default as Home } from './pages/Home';
+export { default as MyRoutes } from './routes/MyRoutes';
+export * from './styles/GlobalStyles';
+export * from './styles/breakpoints';
+```
+8. Luego regreso al archivo **`src/App.tsx`**, añado a la importación del `'index'`, el de `MyRoutes` y lo renderizo en la `classname` de nombre `'rightRoutes'`:
+```js
+function App() {
+  return (
+    <Container>
+      <GlobalStyles />
+      <section className='leftSidebar'>
+        <p>Sidebar</p>
+      </section>
+      <section className='mainMenu'>
+        <p>MainMenu</p>
+      </section>
+      <section className='rightRoutes'>
+        <MyRoutes />
+      </section>
+    </Container>
+  );
+}
+```
+9. Dentro de la carpeta **"src/components/organisms"**, creamos otra carpeta de nombre `sidebar`, creamos un componente de nombre **`Sidebar.tsx`**, ejecutamos el _snippet_ `rfce` y le ajustamos para utilizar el `'styled-components'`:
+```js
 
 ```
+10. Actualizamos el `Auto Barrel` o el archivo **`index.ts`**.
+11. Y en el archivo **`src/App.tsx`**, añado a la importación del `'index'`, el de `Sidebar` y lo renderizo en la `classname` de nombre `'leftSidebar'`:
+```js
+function App() {
+  return (
+    <Container>
+      <GlobalStyles />
+      <section className='leftSidebar'>
+        <Sidebar />
+      </section>
+      <section className='mainMenu'>
+        <p>MainMenu</p>
+      </section>
+      <section className='rightRoutes'>
+        <MyRoutes />
+      </section>
+    </Container>
+  );
+}
+```
+12. Tomamos del archivo **`src/styles/GlobalStyles.tsx`**, el dato de `@import url` para los _fonts_ y lo llevamos para **`index.html`**:
+```html
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+    </style>
+```
+13. Ahora si borramos de **`src/styles/GlobalStyles.tsx`**, ese valor de `@import url`.
 
