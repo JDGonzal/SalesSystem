@@ -470,3 +470,48 @@ function App() {
 ```
 13. Ahora si borramos de **`src/styles/GlobalStyles.tsx`**, ese valor de `@import url`.
 
+
+
+### Definiendo return (00:43:22)
+
+1. El archivo **`src/routes/MyRoutes.tsx`**, ya tiene el `return` para ser tratado como _Componente_.
+2. En el archivo **`src\components\templates\HomeTemplate.tsx`**, agregamos unos elementos _css_, dentro de las comillas invertidas de la definición de `Container`:
+```css
+const Container = styled.div`
+  height: 100vh;
+`;
+```
+3. En el archivo **`src/pages/Home.tsx`**, Renderizo el componente `<HomeTemplate`, y lo importo del `'../index.ts'`:
+```js
+import styled from 'styled-components';
+import {HomeTemplate} from '../index.ts'; 
+
+const Container = styled.div``;
+
+function Home() {
+  return (
+    <Container>
+      <HomeTemplate/>
+    </Container>
+  );
+}
+
+export default Home;
+```
+4. En el archivo **`src/App.tsx`**, corrijo algunos estilos de _css_ para las clases `mainMenu` y `rightRoutes`,para el `@media ${Device.tablet}`:
+```css
+  @media ${Device.tablet} {
+    grid-template-columns: 88px 1fr; /* una columnas */
+    .leftSidebar {
+      display: initial; /* Barra lateral izquierda en tablets */
+    }
+    .mainMenu {
+      display: none;
+    }
+    .rightRoutes {
+      grid-column: 2; /* Ocupa la segunda columna */
+    }
+  }
+```
+5. Así se ve la pantalla hasta el momento, tanto en presentación `tablet` o `mobile`: <br> ![t, ](images/2025-05-28_063213.png "tablet o PC") <br> ![mobile: Samsung Galaxy](images/2025-05-28_063257.png "mobile: Samsung Galaxy")
+

@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import {HomeTemplate} from '../index.ts'; 
 
 const Container = styled.div``;
 
 function Home() {
   return (
     <Container>
-      <span>Home</span>
+      <HomeTemplate/>
     </Container>
   );
 }
