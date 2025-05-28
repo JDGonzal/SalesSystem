@@ -26,15 +26,10 @@ const Container = styled.main`
       display: initial; /* Barra lateral izquierda en tablets */
     }
     .mainMenu {
-      position: none; /* Elimina la posición absoluta en tablets */
-      width: 100%;
+      display: none;
     }
     .rightRoutes {
-      width: 100%;
       grid-column: 2; /* Ocupa la segunda columna */
-      width: calc(
-        100% - 88px
-      ); /* Ajusta el ancho para ocupar el espacio restante */
     }
   }
 `;
