@@ -4,5 +4,7 @@ export { default as HomeTemplate } from './components/templates/HomeTemplate';
 export * from './main';
 export { default as Home } from './pages/Home';
 export { default as MyRoutes } from './routes/MyRoutes';
+export * from './store/ThemeStore';
 export * from './styles/GlobalStyles';
 export * from './styles/breakpoints';
+export * from './styles/themes';

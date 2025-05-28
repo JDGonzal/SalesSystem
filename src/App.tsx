@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { GlobalStyles, MyRoutes, Sidebar } from './index.ts';
+import styled, { ThemeProvider } from 'styled-components';
+import { GlobalStyles, MyRoutes, Sidebar, useThemeStore } from './index.ts';
 import { Device } from './styles/breakpoints.ts';
 
 const Container = styled.main`
@@ -35,19 +35,22 @@ const Container = styled.main`
 `;
 
 function App() {
+  const { themesStyle } = useThemeStore();
   return (
-    <Container>
-      <GlobalStyles />
-      <section className='leftSidebar'>
-        <Sidebar />
-      </section>
-      <section className='mainMenu'>
-        <p>MainMenu</p>
-      </section>
-      <section className='rightRoutes'>
-        <MyRoutes />
-      </section>
-    </Container>
+    <ThemeProvider theme={themesStyle}>
+      <Container>
+        <GlobalStyles />
+        <section className='leftSidebar'>
+          <Sidebar />
+        </section>
+        <section className='mainMenu'>
+          <p>MainMenu</p>
+        </section>
+        <section className='rightRoutes'>
+          <MyRoutes />
+        </section>
+      </Container>
+    </ThemeProvider>
   );
 }
 
