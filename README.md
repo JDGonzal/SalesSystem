@@ -602,3 +602,84 @@ function App() {
 }
 ```
 
+
+### Agregando el SIDEBAR (00:56:56)
+
+1. Copiamos de esta ruta [`Sidebar.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/sidebar/Sidebar.jsx), el contenido en el archivo **`src\components\organisms\sidebar\Sidebar.tsx`**.
+>[!WARNING]
+>Tenemos errores, pues nos faltan componentes:
+>* `import { LinksArray, SecondarylinksArray, ToggleTema } from '../../../index';`
+>* `import { v } from '../../../styles/variables';`
+2. Copiamos el contenido de esta ruta [`ToggleTema.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/ToggleTema.jsx), dentro del archivo **`src/components/organisms/ToggleTema.tsx`**, que debemos crear.
+3. Creamos el archivo **`src\styles\variables.ts`** y copiamos el contenido de [`variables.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/styles/variables.jsx).
+4. En el archivo de **`variables.ts`**, correjimos el logo por el que tenemos en la carpeta **"assets"**: <br> `import logo from '../assets/poss2_32x32.png';`
+5. Creamos el archivo **`src/utils/dataEstatica.ts`** y copiamos el contenido de [`dataEstatica.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/utils/dataEstatica.jsx)
+6. Actualizao el `Auto Barrel` o el archivo **`index.ts`**.
+7. Hago correcciones de _TypeScript_ en el archivo **`src/components/organisms/sidebar/Sidebar.tsx`**:
+```js
+...
+import { v } from '../../../styles/variables';
+...
+interface SidebarProps {
+  state: boolean;
+  setState: React.Dispatch<React.SetStateAction<boolean>>;
+  $isopen: string;
+}
+
+export function Sidebar({ state, setState, $isopen }: SidebarProps) {
+  return (...)
+}
+```
+8. En el archivo **`src/App.tsx`**, al renderizar el `<Sidebar`, debemos ponerle algunas propiedades o parámetros, antes de eso creamos un _hook_ tipo `useState`:
+```js
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+```
+* E importar el respectivo _hook_: <br> `import { useState } from 'react';`
+9. Quitamos el renderizadode `<BrowserRouter` del archivo **`src/routes/MyRoutes.tsx`** y nos lo llevamos al archivo **`src\main.tsx`**:
+```js
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import App from './App.tsx';
+import { BrowserRouter } from 'react-router-dom';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>
+);
+```
+10. El archivo **`src/routes/MyRoutes.tsx`**, quedó solo con este código:
+```js
+import { Route, Routes } from 'react-router-dom';
+import { Home } from '../index.ts';
+
+function MyRoutes() {
+  return (
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='*' element={<div>404 Not Found</div>} />
+    </Routes>
+  );
+}
+
+export default MyRoutes;
+```
+11. Así se ve hasta el momento el aplicativo en pantalla: <br> ![pantalla con el Sidebar](images/2025-05-28_170447.png "pantalla con el Sidebar")
+
+
+
+
+
+
+12. Los íconos que se están utilizando en el archivo **`src\utils\dataEstatica.ts`**, vienen de este sitio [Iconify for React](https://iconify.design/docs/icon-components/react/), mas específicamente de este [icons](https://icon-sets.iconify.design/).
+13. Hay un sitio para almacenar las imágenes a parte del poyecto, utiliza este sitio [imgbb](https://es.imgbb.com/), se aloja las imagenes, tiene este texto: <br> `ImgBB es un servicio gratuito de alojamiento de imágenes. Actualiza tu suscripción para acceder a todas las funciones.`
+14. Así luce el proyecto con el cambio de _Dark_ o _Light_: <br> ![Sideboard Dark Mode](images/2025-05-28_172544.png "Sideboard Dark Mode") ![Sideboard Light Mode](images/2025-05-28_172603.png "Sideboard Light Mode")
+
+
+
+
+>[!WARNING]
+>El archivo **`src/components/organisms/sidebar/Sidebar.tsx`**, presenta muchos errores de _TypeScript_, mas adelante se buscará el modo de solucionarlos.

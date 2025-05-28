@@ -1,5 +1,6 @@
 export { default as App } from './App';
-export { default as Sidebar } from './components/organisms/sidebar/Sidebar';
+export * from './components/organisms/ToggleTema';
+export * from './components/organisms/sidebar/Sidebar';
 export { default as HomeTemplate } from './components/templates/HomeTemplate';
 export * from './main';
 export { default as Home } from './pages/Home';
@@ -8,3 +9,6 @@ export * from './store/ThemeStore';
 export * from './styles/GlobalStyles';
 export * from './styles/breakpoints';
 export * from './styles/themes';
+export * from './styles/variables';
+export * from './utils/dataEstatica';
+

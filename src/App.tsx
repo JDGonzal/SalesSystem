@@ -1,6 +1,7 @@
 import styled, { ThemeProvider } from 'styled-components';
 import { GlobalStyles, MyRoutes, Sidebar, useThemeStore } from './index.ts';
 import { Device } from './styles/breakpoints.ts';
+import { useState } from 'react';
 
 const Container = styled.main`
   // Es un componente de estilo
@@ -35,13 +36,14 @@ const Container = styled.main`
 `;
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Estado para Sidebar
   const { themesStyle } = useThemeStore();
   return (
     <ThemeProvider theme={themesStyle}>
       <Container>
         <GlobalStyles />
         <section className='leftSidebar'>
-          <Sidebar />
+          <Sidebar state={sidebarOpen} setState={()=>setSidebarOpen(!sidebarOpen)}/>
         </section>
         <section className='mainMenu'>
           <p>MainMenu</p>
