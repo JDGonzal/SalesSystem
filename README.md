@@ -515,3 +515,90 @@ export default Home;
 ```
 5. Así se ve la pantalla hasta el momento, tanto en presentación `tablet` o `mobile`: <br> ![t, ](images/2025-05-28_063213.png "tablet o PC") <br> ![mobile: Samsung Galaxy](images/2025-05-28_063257.png "mobile: Samsung Galaxy")
 
+
+
+
+
+
+### Implementando temas con zustand (00:44:38)
+
+1. En una `TERMINAL`, instalamos la despendencia de <br>[![Zustand](images/2025-05-28_141011.jpg "Zustand")](https://www.npmjs.com/package/zustand)):
+```bash
+pnpm add zustand -E
+```
+2. En la carpeta **"src/store"**, es donde se va implementar el manejo de los estados de `Zustand`, y allí creamos un archivo de nombre **`ThemeStore.tsx`**.
+3. En el nuevo archivo empezamos con una importación de `'Zustand'`:
+```js
+import { create } from 'zustand';
+
+interface ThemeState {
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
+}
+export const useThemeStore = create<ThemeState>((set) => ({
+  theme: 'light',
+  toggleTheme: () =>
+    set((state) => ({
+      theme: state.theme === 'light' ? 'dark' : 'light',
+    })),
+}));
+```
+4. Agregamos en la carpeta **"src/styles"**, el archivo **`themes.ts`**, y le copiamos la información de esta ruta [`themes.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/styles/themes.jsx).
+5. En el archivo **`src/store/ThemeStore.tsx`** importamos de `'../styles/themes.ts'` los dos objetos `{Light, Dark}`.
+6. Completamos el código de **`ThemeStore.tsx`**:
+```js
+import { create } from 'zustand';
+import { Light, Dark } from '../styles/themes';
+
+interface ThemeState {
+  theme: 'light' | 'dark';
+  themesStyle: typeof Light | typeof Dark;
+  setTheme: () => void;
+}
+export const useThemeStore = create<ThemeState>((set, get) => ({
+  theme: 'light',
+  themesStyle: Light,
+  setTheme: () => {
+    const { theme } = get();
+    set({ theme: theme === 'light' ? 'dark' : 'light' });
+    set({ themesStyle: theme === 'light' ? Dark : Light });
+  },
+}));
+```
+7. Regresamos al archivo **`src/App.tsx`** importamos de `'styled-components'` el `{ThemeProvider}` y envolvemos todo debajo del `return` en el renderizado de `<ThemeProvider`:
+```js
+function App() {
+  return (
+    <ThemeProvider theme={{ mode: 'light' }}>
+      <Container>
+        <GlobalStyles />
+        <section className='leftSidebar'>
+          <Sidebar />
+        </section>
+        <section className='mainMenu'>
+          <p>MainMenu</p>
+        </section>
+        <section className='rightRoutes'>
+          <MyRoutes />
+        </section>
+      </Container>
+    </ThemeProvider>
+  );
+}
+```
+8. Actualizamos el `Auto Barrel` o el archivo **`index.ts`**.
+9. En el archivo **`src/App.tsx`** usamos un _hook_ de `Zustand`, que lo bautizamos como `useThemeStore`, con la respectiva importación:
+```js
+...
+import { GlobalStyles, MyRoutes, Sidebar, useThemeStore } from './index.ts';
+...
+function App() {
+  const { themesStyle } = useThemeStore();
+  return (
+    <ThemeProvider theme={themesStyle}>
+      ...
+    </ThemeProvider>
+  );
+}
+```
+
