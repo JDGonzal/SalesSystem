@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { GlobalStyles } from './index.ts';
+import { GlobalStyles, MyRoutes, Sidebar } from './index.ts';
 import { Device } from './styles/breakpoints.ts';
 
 const Container = styled.main`
@@ -17,9 +17,11 @@ const Container = styled.main`
   }
   .rightRoutes {
     background-color: lightcoral;
+    grid-column: 1; /* Ocupa toda la fila */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
   }
   @media ${Device.tablet} {
-    grid-template-columns: 88px 1fr ; /* una columnas */
+    grid-template-columns: 88px 1fr; /* una columnas */
     .leftSidebar {
       display: initial; /* Barra lateral izquierda en tablets */
     }
@@ -29,6 +31,10 @@ const Container = styled.main`
     }
     .rightRoutes {
       width: 100%;
+      grid-column: 2; /* Ocupa la segunda columna */
+      width: calc(
+        100% - 88px
+      ); /* Ajusta el ancho para ocupar el espacio restante */
     }
   }
 `;
@@ -38,13 +44,13 @@ function App() {
     <Container>
       <GlobalStyles />
       <section className='leftSidebar'>
-        <p>Sidebar</p>
+        <Sidebar />
       </section>
       <section className='mainMenu'>
         <p>MainMenu</p>
       </section>
       <section className='rightRoutes'>
-        <p>Content</p>
+        <MyRoutes />
       </section>
     </Container>
   );
