@@ -62,7 +62,7 @@ export function Sidebar({ state, setState }: SidebarProps) {
         <div className={state ? 'LinkContainer active' : 'LinkContainer'}>
           <div
             className='Links'
-            onClick={() => SetstateDesplegableLinks(!stateDesplegableLinks)}
+            // onClick={() => SetstateDesplegableLinks(!stateDesplegableLinks)}
           >
             <section className={state ? 'content open' : 'content'}>
               <Icon
@@ -80,7 +80,7 @@ export function Sidebar({ state, setState }: SidebarProps) {
     </Main>
   );
 }
-const Container = styled.div`
+const Container = styled.div<{ $isopen: string }>`
   background: ${({ theme }) => theme.bgtotal};
   color: ${(props) => props.theme.text};
   position: fixed;
@@ -192,7 +192,7 @@ const Container = styled.div`
     }
   }
 `;
-const Main = styled.div`
+const Main = styled.div<{ $isopen: string }>`
   .Sidebarbutton {
     position: fixed;
     top: 70px;
