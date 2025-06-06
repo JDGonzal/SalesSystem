@@ -683,3 +683,78 @@ export default MyRoutes;
 
 >[!WARNING]
 >El archivo **`src/components/organisms/sidebar/Sidebar.tsx`**, presenta muchos errores de _TypeScript_, mas adelante se buscará el modo de solucionarlos.
+
+
+### Cambiando tamaños (01:11:05)
+
+1. En el archivo **`src/App.tsx`**, en el renderizado de `<Container` agregamos un `className` con un condicional terciario para poner o no el valor de `'active'`:
+```js
+  return (
+    <ThemeProvider theme={themesStyle}>
+      <Container className={sidebarOpen ? 'active' : ''}>
+        ...
+      </Container>
+    </ThemeProvider>
+  );
+```
+1. En la definición _css_ de `Container`, dentro de `@media ${Device.tablet}`, agregamos la clase `.active`, si el `sidebarOpen` es verdadero, y definimos el tamaño inicial sea de `260px`:
+```css
+    grid-template-columns: 88px 1fr; /* una columnas */
+    &.active{
+      grid-template-columns: 260px 1fr;
+    }
+```
+1. Comentamos en ese _css_ la definición de la clase `.mainMenu` en la primera, que es para _mobile_ la parte de `background-color: lightgreen;`.
+2. Comentamos también el _css_ para la definición de la clase `.rightRoutes` para _mobile_ la parte `background-color: lightcoral;`.
+3. También se comenta el _css_ para el `background-color: lightyellow;`, que hay al principio.
+4. Abrimos el archivo **`src/styles/GlobalStyles.tsx`**, para ajustar lo siguiente, para que el color de fondo y el color de las letras coincidan con los definidos en el `theme`:
+```js
+export const GlobalStyles = createGlobalStyle`
+    body{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:"Poppins",sans-serif;
+        background-color:${({ theme }) => theme.bgtotal};
+        color:${(props) => props.theme.text};/*#fff;*/
+    }
+`;
+```
+7. Ahora bien nos salen muchos errores relacionados con el `theme` y los valores que se requieren representar, como por ejemplo:<br> `Property 'bgtotal' does not exist on type 'DefaultTheme'.`.<br> Entonces se declara un `module` de `'styled-components'` y dentro una _interface_ que se exporta de nombre `interface DefaultTheme`, y dentro todos los valores que el `theme` se van a utilizar tanto en: 
+* **`src/styles/GlobalStyles.tsx`**, como en 
+* **`src/components\organisms\sidebar\Sidebar.tsx`**. 
+```js
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    bgtotal: string;
+    text: string;
+    color2: string;
+    colorScroll: string;
+    logorotate: string;
+    bgAlpha: string;
+    bg6: string;
+    bg5: string;  
+    color1: string; 
+    bgtgderecha: string;  
+    bg3: string;
+    bg  : string;
+    bg4 : string;
+  }
+}
+```
+8. Se arregló el comportamiento del archivo **`src/components/organisms/sidebar/Sidebar.tsx`**, poniendo la definición como tipo de `$isopen` cuando se crea la constante `Container`:
+```js
+const Container = styled.div<{ $isopen: string }>`
+  ...
+`;
+```
+9. Lo mismo en la definición de la constante `Main`, se define como tipo el `$isopen`:
+```js
+const Main = styled.div<{ $isopen: string }>`
+  ...
+`;
+```
+10.  Se comenta esta llamada de función `onClick={() => SetstateDesplegableLinks(!stateDesplegableLinks)}`, que por ahora está pendiente se ser creada, en el archivo: **`src/components/organisms/sidebar/Sidebar.tsx`**.
+11. Del archivo **`src/components/organisms/sidebar/Sidebar.tsx`**, nos copiamos la propiedad del _css_ `transition: 0.1s ease-in-out;`, para el archivo **`src/App.tsx`**, en el _css_ del `Container`.
+12. Comentamos en el mismo archivo, en el _css_ para la definición de la clase `.leftSidebar` para _mobile_ la parte `background-color: lightblue;`.
+
