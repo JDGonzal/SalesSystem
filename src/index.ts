@@ -1,9 +1,13 @@
 export { default as App } from './App';
+export { default as Title } from './components/atoms/Title';
 export * from './components/organisms/ToggleTema';
+export * from './components/organisms/forms/InputText2';
 export * from './components/organisms/sidebar/Sidebar';
 export { default as HomeTemplate } from './components/templates/HomeTemplate';
+export { default as LoginTemplate } from './components/templates/LoginTemplate';
 export * from './main';
 export { default as Home } from './pages/Home';
+export { default as Login } from './pages/Login';
 export { default as MyRoutes } from './routes/MyRoutes';
 export * from './store/ThemeStore';
 export * from './styles/GlobalStyles';
@@ -11,4 +15,4 @@ export * from './styles/breakpoints';
 export * from './styles/themes';
 export * from './styles/variables';
 export * from './utils/dataEstatica';
-
+// export * from './vite-env.d';

@@ -758,3 +758,225 @@ const Main = styled.div<{ $isopen: string }>`
 11. Del archivo **`src/components/organisms/sidebar/Sidebar.tsx`**, nos copiamos la propiedad del _css_ `transition: 0.1s ease-in-out;`, para el archivo **`src/App.tsx`**, en el _css_ del `Container`.
 12. Comentamos en el mismo archivo, en el _css_ para la definición de la clase `.leftSidebar` para _mobile_ la parte `background-color: lightblue;`.
 
+
+### Diseño del login (01:19:14)
+
+>[!TIP]
+>El instructor pone en el archivo **`src/App.tsx`**, la definición en el _css_ del `color`: <br> `color:${({ theme }) => theme.text};` <br> La cuestión es que esto ya se hizo en el sitio correcto, en el archivo: **`src/styles/GlobalStyles.tsx`**.
+
+1. Creamos el archivo **`src/pages/Login.tsx`**, se ejecuta el _snippet_ `rfce` y se hacen los ajustes correspondientes:
+```js
+import styled from 'styled-components';
+
+const Container = styled.div``;
+
+function Login() {
+  return <Container>Login</Container>;
+}
+
+export default Login;
+```
+2. Creamos un _Template_ de nombre **`src\components\templates\LoginTemplate.tsx`**, también ejecutamos el _snippet_ `rfce` y se hacen los ajustes:
+```js
+import styled from 'styled-components';
+
+const Container = styled.div``;
+
+function LoginTemplate() {
+  return (
+    <Container>
+      <span>LoginTemplate</span>
+    </Container>
+  );
+}
+
+export default LoginTemplate;
+```
+3. Actualizamos el _barrel_ o archivo **`src/index.ts`**.
+4. Regresamos al archivo **`src/pages/Login.tsx`** y allí renderizamos el componente `<LoginTemplate`>
+```js
+import styled from 'styled-components';
+import { LoginTemplate } from '../index.ts';
+
+const Container = styled.div``;
+
+function Login() {
+  return (
+    <Container>
+      <LoginTemplate />
+    </Container>
+  );
+}
+
+export default Login;
+```
+5. Ahora si vamos al archivo **`src/routes/MyRoutes.tsx`** y agrego la ruta del `login`, copiando el del `<Home`, e importando el componente faltante de `Login`:
+```js
+import { Route, Routes } from 'react-router-dom';
+import { Home, Login } from '../index.ts';
+
+function MyRoutes() {
+  return (
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='*' element={<div>404 Not Found</div>} />
+      <Route path='/login' element={<Login />} />
+    </Routes>
+  );
+}
+
+export default MyRoutes;
+```
+6. Probamos poniendo en la _url_ la ruta del `login` y obtenemos esto en pantalla:<br>![localhost/login](images/2025-06-07_094203.png "localhost/login").
+7. Regresamos al archivo **`src/components/templates/LoginTemplate.tsx`**, y empezamos a maquetar lo que veríamos luego en pantalla:
+```js
+import styled from 'styled-components';
+
+const Container = styled.div``;
+
+function LoginTemplate() {
+  return (
+    <Container>
+      <section className='contentCard'>
+        <div className='card'></div>
+      </section>
+    </Container>
+  );
+}
+
+export default LoginTemplate;
+```
+8. Vamos a la carpeta **"src/components/atoms"**, para agregar un componenente, de nombre **`Title.tsx`**, ejecutamos el _snippet_ `rfce` y hacemos los ajustes correspondientes:
+```js
+import styled from 'styled-components';
+
+const Container = styled.div`
+  height: 100vh;
+`;
+
+function Title() {
+  return <Container>Title</Container>;
+}
+
+export default Title;
+```
+9. Como es un _atoms_ , lo podemos ajustar, el instructor sugiere que ni se requere el `return`, verificando si funciona sin errores:
+```js
+import styled from 'styled-components';
+
+const Title = styled.span`
+  font-weight: 700;
+  font-size: 30px;
+`;
+
+export default Title;
+```
+10. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+11. Regresamos al componente **`src/components/templates/LoginTemplate.tsx`**, importamos el _atoms_ `Title` a través del `index.ts` y lo renderizamos con el texto `Ingresar`:
+```js
+import styled from 'styled-components';
+import { Title } from '../../index.ts';
+
+const Container = styled.div``;
+
+function LoginTemplate() {
+  return (
+    <Container>
+      <section className='contentCard'>
+        <div className='card'>
+          <Title>Ingresar</Title>
+        </div>
+      </section>
+    </Container>
+  );
+}
+
+export default LoginTemplate;
+```
+12. Agregamos en el _css_ del `Container`del archivo **`src/components/templates\LoginTemplate.tsx`**, algunos estilos:
+
+* Sugerido por Copilot:
+```css
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .contentCard {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
+    .card {
+      text-align: center;
+    }
+  }
+`;
+```
+* Lo que solicita el Instructor:
+```css
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+```
+13. Clonamos este archivo [**`InputText2.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/formularios/InputText2.jsx), en el siguiente archivo: <br> **`src/components/organisms/forms/InputText2.tsx`**.
+14. Por ahora solo tenemos un error :<br> `Binding element 'children' implicitly has an 'any' type.`, <br> lo corregimos de la siguiente manera:
+```js
+import styled from 'styled-components';
+import { type ReactNode } from 'react';
+
+export function InputText2({ children }: { children: ReactNode }) {
+  return (
+    <Container>
+      <div className='form__group field'>{children}</div>
+    </Container>
+  );
+}
+const Container = styled.div`
+...
+`;
+```
+15. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+16. En el archivo **`src/components/templates/LoginTemplate.tsx`**, debajo del renderizado del `</Title>`, agregamos la etiqueta `<form` y ponemos estos otros elementos:
+```js
+        <div className='card'>
+          <Title>Ingresar</Title>
+          <form action=""></form>
+        </div>
+```
+17. Dentro del `<form` renderizamos el componente `<InputText2`, lo importamos de `index.ts` y dentro de este empezamos con las etiquetas `label` e `input`:
+```js
+        <div className='card'>
+          <Title>Ingresar</Title>
+          <form action=''>
+            <InputText2>
+              <label htmlFor=''></label>
+              <input type='text' />
+            </InputText2>
+          </form>
+        </div>
+```
+18. Empezamos poniendo la etiqueta `input` un `className`, con el valor de `'form__field'`.
+19. A la etiqueta `input` le agrego un `placeholder`, `name` y `id` con el texto de `'email'`.
+20. Aprovecho para ponerle a label en el `for` el nombre de `email`.
+21. Copio todo el componente `<InputText2`, y cambio los nombre de `email`, por `password`, lo mismo que el `type`:
+```js
+          <form action=''>
+          <InputText2>
+              <label htmlFor='email'></label>
+              <input type='text' className='form__field' placeholder='email' name='email' id='email'/>
+            </InputText2>            <InputText2>
+              <label htmlFor='password'></label>
+              <input type='password' className='form__field' placeholder='password' name='password' id='password'/>
+            </InputText2>
+          </form>
+```
+22. Así luce hasta el momento la página `login`:<br>![Página `login` con los dos `input`](images/2025-06-07_172544.png "Página `login` con los dos `input`")
+
