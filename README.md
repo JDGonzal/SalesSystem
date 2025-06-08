@@ -1136,3 +1136,69 @@ export const Linea = styled.div`
 17. Así luce nuestra pantalla de `login`:<br>![](images/2025-06-08_100216.png "")
 
 
+
+### Culminando diseño (01:41:00)
+
+1. En el archivo **`src\components\templates\LoginTemplate.tsx`**, añadimos para el `Container`, algunos estilos:
+```css
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  .contentCard{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .card{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      padding: 10px;
+      margin: 0 auto;
+    }
+  }
+`;
+```
+2. Importamos `{Device}` del archivo `'../../styles/breakpoints.ts'`.
+3. Agregamos los _responsive_ dentro del _css_ para la clase `.card{`:
+```css
+    .card{
+      ...
+      @media ${Device.tablet} {
+        width: 400px;
+      }
+    }
+```
+4. Vamos a eliminar la clase `.ContentCard`.
+5. El renderizado de ` <SaveButton`, lo ponemos por fuer del `<InputText2`.
+6. En el archivo **`src/components/atoms/Title.tsx`**, agrego mas estilos pero los pongo de dinámica, es decir que llegan como _props_ desde donde lo llaman o renderizan:
+```js
+import styled from 'styled-components';
+interface TitleProps {
+  $paddingBottom: string;
+}
+
+const Title = styled.span<TitleProps>`
+  font-weight: 700;
+  font-size: 30px;
+  padding-bottom: ${(props) => props.$paddingBottom || '10px'};
+`;
+
+export default Title;
+```
+7. Regresamos al archivo **`src/components/templates/LoginTemplate.tsx`**, al momento de renderiar el `<Title`, le añadimos una propiedad de nombre `paddingBottom`:
+```js
+          <Title $paddingBottom='20px'>Ingresar</Title>
+```
+8. Así luce nuestr pantalla en `tablet` y en `mobile`:<br>![Modo `tablet`](images/2025-06-08_110203.png "Modo `tablet`") ![Modo `mobile`](images/2025-06-08_110614.png "Modo `mobile`")
+
+
+
+
