@@ -980,3 +980,159 @@ const Container = styled.div`
 ```
 22. Así luce hasta el momento la página `login`:<br>![Página `login` con los dos `input`](images/2025-06-07_172544.png "Página `login` con los dos `input`")
 
+
+### Agregando Buttons (01:29:52)
+
+
+1. Empezamos clonando del repositorio el archivo [**`Btnsave.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/moleculas/Btnsave.jsx), en el archivo **`src/components/molecules/SaveButton.tsx`**, con los ajustes respectivos, como el nombre de la función a exportar por esta: <br> `export function SaveButton({...`
+2. Tenemos errores varios, pero el primero a solucionar es el de:<br> `Module '"../../index"' has no exported member 'Icono'.`, se logra clonando del repositorio [**`Icono.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/atomos/Icono.jsx), en el archivo nuevo de nombre **`src/components/atoms/Icon.tsx`**, con el respectivo ajuste.
+3. El error que tenemos de `Property '$color' does not exist on type 'ExecutionContext' `, lo solucionamos con una `interface`, quedando así el archivo:
+```js
+import styled from 'styled-components';
+interface IconoProps {
+  $color: string;
+}
+
+export const Icono = styled.span<IconoProps>`
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 20px;
+  color: ${(props) => props.$color};
+`;
+```
+4. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+5. Regresamos al archivo **`src/components/molecules/SaveButton.tsx`**, revisamos los errores que todavía tenemos por corregir, añadiendo una `interface`:
+```js
+...
+import type { JSX } from 'react';
+
+
+interface SaveButtonProps {  
+  funcion?: ()=> void; // Optional, to pass a function on click
+  titulo: string;
+  bgcolor: string; 
+  icono?: JSX.Element; // import type { JSX } from 'react';
+  url?: string; // Optional, if you want to use it as a link
+  color: string; // Optional, to set the text color of the button
+  disabled?: boolean; // Optional, if you want to disable the button
+  width?: string; // Optional, to set the width of the button
+}
+
+export function SaveButton({
+  funcion,
+  titulo,
+  bgcolor,
+  icono,
+  url,
+  color,
+  disabled,
+  width,
+}: SaveButtonProps) {
+  return (
+    ...
+  )
+}
+```
+6. Sigo viendo errores, por el manejo del signo `$` para algunas variables, vemos como se puede solucionar en el _css_ del `Container`:
+```js
+const Container = styled.button<{ $width?: string; $bgcolor: string; $color: string; }>`
+  font-weight: 700;
+  display: flex;
+  font-size: 15px;
+  padding: 10px 25px;
+  border-radius: 16px;
+  background-color: ${(props) => props.$bgcolor};
+  border: 2px solid rgba(50, 50, 50, 0.2);
+  border-bottom: 5px solid rgba(50, 50, 50, 0.2);
+  transform: translate(0, -3px);
+  cursor: pointer;
+  transition: 0.2s;
+  transition-timing-function: linear;
+  color: rgb(${(props) => props.$color});
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.$width};
+  .content {
+    display: flex;
+    gap: 12px;
+  }
+  &:active {
+    transform: translate(0, 0);
+    border-bottom: 2px solid rgba(50, 50, 50, 0.5);
+  }
+  &[disabled] {
+    background-color: #646464;
+    cursor: no-drop;
+    box-shadow: none;
+  }
+`;
+```
+7. Vamos al archivo **`src/components/templates/LoginTemplate.tsx`**, donde vamos a renderizar el componente `<SaveButton`:
+```js
+          <form action=''>
+            ...
+            <InputText2>
+              ...
+              <SaveButton />
+            </InputText2>
+          </form>
+```
+8. Podemos poner propiedades al momento de renderiar `<SaveButton`:
+```js
+              <SaveButton
+                titulo='INGRESAR'
+                bgcolor='#1cb0f6'
+                color='255,255,255'
+                width='100%'
+              />
+            </InputText2>
+```
+9. Así se ve hasta el momento la pantalla, con el primer botón: <br>![Dos `input` y un `SaveButton`](images/2025-06-08_092417.png "Dos `input` y un `SaveButton`")
+10. Creo un archivo en la carpeta **"atoms"** de nombre **`Line.tsx`**, con este código:
+```js
+import styled from 'styled-components';
+
+export const Linea = styled.div`
+  background-color: ${({theme}) => theme.color2};
+  height: 2px;
+  border-radius: 15px;
+  margin: 20px 0;
+  position: relative;
+  text-align: center;
+`;
+```
+11. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+12. En el archivo **`src/components/templates/LoginTemplate.tsx`**, importamos `Linea` de `index.ts` y lo renderizamos debajo del cierre de la etiqueta `</form>`:
+```js
+          <Linea>
+            <span>O</span>
+          </Linea>
+```
+13. Agregamos en el archivo **`src/components/atoms/Line.tsx`**, a la constante `Linea`, en el _css_, estilos para el `span`:
+```css
+  span{
+    top: -10px;
+    position: absolute;
+    background-color: #${({theme}) => theme.bgtotal};
+    text-align: center;
+    padding: 0 5px;
+    color: ${({theme}) => theme.color2};
+    font-weight: 700;
+  }
+```
+14. Así se ve la pantallas hasta el momento:<br>![Linea debajo del botón](images/2025-06-08_095054.png "Linea debajo del botón")
+15. Debajo de `Linea` agregamos otro renderizado de `<SaveButton`, con algunas propiedades:
+```js
+          <SaveButton
+            titulo='Google'
+            bgcolor='#fff'
+            color='0,0,0'
+            width='100%'
+            icono={<v.iconogoogle/>}
+          />
+```
+16. Debemos importar las variables `v` del archivo `'../../styles/variables.ts'`, que es de donde sacamos el:<br>`icono={<v.iconogoogle/>}`
+17. Así luce nuestra pantalla de `login`:<br>![](images/2025-06-08_100216.png "")
+
+
