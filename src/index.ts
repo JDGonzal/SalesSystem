@@ -3,6 +3,7 @@ export * from './components/atoms/Icon';
 export * from './components/atoms/Line';
 export { default as Title } from './components/atoms/Title';
 export * from './components/molecules/SaveButton';
+export * from './components/organisms/Footer';
 export * from './components/organisms/ToggleTema';
 export * from './components/organisms/forms/InputText2';
 export * from './components/organisms/sidebar/Sidebar';

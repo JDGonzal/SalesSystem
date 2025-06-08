@@ -1197,8 +1197,67 @@ export default Title;
 ```js
           <Title $paddingBottom='20px'>Ingresar</Title>
 ```
-8. Así luce nuestr pantalla en `tablet` y en `mobile`:<br>![Modo `tablet`](images/2025-06-08_110203.png "Modo `tablet`") ![Modo `mobile`](images/2025-06-08_110614.png "Modo `mobile`")
+8. Así luce nuestra pantalla en `tablet` y en `mobile`:<br>![Modo `tablet`](images/2025-06-08_110203.png "Modo `tablet`") ![Modo `mobile`](images/2025-06-08_110614.png "Modo `mobile`")
 
 
 
+### Footer (01:46:19)
+
+1. Empezamos clonando del repositorio [**`Footer.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/Footer.jsx), en el archivo <br>**`src/components/organisms/Footer.tsx`**<br> El contenido no genera errores.
+2. Ejecutamos en una terminal el siguiente comando:
+```bash
+pnpm i --save-dev @types/node -E
+```
+3. Creo el archivo **`.env`**, con los siguiente elementos:
+```ini
+VITE_RUT="7#######-#"
+VITE_YEAR="2025"
+VITE_SITE=Alquimia Software
+VITE_PHONE="+57 ### ### ###"
+```
+4. Hacemos unos cambios en el contenido o textos para nuestro propósito, haciendo use de las variables de ambiente:
+```js
+export function Footer() {
+  return (
+    <Container>
+      <section className='lock'>
+        <GiPadlock />
+        <span>
+          Esta es una página segura de {import.meta.env.VITE_SITE}. Si tienes dudas sobre
+          la autenticidad de la web, comunícate con
+          <br /> nosotros al {import.meta.env.VITE_PHONE} o a través de nuestros medios
+          digitales.
+        </span>
+      </section>
+      <section className='derechos'>
+        <span>
+          {import.meta.env.VITE_SITE} - RUT: {import.meta.env.VITE_RUT}
+        </span>
+        <div className='separador'></div>
+        <span>Todos los derechos reservados</span>
+        <div className='separador'></div>
+        <span>
+          © {import.meta.env.VITE_YEAR} {import.meta.env.VITE_SITE}
+        </span>
+      </section>
+    </Container>
+  );
+}
+```
+5. Actualizamos el _barrel_ es decir el archivo **`src/index.
+6. Vamos al archivo **`src/components/templates/LoginTemplate.tsx`**, se añade la importación de `Footer` del `'../../index.ts'`, y se renderiza antes de cerrar el `</Container>`.
+7. Así nos sale en pantalla:<br>![Login con el `Footer`](images/2025-06-08_120107.png "`Footer`")
+8. Se debe ajustar la posición del `Footer`, lo hacemos con estilos en el `Container`:
+```css
+const Container = styled.div`
+  ...;
+  flex-direction: column;
+
+  .card {
+    ...
+  }
+`;
+```
+9. Elimino la etiqueta `<section>` y ahora si el `Footer` se ubica del todo abajo:<br>![Modo `tablet`, con el `Footer` abajo](images/2025-06-08_120856.png "Modo `tablet`, con el `Footer` abajo") ![Modo `mobile`, con el `Footer` abajo](images/2025-06-08_121022.png "Modo `mobile`, con el `Footer` abajo")
+10. En el archivo **`.gitignore`**, para no subir al repositorio, se añaden los tipo **`*.env`** y similares. 
 
