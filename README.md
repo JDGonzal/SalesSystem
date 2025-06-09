@@ -1261,3 +1261,45 @@ const Container = styled.div`
 9. Elimino la etiqueta `<section>` y ahora si el `Footer` se ubica del todo abajo:<br>![Modo `tablet`, con el `Footer` abajo](images/2025-06-08_120856.png "Modo `tablet`, con el `Footer` abajo") ![Modo `mobile`, con el `Footer` abajo](images/2025-06-08_121022.png "Modo `mobile`, con el `Footer` abajo")
 10. En el archivo **`.gitignore`**, para no subir al repositorio, se añaden los tipo **`*.env`** y similares. 
 
+
+
+### Conectando a SUPABASE (01:47:35)
+
+
+>[!TIP]  
+> Debemos ingresar a la página de [supabase](https://supabase.com/dashboard), y crear una cuenta con  `github`:
+>
+>![Supabase con Github](images/2025-03-29_144114.gif "Supabase con Github")
+
+1. Entramos al sitio [supabase](https://supabase.com/dashboard).
+2. Si nos falta o no tenemos la _Organization_ de nombre `Tutorials`, damos clic al botón `[New Organization]` y le ponemos de nombre `Tutorials` y damos clic en el botón `[Create Organization]`:<br> ![Create a new organization](images/2025-03-29_154115.png "Create a new organization")
+3. Regresamos al [supabase/dashboard](https://supabase.com/dashboard).
+4. Damos clic al boton de `[New Project]` y dejamos la _Organization_ de nombre `Tutorials`.
+5. Completamos el formulario:
+    * Organization: `Tutorials`
+    * Project-name: `SalesSystem`
+    * Database password: ~~xoxoxoxo~~ (Usamos una buena contraseña)
+    * Region: `East US (North Virginia)`
+* Así se ve el formulario:<br>![Create new project](images/2025-06-08_171420.png "Create new project") ![Create new project](images/2025-06-08_172020.png "Create new project")
+6. Y le damos clic en el botón `[Create new project]`: <br>![project: SalesSystem](images/2025-06-08_172548.png "project: SalesSystem").
+7. En la página de `Supabase`, buscamos el símbolo de configuración que es como engranaje o _gear_ <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>, al final del menú a la izquierda.
+8. En el mismo menú de la izquierda buscamos `API` o `Data API`, copiamos la `URL` y la llevamos al archivo **`.env`**, con el siguiente _key_ `VITE_APP_SUPABASE_URL=`.
+9.  Le damos clic al botón `[Go to API Keys]` o en el mismo menú de la izquierda buscamos `API Keys`.
+10. Copiamos el `anon` `public`, en el arhico **`.env`** con la _key_ `VITE_APP_SUPABASE_ANON_KEY=`.
+11. Se crea el siguiente archivo **`src/supabase/supabase.config.tsx`**.
+12. Entramos a este sitio [Use Supabase with React](https://supabase.com/docs/guides/getting-started/quickstarts/reactjs) y buscamos el paso `(3)`, para ejecutar este comando en una `TERMINAL`:
+```bash
+pnpm add @supabase/supabase-js -E
+```
+13. Regresamos al archivo **`src/supabase/supabase.config.tsx`**, y añadimos este código:
+```js
+import { createClient } from '@supabase/supabase-js';
+
+export const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL || '',
+  import.meta.env.VITE_SUPABASE_ANON_KEY || ''
+);
+```
+14. Volvemos al sitio de `Supabase`y buscamos `Authentication`, con este icono <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-auth "><path d="M5.24121 15.0674H12.7412M5.24121 15.0674V18.0674H12.7412V15.0674M5.24121 15.0674V12.0674H12.7412V15.0674M15 7.60547V4.60547C15 2.94861 13.6569 1.60547 12 1.60547C10.3431 1.60547 9 2.94861 9 4.60547V7.60547M5.20898 9.60547L5.20898 19.1055C5.20898 20.21 6.10441 21.1055 7.20898 21.1055H16.709C17.8136 21.1055 18.709 20.21 18.709 19.1055V9.60547C18.709 8.5009 17.8136 7.60547 16.709 7.60547L7.20899 7.60547C6.10442 7.60547 5.20898 8.5009 5.20898 9.60547Z"></path></svg>, y buscamo `Sign In / Providers`.
+15. En la lista `Auth Providers`, activamos si falta `Email` y `Google`, aunque para este último requiere mas pasos.
+
