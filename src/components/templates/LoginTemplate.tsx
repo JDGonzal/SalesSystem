@@ -1,5 +1,12 @@
 import styled from 'styled-components';
-import { Title, InputText2, SaveButton, Linea, Footer } from '../../index.ts';
+import {
+  Title,
+  InputText2,
+  SaveButton,
+  Linea,
+  Footer,
+  useAuthStore,
+} from '../../index.ts';
 import { v } from '../../styles/variables.ts';
 import { Device } from '../../styles/breakpoints.ts';
 
@@ -27,6 +34,7 @@ const Container = styled.div`
 `;
 
 function LoginTemplate() {
+  const { loginGoogle } = useAuthStore();
   return (
     <Container>
       <div className='card'>
@@ -63,6 +71,7 @@ function LoginTemplate() {
           <span>O</span>
         </Linea>
         <SaveButton
+          funcion={loginGoogle}
           titulo='Google'
           bgcolor='#fff'
           color='0,0,0'
