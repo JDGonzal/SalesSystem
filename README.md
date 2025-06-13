@@ -1303,3 +1303,116 @@ export const supabase = createClient(
 14. Volvemos al sitio de `Supabase`y buscamos `Authentication`, con este icono <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-auth "><path d="M5.24121 15.0674H12.7412M5.24121 15.0674V18.0674H12.7412V15.0674M5.24121 15.0674V12.0674H12.7412V15.0674M15 7.60547V4.60547C15 2.94861 13.6569 1.60547 12 1.60547C10.3431 1.60547 9 2.94861 9 4.60547V7.60547M5.20898 9.60547L5.20898 19.1055C5.20898 20.21 6.10441 21.1055 7.20898 21.1055H16.709C17.8136 21.1055 18.709 20.21 18.709 19.1055V9.60547C18.709 8.5009 17.8136 7.60547 16.709 7.60547L7.20899 7.60547C6.10442 7.60547 5.20898 8.5009 5.20898 9.60547Z"></path></svg>, y buscamo `Sign In / Providers`.
 15. En la lista `Auth Providers`, activamos si falta `Email` y `Google`, aunque para este último requiere mas pasos.
 
+
+### AuthStore (01:54:48)
+
+1. Empezamos buscando en este sitio: [`Consola de Google Cloud`](https://cloud.google.com/storage/docs/cloud-console?hl=es-419).
+2. Dar clic al botón [`Consola`] y debe aparecer algo similar a esto: <br> ![Consola de Google Cloud: Te damos la bienvenida](images/2025-06-09_064719.png "Consola de Google Cloud: Te damos la bienvenida").
+3. Clic en el menú de hamburguesa en la parte superior izquierda: <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/></svg>.
+4. Luego seleccionamos `APIs y Servicios` y ahí `APIs y Servicios habilitados`: <br> ![APIs y Servicios habilitados](images/2025-06-09_070654.png "APIs y Servicios habilitados")
+5. Damos clic en `Credenciales`.
+6. Arriba en `+Crear Credenciales`, empezamos con `ID de cliente de OAuth`. 
+7. Damos clic en el botón de _Warning_ [`Configurar pantalla de consentimiento`].
+8. Se requiere Completar el proceso de `Información de marca`:<br>![Información de Marca](images/2025-06-09_160805.gif "Información de Marca")
+9. Regresamos a `APIs y Servicios` y ahí `APIs y Servicios habilitados`: <br> ![APIs y Servicios habilitados 2](images/2025-06-09_165923.png "APIs y Servicios habilitados 2").
+10. Entramos en el Menú de la izquierda a `Credenciales`.
+11. Seleccionamos la parte de arriba `+Crear Credenciales` y de las opciones clic en ` ID de cliente de OAuth `.
+12. En `Tipo de Aplicación`, seleccionamos `Aplicación Web`:<br>![Crear ID de cliente de OAuth](images/2025-06-09_173730.png "Crear ID de cliente de OAuth")
+13. En el `Nombre` va `Sales System`.
+14. En la sección `URIs de redireccionamiento autorizados`, damos clic al botón `+ Agregar URI`.
+15. Regresamos al sitio de [`Supabase - > Google`](https://supabase.com/dashboard/project/{proyect}/auth/providers?provider=Google):<br>![](images/2025-06-09_175708.png "")
+16. Seleccionamos de `Callback URL (for OAuth)` el texto para dar un `copy`.
+17. Y lo llevamos al sitio de `Google` en `Crear ID de cliente de OAuth` y lo pegamos en la `URI` pendiente.
+18. Y allí le damos clic en `Crear` y esperamos varios minutos.
+19. Sale una ventana y copiamos el `ID de cliente`: <br> "![Se creó del CLiente OAuth](images/2025-06-09_180336.png "Se creó el cliente OAuth").
+20. Se pega en la pagina de `Supabase` pega en `Client ID for OAuth`.
+21. Se repite el proceso de `Secreto del Cliente` de `Google`, para `Client Secret ` de `Supabase`.
+22. En `Supabase` estar seguro que el botón `Enable Sign in in Google` esté activo o en verde y dar clic en el botón `[Save]`.
+23. Nos vamos a este sitio a revisar los pasos a proceder [`Supabase -> Login with Google`](https://supabase.com/docs/guides/auth/social-login/auth-google).
+24. Creamos el archivo **`src/store/AuthStore.tsx`**, empezamos con la importación de `{create}` de `zustand`:<br>`import { create } from 'zustand';`
+25. Creamos una función tipo flecha de nombre `useAuthStore` y luego la exportamos:
+```js
+export const useAuthStore = create((set) => ({
+  
+}));
+```
+26. Creamos el primer objeto que será una función de nombre `loginGoogle` y hacemos uso de la información en esta sección de la página [`Saving Google tokens #`](https://supabase.com/docs/guides/auth/social-login/auth-google#saving-google-tokens):
+```js
+const useAuthStore = create((set) => ({
+  loginGoogle: async () => {
+    // signInWithOAuth - this method is used to sign in with Google OAuth
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+  },
+}));
+```
+27. El error en la línea de `supabase.auth.signInWithOAuth`, se requiere importar  `{supabase}` de `'../supabase/supabase.config'`.
+28. En este sitio buscamos como desconectarnos de la sesión [``Signing out](https://supabase.com/docs/guides/auth/signout), y parece ser este simple comando :<br> `const { error } = await supabase.auth.signOut()`, completamos todo el códio de esta manera:
+```js
+import { create } from 'zustand';
+import { supabase } from '../supabase/supabase.config';
+
+interface AuthStore {
+  loginGoogle: () => Promise<void>;
+  logout: () => Promise<void>;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const useAuthStore = create<AuthStore>((set) => ({
+  loginGoogle: async () => {
+    // signInWithOAuth - this method is used to sign in with Google OAuth
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+  },
+  logout: async () => {
+    // signOut - this method is used to sign out the user
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.log('Error signing out:', error.message);
+    }
+  },
+}));
+```
+>[!TIP]  
+>#### En el contexto de cerrar sesión en una aplicación o sitio web, "signing out" y "logout" son esencialmente intercambiables y significan lo mismo: finalizar una sesión y desconectarse de una cuenta. 
+>El significado de ambos términos: 
+>*"Signing out" (o "sign out"):*
+>Se utiliza para indicar el acto de cerrar sesión o desconectar de una cuenta, especialmente en el contexto de aplicaciones o sitios web.
+>*"Logout":*
+>Es una forma más informal de decir "signing out". También significa cerrar sesión o desconectar de una cuenta. 
+>_En resumen:_ 
+>"Signing out" y "logout" son sinónimos en el contexto de cerrar sesión. La forma en que se use dependerá del contexto específico, pero ambos significan lo mismo. 
+29. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+30. Abrimos el archivo **`src/components/templates/LoginTemplate.tsx`**, para hacer la prueba de ingresar con una cuenta de `Google`, en la función `LoginTemplate()`, hago uso de la función nueva de `zustand` de nombre `useAuthStore`:
+```js
+import {
+  ...
+  useAuthStore,
+} from '../../index.ts';
+...
+function LoginTemplate() {
+  const { loginGoogle } = useAuthStore();
+  ...
+}
+```
+30. Abajo en el renderizado de `<SaveButton titulo='Google'`, activamos una nueva propiedad o parámetro de nmbre `funcion` y la igualamos a la de `zustand` de nombre `loginGoogle`:
+```js
+        <SaveButton
+          funcion={loginGoogle}
+          titulo='Google'
+          bgcolor='#fff'
+          color='0,0,0'
+          width='100%'
+          icono={<v.iconogoogle />}
+        />
+```
+31. Luego hacemos las respectiva pruebas para verificar la funcionalidad del botón y el ingreso usando una cuenta de `Google`.
+
