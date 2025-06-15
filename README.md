@@ -1430,3 +1430,160 @@ function LoginTemplate() {
 2. Cambiamos la dirección local existente para `NextJs` de `http://localhost:3000` por esta otra también local de `react+Vite` que es `http://localhost:5173/` en el campo `Site URL`.
 3. Ahora si vamos a probar:<br>![Login con Google](images/2025-06-14_144938.gif "Login con Google")
 
+
+
+### Context (02:10:37)
+
+1. Vamos a escuchar en todo momento el estado del usuario, para eso buscamos este sitio [`Listen to auth events`](https://supabase.com/docs/reference/javascript/auth-onauthstatechange), donde explica que podemos exsuchhr eventos en este canal `onAuthStateChange`.
+2. Creamos el archivo **`src/context/AuthContext.tsx`**.
+3. Creamos la función de flecha `AuthContextProvider`:
+```js
+export const AuthContextProvider = () => {};
+```
+4. Agregamos el parámetro `{children}` y por ende definimos el `children` como un `ReactNode`:
+```js
+import  { type ReactNode } from 'react';
+
+export const AuthContextProvider = (
+  { children }: { children: ReactNode }) => {
+	return <>{children}</>;
+};
+```
+5. Agregamos el _hook_ de nombre `useState()`, y la importación de `'react'`:
+```js
+    const [authState, setAuthState] = useState([]);
+```
+6. Agregamos el _hook_ de nombre `useEffect()`, y la importación de `'react'`:
+```js
+    useEffect(() => {}, []);
+```
+7. Vamos a escuchar de `supabase` la `{data}`, dentro del `useEffect`:
+```js
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, session);
+    });
+  }, []);
+```
+8. Dentro del `useEffect` , hacemos un `return`:
+```js
+    return ()=>{
+      data.subscription; // Instructor
+      // data?.subscription?.unsubscribe(); // Copilot
+    }
+```
+9. Creamos una constante de tipo `createContext`, que tambien debemos importar de `react`:
+```js
+const AuthContext = createContext<null | unknown>(null);
+```
+10. Y ese `AuthContext`, es el que vamos a retornar al final:
+```js
+  return (
+    <AuthContext.Provider value={{ authState }}>
+      {children}
+    </AuthContext.Provider>
+  );
+```
+11. Exportamos la función `userAuth`, para devolver el _hook_ de nombre `useContext`, que tambien debemos importarla de `'react'`:
+```js
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAuthContext = () => {
+  return useContext(AuthContext);
+};
+```
+12. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+13. Vamos al archivo **`src/App.tsx`** y envolvemos todo el `<Containter` con `<`:
+```js
+  return (
+    <ThemeProvider theme={themesStyle}>
+      <AuthContextProvider>
+        <Container className={sidebarOpen ? 'active' : ''}>
+          ...
+        </Container>
+      </AuthContextProvider>
+    </ThemeProvider>
+  );
+```
+14. Abrimos el archivo **`src/components/templates/HomeTemplate.tsx`**, importamos el `'AuthStore'` de `zustang` y obtenemos el `logout`:
+```js
+...
+import { useAuthStore } from '../../store/AuthStore';
+...
+function HomeTemplate() {
+  const { logout } = useAuthStore();
+  return (
+    <Container>
+      <span>HomeTemplate</span>
+      <button onClick={logout}>Logout</button>
+    </Container>
+  );
+}
+```
+15. El botón nos pemite Cerrar la Sesión que es un `SIGNED_OUT` y si nos vamos al sitio `http://localhost:5173/login` y seleccionamos el botón de `Google`, nos arroja un `SIGNED_IN` y luego un `INITIAL_SESSION`, el valor de la sección sería un _json_ con este valor:
+```json
+{
+  "provider_token": "ya29...0177",
+  "access_token": "eyJhb...URYpgE",
+  "expires_in": 3600,
+  "expires_at": 1749949186,
+  "refresh_token": "ada...7z",
+  "token_type": "bearer",
+  "user": {
+    "id": "8e0e5dec-3d8c-400f-88d0-373581a01236",
+    "aud": "authenticated",
+    "role": "authenticated",
+    "email": "jdgonzal2@gmail.com",
+    "email_confirmed_at": "2025-06-14T19:47:47.497872Z",
+    "phone": "",
+    "confirmed_at": "2025-06-14T19:47:47.497872Z",
+    "last_sign_in_at": "2025-06-14T23:59:46.770936Z",
+    "app_metadata": {
+      "provider": "google",
+      "providers": [
+        "google"
+      ]
+    },
+    "user_metadata": {
+      "avatar_url": "https://lh3.googleusercontent.com/a/AC...=s96-c",
+      "email": "jdgonzal2@gmail.com",
+      "email_verified": true,
+      "full_name": "Juan David Gonzalez Piza",
+      "iss": "https://accounts.google.com",
+      "name": "Juan David Gonzalez Piza",
+      "phone_verified": false,
+      "picture": "https://lh3.googleusercontent.com/a/AC...=s96-c",
+      "provider_id": "1031...6569",
+      "sub": "1031...6569"
+    },
+    "identities": [
+      {
+        "identity_id": "458e64b4-749b-4cb2-aae7-a42c59cd8c0f",
+        "id": "1031...6569",
+        "user_id": "8e0e5dec-3d8c-400f-88d0-373581a01236",
+        "identity_data": {
+          "avatar_url": "https://lh3.googleusercontent.com/a/AC...=s96-c",
+          "email": "jdgonzal2@gmail.com",
+          "email_verified": true,
+          "full_name": "Juan David Gonzalez Piza",
+          "iss": "https://accounts.google.com",
+          "name": "Juan David Gonzalez Piza",
+          "phone_verified": false,
+          "picture": "https://lh3.googleusercontent.com/a/AC...=s96-c",
+          "provider_id": "1031...6569",
+          "sub": "1031...6569"
+        },
+        "provider": "google",
+        "last_sign_in_at": "2025-06-14T19:47:47.476495Z",
+        "created_at": "2025-06-14T19:47:47.476557Z",
+        "updated_at": "2025-06-14T23:59:46.767573Z",
+        "email": "jdgonzal2@gmail.com"
+      }
+    ],
+    "created_at": "2025-06-14T19:47:47.447675Z",
+    "updated_at": "2025-06-14T23:59:46.774678Z",
+    "is_anonymous": false
+  }
+}
+```
+
+
