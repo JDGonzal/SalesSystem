@@ -1587,3 +1587,49 @@ function HomeTemplate() {
 ```
 
 
+### Data User (02:23:46)
+
+1. Abrimos el archivo **`src\context\AuthContext.tsx`** y agregamos un condicional en el `useEffect`, dentro del `onAuthStateChange` y antes del `console.log` y mejoramos la definición del _hook_ de tipo `useState` para `authState`:
+```js
+export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+  const [authState, setAuthState] = useState<unknown | User>(null);
+
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user == null) {
+        setAuthState([]);
+        return;
+      }
+      setAuthState(session.user);
+      ...
+    });
+
+    return () => {...};
+  }, []);
+  return (
+    <AuthContext.Provider value={{ authState }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+```
+2. Quitamos los `console.log`.
+3. El instructor sugiere borrar o comentar el elemento `event`, pero este empieza a presentar fallas y mensaje de error, por tanto se deja.
+4. Encierro el proceso de escucha del `onAuthStateChange`, dentro de un `try/catch`.
+5. Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
+6. Abro el archivo **`src/components/templates/HomeTemplate.tsx`**, y utilozo el `AuthContextProvider` del componente `AuthContext.tsx`:
+```js
+import { useAuthContext } from '../../context/AuthContext';
+...
+function HomeTemplate() {
+  ...
+  const { authState } = useAuthContext();
+  ...
+}
+```
+>[!WARNING]  
+>Tengo el siguinete error `Property 'authState' does not exist on type 'unknown'.`, pero habrá que averiguarlo mas adelante si se puede solucionar, mientras tanto el valor si es capaz de leerlo.
+7. Solo por probar ponemos debajo del `<button` una etiqueta `<img` y con el valor de `user.user_metadata.avatar_url`:
+8. 
+9. 
+
