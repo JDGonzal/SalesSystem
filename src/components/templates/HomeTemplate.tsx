@@ -14,7 +14,7 @@ function HomeTemplate() {
     <Container>
       <span>HomeTemplate</span>
       <button onClick={logout}>Logout</button>
-      <img src={authState?.user_metadata?.avatar_url}/>
+      <img src={authState?.user_metadata?.avatar_url} />
     </Container>
   );
 }
