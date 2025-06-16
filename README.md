@@ -1628,8 +1628,73 @@ function HomeTemplate() {
 }
 ```
 >[!WARNING]  
->Tengo el siguinete error `Property 'authState' does not exist on type 'unknown'.`, pero habrá que averiguarlo mas adelante si se puede solucionar, mientras tanto el valor si es capaz de leerlo.
+>Tengo el siguiente error `Property 'authState' does not exist on type 'unknown'.`, pero habrá que averiguarlo mas adelante si se puede solucionar, mientras tanto el valor si es capaz de leerlo.
 7. Solo por probar ponemos debajo del `<button` una etiqueta `<img` y con el valor de `user.user_metadata.avatar_url`:
-8. 
-9. 
+
+
+### Rutas Protegidas (02:30:36)
+
+>[!WARNING]  
+>#### Solución al error mencionado en el paso anterior de `Property 'authState' does not exist on type 'unknown'`.
+>1. En el archivo **`src\context\AuthContext.tsx`**, cree una `interface` de nombre `AuthContextType`:
+>```js
+>interface AuthContextType {
+>  authState: User | null | [];
+>}
+>```
+>2. Al momento de exportar el nuevo _hook_ de nombre `useAuthContext`, el `return` lo hacemos indicando el tipo definido en la `interface` y se inicializa en `null`:
+>```js
+>const AuthContext = createContext<AuthContextType>({ authState: null });
+>```
+
+1. Creamos en **"src"**, una nueva carpeta de nombre **"hooks"**.
+2. Creamos dentro de esta nueva carpeta el archivo **`ProtectedRoutes.tsx`**.
+3. Creamos una función de flecha con el mismo nombre del archivo y con algunos parámetros:
+```js
+import type { User } from '@supabase/supabase-js';
+import type { ReactNode } from 'react';
+
+export const ProtectedRoutes = ({
+  user,
+  redirectTo,
+  children,
+}: {
+  user: unknown | User;
+  redirectTo: string;
+  children: ReactNode;
+}) => {};
+```
+4. Ponemos un condicional para usar el `Navigate` de `'react-router-dom'`:
+```js
+import type { User } from '@supabase/supabase-js';
+import type { ReactNode } from 'react';
+import { Navigate } from 'react-router-dom';
+
+export const ProtectedRoutes = ({
+  user,
+  redirectTo,
+  children,
+}: {
+  user: unknown | User;
+  redirectTo: string;
+  children: ReactNode;
+}) => {
+  if (!user) {
+    return <Navigate to={redirectTo} replace />;
+  }
+  return children ? children : <Outlet />;
+};
+```
+5. Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
+6. Abrimos el archivo **`src/routes/MyRoutes.tsx`**, empezamos trayendo de `useAuthContext` el `authState` y la importación del componente `useAuthContext`:
+```js
+  const { authState } = useAuthContext();
+```
+7. Organizamos una ruta usando el componente `ProtectedRoutes` y envolviendo el `{<Home />}`:
+```js
+      <Route element={<ProtectedRoutes user={authState} redirectTo='/login' />}>
+        <Route path='/' element={<Home />} />
+      </Route>
+```
+
 
