@@ -8,7 +8,7 @@ import {
 import { supabase } from '../supabase/supabase.config';
 import type { User } from '@supabase/supabase-js';
 
-interface AuthContextType {
+type AuthContextType ={
   authState: User | null | [];
 }
 const AuthContext = createContext<AuthContextType>({ authState: null });
