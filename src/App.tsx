@@ -2,12 +2,14 @@ import styled, { ThemeProvider } from 'styled-components';
 import {
   AuthContextProvider,
   GlobalStyles,
+  Login,
   MyRoutes,
   Sidebar,
   useThemeStore,
 } from './index.ts';
 import { Device } from './styles/breakpoints.ts';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.main`
   // Es un componente de estilo
@@ -46,26 +48,34 @@ const Container = styled.main`
 `;
 
 function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(false); // Estado para Sidebar
+  // Estado para Sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Estado para el tema
   const { themesStyle } = useThemeStore();
+  // Para obtener ubicación actual
+  const { pathname } = useLocation();
   return (
     <ThemeProvider theme={themesStyle}>
       <AuthContextProvider>
-        <Container className={sidebarOpen ? 'active' : ''}>
-          <GlobalStyles />
-          <section className='leftSidebar'>
-            <Sidebar
-              state={sidebarOpen}
-              setState={() => setSidebarOpen(!sidebarOpen)}
-            />
-          </section>
-          <section className='mainMenu'>
-            <p>MainMenu</p>
-          </section>
-          <section className='rightRoutes'>
-            <MyRoutes />
-          </section>
-        </Container>
+        <GlobalStyles />
+        {pathname == '/login' ? (
+          <Login />
+        ) : (
+          <Container className={sidebarOpen ? 'active' : ''}>
+            <section className='leftSidebar'>
+              <Sidebar
+                state={sidebarOpen}
+                setState={() => setSidebarOpen(!sidebarOpen)}
+              />
+            </section>
+            <section className='mainMenu'>
+              <p>MainMenu</p>
+            </section>
+            <section className='rightRoutes'>
+              <MyRoutes />
+            </section>
+          </Container>
+        )}
       </AuthContextProvider>
     </ThemeProvider>
   );

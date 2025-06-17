@@ -1698,3 +1698,68 @@ export const ProtectedRoutes = ({
 ```
 
 
+### Finalizando Login (02:37:57)
+
+1. Abrimos el archivo **`src/App.tsx`**, importamos de `'react-router-dom'` el _hook_ de nombre `useLocation`.
+2. Deserializamos el contenido del _hook_ `useLocation`:
+```js
+  const { pathname } = useLocation();
+```
+3. Debajo del renderizado de `<AuthContextProvider`, hacemos un condicional terciario, o solo mostramos `<Login />` o todo el `<Container`:
+```js
+  return (
+    <ThemeProvider theme={themesStyle}>
+      <AuthContextProvider>
+        {pathname == '/login' ? (
+          <Login />
+        ) : (
+          <Container className={sidebarOpen ? 'active' : ''}>
+            ...
+          </Container>
+        )}
+      </AuthContextProvider>
+    </ThemeProvider>
+  );
+```
+4. Movemos el `<GlobalStyle`, antes del condicional terciario.
+5. Abrimos el archivo **`src\components\templates\LoginTemplate.tsx`** y agregamos la constante `ContentLogo` de tipo `styled.section`, debajo de la definida como `Content`:
+```js
+const ContentLogo = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+`;
+```
+6. Antes del renderiado del `<Title` , agregamos el renderizado de `<ContentLogo`, con algunos elementos:
+```js
+        <ContentLogo>
+          <img src={v.logo} alt='Logo' />
+          <span>{import.meta.env.VITE_SITE}</span>
+        </ContentLogo>
+```
+7. En el archivo **`src\styles\variables.ts`**, añado mas valores al `logo`, utilizo los valores abajo en el _json_ que se exporta y corrijo en donde se este utilizando:
+```js
+import logo_32x32 from '../assets/poss2_32x32.png'; //'../assets/ada369logo.png';
+import logo_64x64 from '../assets/poss2_64x64.png';
+import logo_128x128 from '../assets/poss2_128x128.png';
+import logo_256x256 from '../assets/poss2_256x256.png';
+```
+```json
+export const v = {
+  ...
+  logo_32x32: logo_32x32,
+  logo_64x64: logo_64x64,
+  logo_128x128: logo_128x128,
+  logo_256x256: logo_256x256,
+  ...
+}
+```
+8. Mejoro algunos estilos, como los tiene el instructor.
+9. 

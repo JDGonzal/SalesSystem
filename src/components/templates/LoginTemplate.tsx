@@ -33,11 +33,32 @@ const Container = styled.div`
   }
 `;
 
+const ContentLogo = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  span {
+    font-weight: 700;
+  }
+`;
+
 function LoginTemplate() {
   const { loginGoogle } = useAuthStore();
   return (
     <Container>
       <div className='card'>
+        <ContentLogo>
+          <img src={v.logo_64x64} alt='Logo' />
+          <span>{import.meta.env.VITE_SITE}</span>
+        </ContentLogo>
         <Title $paddingBottom='20px'>Ingresar</Title>
         <form action=''>
           <InputText2>
