@@ -4,7 +4,7 @@
 
 [![Crea y Despliega un Sistema de Ventas FULL STACK con REACT y PostgreSQL | 2025](images/2025-05-25_152207.png "Crea y Despliega un Sistema de Ventas FULL STACK con REACT y PostgreSQL | 2025")](https://www.youtube.com/watch?v=URG4rnmdThs&t=270s)
 
-## 1. Precondiciones (00:00:00)
+## Section 1: Precondiciones (00:00:00)
 
 1. Instalar `NODEJS` y `npm` en su sistema, usando el `nvm`:
   [Instalar múltiples versiones de Node.js en Windows](https://rafaelneto.dev/blog/instalar-multiples-versiones-nodejs-windows/).
@@ -35,7 +35,7 @@ nvm list
 * `TSLint` de `Microsoft` 1.3.x.
 * `vscode-styled-components` de `Styled Components` 1.7.x.
 
-## 2. Login
+## Section 2: Login
 
 >[!IMPORTANT]  
 >### Temas puntuales de la sección  
@@ -1744,7 +1744,7 @@ const ContentLogo = styled.section`
           <span>{import.meta.env.VITE_SITE}</span>
         </ContentLogo>
 ```
-7. En el archivo **`src\styles\variables.ts`**, añado mas valores al `logo`, utilizo los valores abajo en el _json_ que se exporta y corrijo en donde se este utilizando:
+7. En el archivo **`src\styles\variables.ts`**, añado mas valores al `logo`, utilizo los valores abajo en el _json_ que se exporta y corrijo en donde se esté utilizando:
 ```js
 import logo_32x32 from '../assets/poss2_32x32.png'; //'../assets/ada369logo.png';
 import logo_64x64 from '../assets/poss2_64x64.png';
@@ -1762,4 +1762,61 @@ export const v = {
 }
 ```
 8. Mejoro algunos estilos, como los tiene el instructor.
-9. 
+
+
+## Section 3: Categoría de productos
+
+
+>[!NOTE]  
+>### Temas puntuales de la sección
+>**Descripción de la sección:**  
+>En esta sección desarrollaremos el módulo de `Categoría de productos`, abarcando desde la creación de tablas y estructuras básicas hasta funcionalidades avanzadas como la integración con `Storage` y el uso de `TanStack Query`. Este módulo será clave para organizar y manejar la información de productos, empresas, usuarios y configuraciones.
+>
+>Entre los temas destacados, aprenderás a:
+>* Diseñar y configurar las tablas básicas necesarias para el sistema.
+>* Implementar _triggers_ para automatizar procesos en la base de datos.
+>* Subir y gestionar imágenes en el _Storage_, optimizando la lógica para este proceso.
+>* Mostrar y gestionar categorías de productos, empresas y usuarios mediante funciones bien estructuradas.
+>* Asignar sucursales y registrar múltiples usuarios con relaciones bien definidas.
+>* Crear una página de configuración funcional y estilizada.
+>* Integrar `TanStack Query` para manejar la consulta y gestión de datos con eficiencia.
+>
+>Al finalizar esta sección, tendrás un sistema sólido y dinámico para gestionar productos y usuarios de manera profesional.
+
+
+### Creando la tabla de productos (02:42:44)
+
+1. El instructor ingresa directamente a la página de `supabase`, busca <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-editor "><path d="M2.9707 15.3494L20.9707 15.355M20.9405 9.61588H2.99699M8.77661 9.61588V21.1367M20.9405 5.85547V19.1367C20.9405 20.2413 20.0451 21.1367 18.9405 21.1367H4.99699C3.89242 21.1367 2.99699 20.2413 2.99699 19.1367V5.85547C2.99699 4.7509 3.89242 3.85547 4.99699 3.85547H18.9405C20.0451 3.85547 20.9405 4.7509 20.9405 5.85547Z"></path></svg> `Table Editor`, da clic en el botón [`Create a new table`], pero prefiero hacerlo por comandos _SQL_.
+2. Busco la opción <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sql-editor "><path d="M7.89844 8.4342L11.5004 12.0356L7.89844 15.6375M12 15.3292H16.5M5 21.1055H19C20.1046 21.1055 21 20.21 21 19.1055V5.10547C21 4.0009 20.1046 3.10547 19 3.10547H5C3.89543 3.10547 3 4.0009 3 5.10547V19.1055C3 20.21 3.89543 21.1055 5 21.1055Z"></path></svg> `SQL Editor`, allí voy a crear las tablas, pero primero voy a crear los archivos de extesión **`*.sql`**.
+
+>[!TIP]  
+>Abrí el archivo **`src/context/AuthContext.tsx`** y cambié el `interface`, por el `type` y este sigue trabajando normal.
+
+3. Creo la carpeta en **"src"** **"db/sql/tables"**.
+4. Empiezo creando el archivo **`users.sql`**:
+```sql
+-- Create the `users` table
+DROP TABLE IF EXISTS users;
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    name VARCHAR(100),
+    id_type INT8 NOT NULL,
+    document VARCHAR(20) UNIQUE NOT NULL,
+    phone VARCHAR(15),
+    id_role INT NOT NULL,
+    address VARCHAR(255),
+    id_auth VARCHAR(50) UNIQUE,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+COMMIT;
+```
+5. El instructor sugiere el uso de `TEXT` en vez de `VARCHAR`, pero en consultas es mas eficiente el uso de `VARCHAR`.
+6. Copio el contenido del archivo **`users.sql`**, en el `SQL Editor` de `Supabase` y clic en el botón [`Run Ctrl <┘`], nos hace una advertencia de:<br> `Potential issue detected with your query`<br> Pero le damos clic en el botón [`Run this query`], esto es por el _borrado_ de la tabla al principio con el `DROP`.
+7. Revisamos la opción `Table Editor`, luego de darle la tecla [`F5`] y esto es lo que visualizamos: <br> ![`users` Table](images/2025-06-17_171746.png "`users` Table")
+
+
