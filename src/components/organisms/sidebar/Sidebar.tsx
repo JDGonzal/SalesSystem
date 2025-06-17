@@ -18,7 +18,7 @@ export function Sidebar({ state, setState }: SidebarProps) {
       <Container $isopen={state.toString()} className={state ? 'active' : ''}>
         <div className='Logocontent'>
           <div className='imgcontent'>
-            <img src={v.logo} />
+            <img alt='logo' src={v.logo_32x32} />
           </div>
           <h2>Sales System</h2>
         </div>
