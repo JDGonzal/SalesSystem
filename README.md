@@ -1793,7 +1793,7 @@ export const v = {
 >Abrí el archivo **`src/context/AuthContext.tsx`** y cambié el `interface`, por el `type` y este sigue trabajando normal.
 
 3. Creo la carpeta en **"src"** **"db/sql/tables"**.
-4. Empiezo creando el archivo **`users.sql`**:
+4. Para **Usuarios** creamos el archivo **`users.sql`**:
 ```sql
 -- Create the `users` table
 DROP TABLE IF EXISTS users;
@@ -1803,7 +1803,7 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     name VARCHAR(100),
-    id_type INT8 NOT NULL,
+    id_type INT NOT NULL,
     document VARCHAR(20) UNIQUE NOT NULL,
     phone VARCHAR(15),
     id_role INT NOT NULL,
@@ -1819,4 +1819,100 @@ COMMIT;
 6. Copio el contenido del archivo **`users.sql`**, en el `SQL Editor` de `Supabase` y clic en el botón [`Run Ctrl <┘`], nos hace una advertencia de:<br> `Potential issue detected with your query`<br> Pero le damos clic en el botón [`Run this query`], esto es por el _borrado_ de la tabla al principio con el `DROP`.
 7. Revisamos la opción `Table Editor`, luego de darle la tecla [`F5`] y esto es lo que visualizamos: <br> ![`users` Table](images/2025-06-17_171746.png "`users` Table")
 
+
+
+
+### Creando tablas básicas (02:49:55)
+
+1. Para **Tipos de Documentos** creamos el archivo **`src/db/sql/tables/docTypes.sql`**, con este código:
+```sql
+-- Create the `doc_types` table
+DROP TABLE IF EXISTS doc_types;
+CREATE TABLE IF NOT EXISTS doc_types (
+    id INT PRIMARY KEY,
+    name VARCHAR(50) UNIQUE NOT NULL,
+    description VARCHAR(255),
+    id_company INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+-- Add foreign key constraint to `users` table
+ALTER TABLE users 
+ADD CONSTRAINT fk_doc_type FOREIGN KEY (id_type) REFERENCES doc_types(id) ON DELETE CASCADE;
+-- Insert initial data into `doc_types`
+INSERT INTO doc_types (id, name, description, id_company) VALUES
+(1, 'CC', 'Cédula de Ciudadanía', 1),
+(2, 'NIT', 'Registro Nacional de Persona Jurídica', 1),
+(3, 'RG', 'Registro Geral', 1),
+(4, 'CE', 'Cédula de Extranjería', 1),
+(5, 'Pasaporte', 'Documento de viaje internacional', 1);
+COMMIT;
+```
+2. Para **Compañías** creamos el archivo **`src/db/sql/tables/companies.sql`**, con este código:
+```sql
+-- Create the `companies` table
+DROP TABLE IF EXISTS companies;
+CREATE TABLE IF NOT EXISTS companies (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    cnpj VARCHAR(14) UNIQUE NOT NULL,
+    logo VARCHAR(255),
+    currency VARCHAR(10) DEFAULT '$',
+    address VARCHAR(255),
+    phone VARCHAR(15),
+    email VARCHAR(100) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CHECK (currency IN ('$','€','£','¥','₩','₹','₽','₺','₪','₫'))
+);
+-- Insert initial data into `companies`
+INSERT INTO companies (name, cnpj)
+VALUES
+    ('Empresa Ejemplo', '12345678000195'),
+    ('Otra Empresa', '98765432000176');
+COMMIT;
+```
+3. Para **Sucursales** creamos el archivo **`src/db/sql/tables/branches.sql`**, con este código:
+```sql
+-- Create the `branches` table
+DROP TABLE IF EXISTS branches;
+CREATE TABLE IF NOT EXISTS branches (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    address VARCHAR(255),
+    phone VARCHAR(15),
+    email VARCHAR(100),
+    id_company INT NOT NULL,
+    id_user INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_company FOREIGN KEY (id_company) REFERENCES companies(id) ON DELETE CASCADE,
+    CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
+);
+COMMIT;
+```
+4. Para **Roles** creamos el archivo **`src/db/sql/tables/roles.sql`**, con este código:
+```sql
+-- Create the `roles` table
+DROP TABLE IF EXISTS roles;
+CREATE TABLE IF NOT EXISTS roles (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) UNIQUE NOT NULL,
+    description VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+-- Add foreign key constraint to `users` table
+ALTER TABLE users
+ADD CONSTRAINT fk_role FOREIGN KEY (id_role) REFERENCES roles(id) ON DELETE CASCADE;
+-- Insert initial data into `roles`
+INSERT INTO roles (name, description) VALUES
+('Admin', 'Administrador del sistema'),
+('User', 'Usuario regular'),
+('Manager', 'Gerente de sucursal'),
+('Accountant', 'Contador de la empresa'),
+('Support', 'Soporte técnico');
+COMMIT;
+```
+5. Así se visualiza la estructura o _Schema_ de nuestar base de datos en `Supabase`:<br>![Database Schema 1](images/2025-06-17_194525.png "Database Schema 1") 
 
