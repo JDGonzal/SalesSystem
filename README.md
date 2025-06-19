@@ -1914,5 +1914,49 @@ INSERT INTO roles (name, description) VALUES
 ('Support', 'Soporte técnico');
 COMMIT;
 ```
-5. Así se visualiza la estructura o _Schema_ de nuestar base de datos en `Supabase`:<br>![Database Schema 1](images/2025-06-17_194525.png "Database Schema 1") 
+5. Así se visualiza la estructura o _Schema_ de nuestra base de datos en `Supabase`:<br>![Database Schema 1](images/2025-06-17_194525.png "Database Schema 1") 
+
+
+
+
+### Testing Trigger (03:02:55)
+
+1. Vamos a crear la carpeta **"functions"**, dentro de la carpeta **"src/db/sql"**.
+2. Dentro de la nueva carpeta creamos el archivo **`src/db/sql/functions/companyInsert.sql`**, con este código:
+```sql
+-- Create the `companyInsert` function to insert a new company into the database.
+CREATE OR REPLACE FUNCTION fnc_company_insert()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN
+    -- Insert the new company into the `companies` table
+    INSERT INTO doc_types (name, description, id_company)
+    VALUES
+        (CONCAT('CC',TO_CHAR(NEW.id)), 'Cédula de Ciudadanía', NEW.id),
+        (CONCAT('NIT',TO_CHAR(NEW.id)), 'Registro Nacional de Persona Jurídica', NEW.id),
+        (CONCAT('RG',TO_CHAR(NEW.id)), 'Registro Geral', NEW.id),
+        (CONCAT('CE',TO_CHAR(NEW.id)), 'Cédula de Extranjería', NEW.id),
+        (CONCAT('Pasaporte',TO_CHAR(NEW.id)), 'Documento de viaje internacional', NEW.id);
+
+    -- Return the new row
+    RETURN NEW;
+END
+$$;
+COMMIT;
+```
+3. Luego creamos la carpeta **"triggers"** y luego allí creamos el archivo **`src/db/sql/triggers/companyInsert.sql`**, con este código:
+```sql
+CREATE OR REPLACE TRIGGER trg_company_insert
+AFTER INSERT ON companies
+FOR EACH ROW
+EXECUTE FUNCTION fnc_company_insert();
+COMMIT;
+```
+4. Para una prueba ejecutamos el siguiente comando _sql_, para la creación de una empresa:
+```sql
+INSERT INTO companies (name, cnpj)
+VALUES
+    ('Nueva Empresa', '12345678002975');
+COMMIT;
+```
+5. Luego de ejecutar la última prueba comprobamos que el _trigger_ creo nuevos registros enla tabla `doc_types`, que mas adelante veremos el uso de estos registros.
 

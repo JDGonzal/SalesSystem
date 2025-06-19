@@ -1,0 +1,5 @@
+CREATE OR REPLACE TRIGGER trg_company_insert
+AFTER INSERT ON companies
+FOR EACH ROW
+EXECUTE FUNCTION fnc_company_insert();
+COMMIT;
