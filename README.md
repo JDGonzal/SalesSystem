@@ -2083,3 +2083,18 @@ create policy "Enable delete for users based on user_id"
 >
 >En resumen, RLS es una herramienta poderosa en `Supabase` que permite a los desarrolladores proteger sus datos y controlar el acceso a ellos de manera granular y centralizada 
 
+
+
+### Diagrama lógico para la subida de imágenes (03:22:42)
+
+![Diagrama Lógico](images/2025-06-20_180440.png "Diagrama Lógico")
+
+1. Esto es opcional para las `categories`.
+2. Cuando se pueda crear la Categoría se subirá la imagen desde el PC local.
+3. Se cambia el nombre de la imagen por el `id`.
+4. `Supabase` tambien tiene un servicio de `storage`, para almacenar en este caso las imágenes.
+5. Cada vez que subo la imagen al `storage` este me devuelve una ruta o _URL_.
+6. La ruta con algunos cambios la almacenamos en la tabla `categories`.
+
+
+
