@@ -1960,3 +1960,10 @@ COMMIT;
 ```
 5. Luego de ejecutar la última prueba comprobamos que el _trigger_ creo nuevos registros enla tabla `doc_types`, que mas adelante veremos el uso de estos registros.
 
+
+### Insertando Sucursales (03:13:30)
+
+1. Se crea el archivo **`src/db/sql/functions/branchInsert.sql`**, pero no lo ejecutamos aun en el servidor de `supabase`.
+2. Lo mismo creamos **``**, pero no se ejecuta aun en `supabase`.
+3. Este paso le falta mucho, toca esperar a lo que sigue.
+
