@@ -1,0 +1,5 @@
+CREATE OR REPLACE TRIGGER trg_branch_insert
+AFTER INSERT ON users
+FOR EACH ROW
+EXECUTE FUNCTION fnc_branch_insert();
+COMMIT;
