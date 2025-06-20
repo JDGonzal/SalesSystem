@@ -1307,19 +1307,19 @@ export const supabase = createClient(
 ### AuthStore (01:54:48)
 
 1. Empezamos buscando en este sitio: [`Consola de Google Cloud`](https://cloud.google.com/storage/docs/cloud-console?hl=es-419).
-2. Dar clic al botón [`Consola`] y debe aparecer algo similar a esto: <br> ![Consola de Google Cloud: Te damos la bienvenida](images/2025-06-09_064719.png "Consola de Google Cloud: Te damos la bienvenida").
+2. Dar clic al botón `[Consola]` y debe aparecer algo similar a esto: <br> ![Consola de Google Cloud: Te damos la bienvenida](images/2025-06-09_064719.png "Consola de Google Cloud: Te damos la bienvenida").
 3. Clic en el menú de hamburguesa en la parte superior izquierda: <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/></svg>.
 4. Luego seleccionamos `APIs y Servicios` y ahí `APIs y Servicios habilitados`: <br> ![APIs y Servicios habilitados](images/2025-06-09_070654.png "APIs y Servicios habilitados")
 5. Damos clic en `Credenciales`.
 6. Arriba en `+Crear Credenciales`, empezamos con `ID de cliente de OAuth`. 
-7. Damos clic en el botón de _Warning_ [`Configurar pantalla de consentimiento`].
+7. Damos clic en el botón de _Warning_ `[Configurar pantalla de consentimiento]`.
 8. Se requiere Completar el proceso de `Información de marca`:<br>![Información de Marca](images/2025-06-09_160805.gif "Información de Marca")
 9. Regresamos a `APIs y Servicios` y ahí `APIs y Servicios habilitados`: <br> ![APIs y Servicios habilitados 2](images/2025-06-09_165923.png "APIs y Servicios habilitados 2").
 10. Entramos en el Menú de la izquierda a `Credenciales`.
 11. Seleccionamos la parte de arriba `+Crear Credenciales` y de las opciones clic en ` ID de cliente de OAuth `.
 12. En `Tipo de Aplicación`, seleccionamos `Aplicación Web`:<br>![Crear ID de cliente de OAuth](images/2025-06-09_173730.png "Crear ID de cliente de OAuth")
 13. En el `Nombre` va `Sales System`.
-14. En la sección `URIs de redireccionamiento autorizados`, damos clic al botón `+ Agregar URI`.
+14. En la sección `URIs de redireccionamiento autorizados`, damos clic al botón `[+ Agregar URI]`.
 15. Regresamos al sitio de [`Supabase - > Google`](https://supabase.com/dashboard/project/{proyect}/auth/providers?provider=Google):<br>![](images/2025-06-09_175708.png "")
 16. Seleccionamos de `Callback URL (for OAuth)` el texto para dar un `copy`.
 17. Y lo llevamos al sitio de `Google` en `Crear ID de cliente de OAuth` y lo pegamos en la `URI` pendiente.
@@ -1327,7 +1327,7 @@ export const supabase = createClient(
 19. Sale una ventana y copiamos el `ID de cliente`: <br> "![Se creó del CLiente OAuth](images/2025-06-09_180336.png "Se creó el cliente OAuth").
 20. Se pega en la pagina de `Supabase` pega en `Client ID for OAuth`.
 21. Se repite el proceso de `Secreto del Cliente` de `Google`, para `Client Secret ` de `Supabase`.
-22. En `Supabase` estar seguro que el botón `Enable Sign in in Google` esté activo o en verde y dar clic en el botón `[Save]`.
+22. En `Supabase` estar seguro que el botón `[Enable Sign in in Google]` esté activo o en verde y dar clic en el botón `[Save]`.
 23. Nos vamos a este sitio a revisar los pasos a proceder [`Supabase -> Login with Google`](https://supabase.com/docs/guides/auth/social-login/auth-google).
 24. Creamos el archivo **`src/store/AuthStore.tsx`**, empezamos con la importación de `{create}` de `zustand`:<br>`import { create } from 'zustand';`
 25. Creamos una función tipo flecha de nombre `useAuthStore` y luego la exportamos:
@@ -1457,7 +1457,7 @@ export const AuthContextProvider = (
 ```js
     useEffect(() => {}, []);
 ```
-7. Vamos a escuchar de `supabase` la `{data}`, dentro del `useEffect`:
+7. Vamos a escuchar de `Supabase` la `{data}`, dentro del `useEffect`:
 ```js
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -1786,7 +1786,7 @@ export const v = {
 
 ### Creando la tabla de productos (02:42:44)
 
-1. El instructor ingresa directamente a la página de `supabase`, busca <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-editor "><path d="M2.9707 15.3494L20.9707 15.355M20.9405 9.61588H2.99699M8.77661 9.61588V21.1367M20.9405 5.85547V19.1367C20.9405 20.2413 20.0451 21.1367 18.9405 21.1367H4.99699C3.89242 21.1367 2.99699 20.2413 2.99699 19.1367V5.85547C2.99699 4.7509 3.89242 3.85547 4.99699 3.85547H18.9405C20.0451 3.85547 20.9405 4.7509 20.9405 5.85547Z"></path></svg> `Table Editor`, da clic en el botón [`Create a new table`], pero prefiero hacerlo por comandos _SQL_.
+1. El instructor ingresa directamente a la página de `Supabase`, busca <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-editor "><path d="M2.9707 15.3494L20.9707 15.355M20.9405 9.61588H2.99699M8.77661 9.61588V21.1367M20.9405 5.85547V19.1367C20.9405 20.2413 20.0451 21.1367 18.9405 21.1367H4.99699C3.89242 21.1367 2.99699 20.2413 2.99699 19.1367V5.85547C2.99699 4.7509 3.89242 3.85547 4.99699 3.85547H18.9405C20.0451 3.85547 20.9405 4.7509 20.9405 5.85547Z"></path></svg> `Table Editor`, da clic en el botón `[Create a new table]`, pero prefiero hacerlo por comandos _SQL_.
 2. Busco la opción <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sql-editor "><path d="M7.89844 8.4342L11.5004 12.0356L7.89844 15.6375M12 15.3292H16.5M5 21.1055H19C20.1046 21.1055 21 20.21 21 19.1055V5.10547C21 4.0009 20.1046 3.10547 19 3.10547H5C3.89543 3.10547 3 4.0009 3 5.10547V19.1055C3 20.21 3.89543 21.1055 5 21.1055Z"></path></svg> `SQL Editor`, allí voy a crear las tablas, pero primero voy a crear los archivos de extesión **`*.sql`**.
 
 >[!TIP]  
@@ -1816,7 +1816,7 @@ CREATE TABLE IF NOT EXISTS users (
 COMMIT;
 ```
 5. El instructor sugiere el uso de `TEXT` en vez de `VARCHAR`, pero en consultas es mas eficiente el uso de `VARCHAR`.
-6. Copio el contenido del archivo **`users.sql`**, en el `SQL Editor` de `Supabase` y clic en el botón [`Run Ctrl <┘`], nos hace una advertencia de:<br> `Potential issue detected with your query`<br> Pero le damos clic en el botón [`Run this query`], esto es por el _borrado_ de la tabla al principio con el `DROP`.
+6. Copio el contenido del archivo **`users.sql`**, en el `SQL Editor` de `Supabase` y clic en el botón `[Run Ctrl <┘]`, nos hace una advertencia de:<br> `Potential issue detected with your query`<br> Pero le damos clic en el botón [`Run this query`], esto es por el _borrado_ de la tabla al principio con el `DROP`.
 7. Revisamos la opción `Table Editor`, luego de darle la tecla [`F5`] y esto es lo que visualizamos: <br> ![`users` Table](images/2025-06-17_171746.png "`users` Table")
 
 
@@ -1963,7 +1963,123 @@ COMMIT;
 
 ### Insertando Sucursales (03:13:30)
 
-1. Se crea el archivo **`src/db/sql/functions/branchInsert.sql`**, pero no lo ejecutamos aun en el servidor de `supabase`.
-2. Lo mismo creamos **``**, pero no se ejecuta aun en `supabase`.
+1. Se crea el archivo **`src/db/sql/functions/branchInsert.sql`**, pero no lo ejecutamos aun en el servidor de `Supabase`.
+2. Lo mismo creamos **`src/db/sql/triggers/branchInsert.sql`**, pero no se ejecuta aun en `Supabase`.
 3. Este paso le falta mucho, toca esperar a lo que sigue.
+
+
+### Tabla Categorías (03:16:03)
+
+1. Creamos el archivo **`src/db/sql/tables/categories.sql`**, con el siguiente código, y lo ejecutamos en `Supabase`:
+```sql
+-- Create tje `categories` table
+DROP TABLE IF EXISTS categories;
+CREATE TABLE IF NOT EXISTS categories (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    color VARCHAR(20),
+    icon VARCHAR(100),
+    description TEXT,
+    id_company INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_company FOREIGN KEY (id_company) REFERENCES companies(id) ON DELETE CASCADE
+);
+COMMIT;
+```
+2. Estas reglas o _Policies_ deben de configurarse en `Supabase`, y nos vamos al icono<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-editor "><path d="M2.9707 15.3494L20.9707 15.355M20.9405 9.61588H2.99699M8.77661 9.61588V21.1367M20.9405 5.85547V19.1367C20.9405 20.2413 20.0451 21.1367 18.9405 21.1367H4.99699C3.89242 21.1367 2.99699 20.2413 2.99699 19.1367V5.85547C2.99699 4.7509 3.89242 3.85547 4.99699 3.85547H18.9405C20.0451 3.85547 20.9405 4.7509 20.9405 5.85547Z"></path></svg> `Table Editor`, da clic en la tabla `categories`, luego en los puntos suspensivoa al lado del nombre de la tabla:<br>![`categories` -> `View policies`](images/2025-06-20_143318.png "`categories` -> `View policies`")
+3. Damos clic al botón `[Create policy]`
+4. Nos aparece una pantalla base y damos clic a la derecha en la columna `Templates` o Plantillas, al que dice `SELECT`(Es lo mismo que hacerlo en el que dice `Policy Command`):<br>![Categories -> new policiy -> SELECT](images/2025-06-20_143837.png "Categories -> new policiy -> SELECT")
+5. En `Target Roles`, selecciono `authenticated` y este es el texto del comando:
+```sql
+create policy "Enable read access for all users"
+    on "public"."categories"
+    as PERMISSIVE
+    for SELECT
+    to authenticated
+    using (
+        true
+    );
+```
+6. Damos clic en el botón `[Save policy]`.
+7. De nuevo clic en el botón `[Create policy]` y damos clic a la derecha en la columna `Templates` o plantillas sobre `INSERT`, revisar que `Target Roles` tenga `authenticated`, y esto es el comando que nos muestra:
+```sql
+create policy "Enable insert for authenticated users only"
+    on "public"."categories"
+    as PERMISSIVE
+    for INSERT
+    to authenticated
+    with check (
+        true
+    );
+```
+8. Damos clic en el botón `[Save policy]`.
+9. De nuevo clic en el botón `[Create policy]` y damos clic a la derecha en la columna `Templates` o plantillas sobre `UPDATE`, revisar que `Target Roles` tenga `authenticated`, y esto es el comando que nos muestra:
+```sql
+create policy "Enable update for users based on email"
+    on "public"."categories"
+    as PERMISSIVE
+    for UPDATE
+    to authenticated
+    using (
+        (select auth.jwt()) ->> 'email' = email
+        with check (
+        (select auth.jwt()) ->> 'email' = email
+    );
+```
+>[!WARNING]  
+>Aquí hay errores varios, empezando que la tabla `categories` no tiene el campo `'email'` y el otro es que hay un paréntesis por cerrar, y debemos corregirlo enseguida.
+10. cambiamos el `using` por solo `id=id`, lo mismo aplica para el `with check`:
+```sql
+create policy "Enable update for users based on email"
+    on "public"."categories"
+    as PERMISSIVE
+    for UPDATE
+    to authenticated
+    using (
+        id=id
+    with check (
+        id=id
+    );
+```
+11. Damos clic en el botón `[Save policy]`.
+>[!WARNING]  
+>El paréntesis faltante es un defecto del formulario en pantalla o de la _U.I._, en pocas palabras no es necesario añadir ese cierre de paréntesis.
+12. De nuevo clic en el botón `[Create policy]` y damos clic a la derecha en la columna `Templates` o plantillas sobre `DELETE`, revisar que `Target Roles` tenga `authenticated`, cambiamos el `using` con `id=id` y esto es el comando que nos muestra:
+```sql
+create policy "Enable delete for users based on user_id"
+    on "public"."categories"
+    as PERMISSIVE
+    for DELETE
+    to authenticated
+    using (
+        id=id
+    );
+```
+13. Damos clic en el botón `[Save policy]`, así se ve el _CRUD_ de las reglas o _policies_ para la table `categories`: <br>![`Policies` de `categories`](images/2025-06-20_154612.png "`Policies` de `categories`")
+14. Regresamos a <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-editor "><path d="M2.9707 15.3494L20.9707 15.355M20.9405 9.61588H2.99699M8.77661 9.61588V21.1367M20.9405 5.85547V19.1367C20.9405 20.2413 20.0451 21.1367 18.9405 21.1367H4.99699C3.89242 21.1367 2.99699 20.2413 2.99699 19.1367V5.85547C2.99699 4.7509 3.89242 3.85547 4.99699 3.85547H18.9405C20.0451 3.85547 20.9405 4.7509 20.9405 5.85547Z"></path></svg> `Table Editor`.
+15. Y el Instructor sugiere quitar de cada tabla en `Supabase` todas las `RLS` (_Row Level Security_), pero resulta que esta versión de `Supabase` (jun-20-2025), todas las tablas tienen los `RLS` inactivos:<br>![10 cuestiones que necesitan atención](images/2025-06-20_174342.png "10 cuestiones que necesitan atención")
+
+>[!TIP]  
+> En `Supabase`, RLS significa **Seguridad a Nivel de Fila** (_Row Level Security_, por sus siglas en inglés). Es una característica de Postgresql que permite controlar el acceso a los datos a nivel de fila individual dentro de una tabla. En otras palabras, RLS permite definir políticas que determinan qué usuarios o roles pueden ver, insertar, actualizar o eliminar filas específicas en una tabla. 
+>
+>¿Cómo funciona RLS en `Supabase`?
+>* **Políticas:**  
+>RLS se basa en políticas, que son reglas SQL que se aplican a cada consulta que accede a una tabla.
+>* **Acceso condicional:**  
+>Estas políticas pueden basarse en el usuario autenticado, roles, columnas de la tabla u otras condiciones.
+>* **Control granular:**  
+>RLS proporciona un control muy granular sobre el acceso a los datos, permitiendo que los desarrolladores definan políticas muy específicas para diferentes usuarios o roles. 
+>
+>Beneficios de usar RLS en `Supabase`:
+>* **Mayor seguridad:**  
+>RLS ayuda a proteger los datos al garantizar que solo los usuarios autorizados puedan acceder a la información correcta.
+>* **Control de acceso centralizado:**  
+>Las políticas de RLS se definen en la base de datos, lo que facilita la gestión y el mantenimiento del control de acceso.
+>* **Escalabilidad:**  
+>RLS puede ayudar a escalar aplicaciones multiusuario, ya que permite definir políticas específicas para diferentes usuarios o roles.
+>* **Integración con la autenticación:**  
+>RLS se integra con el sistema de autenticación de `Supabase`, lo que permite utilizar la información del usuario autenticado para aplicar las políticas de seguridad. 
+>
+>En resumen, RLS es una herramienta poderosa en `Supabase` que permite a los desarrolladores proteger sus datos y controlar el acceso a ellos de manera granular y centralizada 
 
