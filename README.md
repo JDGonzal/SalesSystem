@@ -2097,4 +2097,72 @@ create policy "Enable delete for users based on user_id"
 6. La ruta con algunos cambios la almacenamos en la tabla `categories`.
 
 
+### Función insertar categorías (03:25:27)
+
+1. Dentro de la carpeta **"src/supabase"**, creamos el archivo **`crudCategories.tsx`**.
+2. Empezamos por crear la función de tipo asíncrona y exportable de nombre `InsertCategory()`.
+3. El instructor nos sugiere ir a esta página para leer la documentación [`JavaScript Client Library`](https://supabase.com/docs/reference/javascript/insert).
+4. Lo que sugiere en la docuemntación es algo así con un _json_ es decir con clave-valor:
+```js
+const { error } = await supabase
+  .from('countries')
+  .insert({ id: 1, name: 'Mordor' })
+```
+5. Pero como hay que tener varios elmentos en consideración, nos hacemos un procedimiento almancenado en `Supabase`, y creamos el archivo **`src/db/sql/functions/categoryInsert.sql`**, con el código que aparece abajo, para luego ejecutar en `Supabase`:
+```sql
+-- Create the `fnc_category_insert` function to insert a new category into the database.
+CREATE OR REPLACE FUNCTION fnc_category_insert(
+    _name VARCHAR(100), 
+    _color VARCHAR(20), 
+    _icon VARCHAR, 
+    _description TEXT, 
+    _id_company INT
+)
+RETURNS INT LANGUAGE plpgsql AS $$
+-- delcare a variable to hold the new category ID
+DECLARE new_category_id INT;
+BEGIN
+    -- Check if the category name already exists
+    PERFORM 1 FROM categories WHERE name = _name AND id_company = _id_company;
+    IF FOUND THEN
+        RAISE EXCEPTION 'Category with name "%" already exists for company ID %', _name, _id_company;
+    ELSE
+        -- If not found, insert the new category
+        INSERT INTO categories (
+            name,
+            color,
+            icon,
+            description,
+            id_company,
+            created_at,
+            updated_at
+        )
+        VALUES
+            (_name, _color, _icon, _description, _id_company, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        RETURNING id INTO new_category_id;
+        -- Return the new category ID
+        RETURN new_category_id;
+    END IF;
+END
+$$;
+COMMIT;
+```
+6. Así se ve el _schema_ o esquema de la base de datos:<br>![Database Schema 2](images/2025-06-21_180009.png "Database Schema 2")
+7. Como falta la llamada dentro del archivo **`src\supabase\crudCategories.tsx`** a la función recien creada en `Supabase`, hice este arreglo temporal a la función `InsertCategory()`:
+```js
+import { supabase } from '../index.ts';
+
+export async function InsertCategory(category: {
+  name: string;
+  color: string;
+  icon: string;
+  description: string;
+  id_company: number;
+  file: string;
+}) {
+  const { data, error } = await supabase.rpc('fnc_category_insert', category);
+
+  console.log('InsertCategory', data, error);
+}
+```
 
