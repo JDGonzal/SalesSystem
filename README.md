@@ -2213,3 +2213,99 @@ export async function InsertCategory(
 15. Selcciono en `Target roles` la opción de `authenticated`: <br> ![Storage -> images ->Policies](images/2025-06-22_142838.png "Storage -> images ->Policies")
 16. Damos clic en `[Review]`, nos aparecen las cuatro operaciones y damos clic en el botón `[Save policy]`.
 
+
+
+### Subiendo imagen al Storage (03:47:19)
+
+1. Podemos empezar con el sitio [`STORAGE->Upload a file`](https://supabase.com/docs/reference/javascript/storage-from-upload).
+>[!NOTE]  
+>#### Subir un archivo  
+>Sube un archivo a un depósito existente.
+>
+>* Permisos de política RLS requeridos:
+>   * bucketspermisos de tabla: ninguno
+>   * objectsPermisos de tabla: solo insertcuando está cargando archivos nuevos y selectcuando insertestá updateinsertando archivos
+>* Consulte la guía de almacenamiento para saber cómo funciona el control de acceso.
+>* En React Native, usar Blob, Fileo FormDatano funciona correctamente. Suba el archivo usando ArrayBufferdatos de archivo base64 (vea el ejemplo a continuación).
+>
+>Parámetros
+>* **camino** *Requerido* cadena
+>   * La ruta del archivo, incluido el nombre, debe tener el formato folder/subfolder/filename.png. El contenedor debe existir antes de intentar cargarlo.
+>* **cuerpo del archivo** *Requerido* Cuerpo del archivo
+>   * El cuerpo del archivo que se almacenará en el depósito.
+> 
+>Opciones del archivo
+>* **Control de caché** *Opcional* cadena
+>   * El tiempo que el recurso se almacena en caché en el navegador y en la CDN de Supabase. Se configura en el Cache-Control: max-age=<seconds>encabezado. El valor predeterminado es 3600 segundos.
+>* **tipo de contenido** *Opcional* cadena
+>   * El Content-Typevalor del encabezado. Debe especificarse si se usa un fileBodyvalor que no sea Blobni Fileni FormData; de lo contrario, el valor predeterminado será text/plain;charset=UTF-8.
+>* **dúplex** *Opcional* cadena
+>   * La opción dúplex es un parámetro de cadena que habilita o deshabilita la transmisión dúplex, lo que permite leer y escribir datos en la misma secuencia. Se puede pasar como opción al método fetch().
+>* **encabezados** *Opcional* Registro<cadena, cadena>
+>   * Opcionalmente, agregue encabezados adicionales
+>* **metadatos** *Opcional* Registro<cadena, cualquier>
+>   * La opción de metadatos es un objeto que permite almacenar información adicional sobre el archivo. Esta información se puede usar para filtrar y buscar archivos. El objeto de metadatos puede contener cualquier par clave-valor que desee almacenar.
+>* **inserción** *Opcional* booleano
+>   * Cuando upsert se establece en verdadero, el archivo se sobrescribe si existe. Cuando se establece en falso, se genera un error si el objeto ya existe. El valor predeterminado es falso. 
+> 
+2. Regresando al archivo **`src/supabase/crudCategories.tsx`**, creamos la función asíncrona y exportable de nombre `uploadImage()`, y copio un código del sitio antes consultado:
+```js
+export async function uploadImage(){
+  const avatarFile = event.target.files[0]
+  const { data, error } = await supabase
+    .storage
+    .from('avatars')
+    .upload('public/avatar1.png', avatarFile, {
+      cacheControl: '3600',
+      upsert: false
+    })  
+}
+```
+3. Corregimos la función `uploadImage()`:
+```js
+async function uploadImage(category_id: string, imageFile: File) {
+  // const avatarFile = event.target.files[0]
+  const pathFile = 'categories/' + category_id;
+  const { data, error } = await supabase.storage
+    .from('images')
+    .upload(pathFile, imageFile, {
+      cacheControl: '2', // '3600' -> 1 hora,
+      upsert: true,  // El archivo se reemplaza si ya existe
+    });
+    if (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.message,
+      });
+      return null;
+    }
+    if (data) {
+      const { data: urlData } = await supabase.storage
+        .from('images')
+        .getPublicUrl(pathFile);
+      return urlData.publicUrl;
+    }
+}
+```
+4. Ajustamos la función anterior de nombre `InsertCategory()`, para tener la información del `imageFile`:
+```js
+export async function InsertCategory(
+  category: {...},
+  imageFile: File
+) {
+  const { data, error } = await supabase.rpc('fnc_category_insert', category);
+  if (error) {
+    ...
+    return null;
+  }
+  const fileSize = imageFile.size ; 
+  if (fileSize != undefined) {
+    const new_category_id = data; //data?.[0]?.new_category_id;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const imageUrl = await uploadImage(new_category_id as string, imageFile);
+  }
+}
+```
+
+
