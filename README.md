@@ -2166,3 +2166,50 @@ export async function InsertCategory(category: {
 }
 ```
 
+
+### Configurando el Storage (03:38:34)
+
+1. Empezamos con esta documentación [`Remote Procedure Calls`](https://supabase.com/docs/reference/javascript/rpc).
+2. Puedes llamar a las funciones de Postgres como _Llamadas a Procedimientos Remotos_ (`RPC`), lógica en tu base de datos que puedes ejecutar desde cualquier lugar. Las funciones son útiles cuando la lógica rara vez cambia, como para restablecer y actualizar contraseñas.
+3. El paso anterior ya lo había hecho en el archivo **`src\supabase\crudCategories.tsx`**.
+4. Antes de continuar vamo a instalar unos _Mensajes Emerjentes_ y los buscamos en este sitio [`sweetalert2`](https://sweetalert2.github.io/).
+5. Vamos a la parte de [_Installation_](https://sweetalert2.github.io/#download) y usamos este código en una `TERMINAL`:<br>`pnpm install sweetalert2 -E`
+6. Completamos el contenido de **`src\supabase\crudCategories.tsx`**, usando la nueva biblioteca de `'sweetalert2'` y empezamos con la importación y luego su uso en un condicional:
+```js
+...
+import Swal from 'sweetalert2';
+
+export async function InsertCategory(
+  category: {
+    name: string;
+    color: string;
+    icon: string;
+    description: string;
+    id_company: number;
+  },
+  file: string
+) {
+  const { data, error } = await supabase.rpc('fnc_category_insert', category);
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+  }
+}
+```
+7. Debemos aprovechar de la `data` el valor que retornamos en la función `fnc_category_insert()` de `Supabase` y la variable que retorna que es `new_category_id`:
+```js
+  const new_category_id = data;
+```
+8. Regresamos a `Supabase` y buscamos en el menú a <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-storage "><path d="M19.4995 11.3685V8.50725L14.0723 3.10584H5.49951C4.94722 3.10584 4.49951 3.55355 4.49951 4.10584V9.1051M19.4468 8.48218L14.0701 3.10547L14.0701 7.48218C14.0701 8.03446 14.5178 8.48218 15.0701 8.48218L19.4468 8.48218ZM6.86675 9.1051H3.96045C3.40816 9.1051 2.96045 9.55282 2.96045 10.1051V19.1051C2.96045 20.2097 3.85588 21.1051 4.96045 21.1051H18.9604C20.065 21.1051 20.9604 20.2097 20.9604 19.1051V12.3685C20.9604 11.8162 20.5127 11.3685 19.9605 11.3685H9.98622C9.72382 11.3685 9.47194 11.2654 9.28489 11.0813L7.56808 9.39226C7.38103 9.20824 7.12915 9.1051 6.86675 9.1051Z"></path></svg> `Storage`.
+9. Damos clic al botón `[New bucket]` y en el campo de `Name of the bucket`, le ponemos `images`, activamos el botón de `Public bucket` y le damos `[Save]`:<br>![Create storage bucket - > images](images/2025-06-22_141544.png "Create storage bucket - > images")
+10. Dentro de este _bucket_ de nombre `images`, damos clic en el botón `[Create folder]` y en el nombre le ponemos `categories`.
+11. Estando en el _bucket_ de nombre `images`, damos clic a la izquierda en `Policies`.
+12. Damos click al botón `[New policy]`, y seleccionamos el de abajo <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>`For full customization`.
+13. En el campo `Policy name`, le ponemos `Image Permissions`
+14. Pongo los cuatro _chulos_ o _check_ (✅), para `SELECT`, `INSERT`, `UPDATE` y `DELETE`, que son `Allowed operation`.
+15. Selcciono en `Target roles` la opción de `authenticated`: <br> ![Storage -> images ->Policies](images/2025-06-22_142838.png "Storage -> images ->Policies")
+16. Damos clic en `[Review]`, nos aparecen las cuatro operaciones y damos clic en el botón `[Save policy]`.
+
