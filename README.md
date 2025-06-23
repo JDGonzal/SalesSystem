@@ -2248,9 +2248,9 @@ export async function InsertCategory(
 >* **inserción** *Opcional* booleano
 >   * Cuando upsert se establece en verdadero, el archivo se sobrescribe si existe. Cuando se establece en falso, se genera un error si el objeto ya existe. El valor predeterminado es falso. 
 > 
-2. Regresando al archivo **`src/supabase/crudCategories.tsx`**, creamos la función asíncrona y exportable de nombre `uploadImage()`, y copio un código del sitio antes consultado:
+1. Regresando al archivo **`src/supabase/crudCategories.tsx`**, creamos la función asíncrona de nombre `uploadImage()`, y copio un código del sitio antes consultado:
 ```js
-export async function uploadImage(){
+async function uploadImage(){
   const avatarFile = event.target.files[0]
   const { data, error } = await supabase
     .storage
@@ -2261,7 +2261,7 @@ export async function uploadImage(){
     })  
 }
 ```
-3. Corregimos la función `uploadImage()`:
+1. Corregimos la función `uploadImage()`:
 ```js
 async function uploadImage(category_id: string, imageFile: File) {
   // const avatarFile = event.target.files[0]
@@ -2288,7 +2288,7 @@ async function uploadImage(category_id: string, imageFile: File) {
     }
 }
 ```
-4. Ajustamos la función anterior de nombre `InsertCategory()`, para tener la información del `imageFile`:
+1. Ajustamos la función anterior de nombre `InsertCategory()`, para tener la información del `imageFile`:
 ```js
 export async function InsertCategory(
   category: {...},
@@ -2308,4 +2308,69 @@ export async function InsertCategory(
 }
 ```
 
+
+### Mostrar catergorías (03:58:00)
+
+1. En el archivo **`src/supabase/crudCategories.tsx`**, creamos la función asíncronica de nombre `changeCategoryIcon()`:
+```js
+async function changeCategoryIcon(category: {
+  id: number;
+  icon: string;
+}) {
+  const { error } = await supabase
+    .from('categories')
+    .update(category)
+    .eq('id', category.id);
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return null;
+  }
+}
+```
+2. En el mismo archivo, pero en la función `InsertCategory()`, usamos el valor el valor obtenido en `imageUrl`, para cargar un objeto a ser usado como parámetros en el llamdo de `changeCategoryIcon()`:
+```js
+export async function InsertCategory(
+  category: {...},
+  imageFile: File
+) {
+  const { data, error } = await supabase.rpc('fnc_category_insert', category);
+  ...
+  const fileSize = imageFile.size;
+  if (fileSize != undefined) {
+    const new_category_id = data; 
+    // retorna directamente `urlData.publicUrl`
+    const imageUrl = await uploadImage(new_category_id as string, imageFile);
+    const updateCategory = {
+      id: new_category_id,
+      icon: imageUrl || '', // Provide a default empty string if imageUrl is null or undefined
+    };
+    await changeCategoryIcon(updateCategory);
+  }
+}
+```
+3. Creamos una constante para utilizar en cada parte que ponemos la palabra `'categories'`, por la constante `tableName`, para sustituir todo donde aparece la cadena de caracters por la constante.
+4. Añadimos una función asincrónica y exportable,  para mostrar Categorias:
+```js
+export async function GetCategoriesByCompanyId(id_company: number) {
+  const { data, error } = await supabase
+    .from(tableName)
+    .select('*')
+    .eq('id_company', id_company)
+    .order('name', { ascending: true });
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return [];
+  }
+  return data;
+}
+```
+5. Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
 
