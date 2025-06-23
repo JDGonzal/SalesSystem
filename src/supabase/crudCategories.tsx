@@ -1,6 +1,7 @@
-/* eslint-disable react-refresh/only-export-components */
 import { supabase } from '../index.ts';
 import Swal from 'sweetalert2';
+
+const tableName = 'categories';
 
 export async function InsertCategory(
   category: {
@@ -24,8 +25,13 @@ export async function InsertCategory(
   const fileSize = imageFile.size;
   if (fileSize != undefined) {
     const new_category_id = data; //data?.[0]?.new_category_id;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // retorna directamente `urlData.publicUrl`
     const imageUrl = await uploadImage(new_category_id as string, imageFile);
+    const updateCategory = {
+      id: new_category_id,
+      icon: imageUrl || '', // Provide a default empty string if imageUrl is null or undefined
+    };
+    await changeCategoryIcon(updateCategory);
   }
 }
 
@@ -52,4 +58,39 @@ async function uploadImage(category_id: string, imageFile: File) {
       .getPublicUrl(pathFile);
     return urlData.publicUrl;
   }
+}
+
+async function changeCategoryIcon(category: {
+  id: number;
+  icon: string;
+}) {
+  const { error } = await supabase
+    .from(tableName)
+    .update(category)
+    .eq('id', category.id);
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return null;
+  }
+}
+
+export async function GetCategoriesByCompanyId(id_company: number) {
+  const { data, error } = await supabase
+    .from(tableName)
+    .select('*')
+    .eq('id_company', id_company)
+    .order('name', { ascending: true });
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return [];
+  }
+  return data;
 }
