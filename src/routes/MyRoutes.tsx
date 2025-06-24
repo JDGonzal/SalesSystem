@@ -3,7 +3,7 @@ import { Home, Login, ProtectedRoutes, useAuthContext } from '../index.ts';
 
 export function MyRoutes() {
   const { authState } = useAuthContext();
-  console.info('MyRoutes authState:', authState);
+  // console.info('MyRoutes authState:', authState);
   return (
     <Routes>
       <Route element={<ProtectedRoutes authState={authState} redirectTo='/login' />}>

@@ -9,7 +9,7 @@ const Container = styled.div`
 function HomeTemplate() {
   const { logout } = useAuthStore();
   const { authState } = useAuthContext();
-  console.log('authState in HomeTemplate:', authState);
+  // console.log('authState in HomeTemplate:', authState);
   return (
     <Container>
       <span>HomeTemplate</span>

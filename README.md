@@ -2491,5 +2491,72 @@ interface SaveButtonProps {
 13. Ahora si probando el nuevo botón para crear una _company_: <br> ![Insertar Empresa Test](images/2025-06-24_071118.gif "Insertar Empresa Test")
 14. En el archivo **`src\supabase\crudCompanies.tsx`**, le agrego al momento del proceso con `supabase`que al final despues del `select()` otra función `maybeSingle()`.
 15. Para probar de nuevo, borremos el último registro de la tabla  `companies` en `Supabase`, y así se ve el contenido en la consola después de la prueba: <br> ![maybeSingle()](images/2025-06-24_074837.png "maybeSingle()")
-16. 
+
+
+
+### Mostrar usuarios (04:16:08)
+
+1. Borremos o comentemos el botón de pruebas del archivo **`src/components/templates/LoginTemplate.tsx`**.
+2. Borremos o comentemos la función `insertCompanyTest()` y lo que se relaciona con esto dentro de este archivo.
+3. Abrimos el archivo **`src/store/AuthStore.tsx`**.
+4. En la _key_ de nombre `loginGoogle`, llevamos el contenido de `supabase` a un objeto para deserializar:
+```js
+    const { data, error } = await supabase.auth.signInWithOAuth()
+```
+5. Dentro de esta misma _key_ aprovechamos si hay valores en `data` o en `error`, simplemente lo dejamos como mensaje en la consola, por ahora:
+```js
+    if (error) {
+      console.log('Error signing in with Google:', error.message);
+    }
+    if (data) {
+      console.log('Successfully signed in with Google:', data);
+    }
+```
+6. Creamos el archivo **`src/supabase/crudUsers.tsx`**.
+7. Empiezo importando a `{ supabase }` y a `Swal`, mas la definición de `tableName`:
+```js
+import { supabase } from '../index.ts';
+
+const tableName = 'users';
+```
+8. Luego creo la función exportable y asincrónica de nombre `getUser()`:
+```js
+export async function getUser(userId: string): Promise<unknown> {
+  const { data } = await supabase
+    .from(tableName)
+    .select('*')
+    .eq('id_auth', userId)
+    .maybeSingle();
+
+  return data;
+}
+```
+9. Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
+10. Oculto o comento todos los `console.log` que muestran `authState` en:
+* **`HomeTemplate.tsx`**
+* **`ProtectedRoutes.tsx`**
+* **`MyRoutes`**
+11.  Agrego en el archivo **`src/context/AuthContext.tsx`**, en la importación del `index.ts`, el nuevo `getUser`:
+```js
+import { supabase, getUser } from '../index.ts';
+```
+12. Debajo del _hook_ de tipo `useEffect`, creamos una función tipo flecha de nombre `insertUser()`:
+```js
+  const insertUser = async (userId: string) => {
+    const response = await getUser(userId);
+    if (!response) {
+      console.error('User not found');
+    }
+  };
+```
+13. Dentro del `useEffect`, justo cuando definimos este <br>`setAuthState(session?.user);`<br> llamamos la función nueva de `insertUser()`:
+```js
+      if (session == null) {
+        setAuthState(null);
+      } else {
+        setAuthState(session?.user || null);
+        insertUser(session?.user?.id || '');
+      }
+```
+
 

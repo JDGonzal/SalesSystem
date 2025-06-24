@@ -6,7 +6,7 @@ import {
   Linea,
   Footer,
   useAuthStore,
-  useCompanyStore,
+  // useCompanyStore,
 } from '../../index.ts';
 import { v } from '../../styles/variables.ts';
 import { Device } from '../../styles/breakpoints.ts';
@@ -53,7 +53,7 @@ const ContentLogo = styled.section`
 
 function LoginTemplate() {
   const { loginGoogle } = useAuthStore();
-  const { insertCompany } = useCompanyStore();
+  /*const { insertCompany } = useCompanyStore();
   async function insertCompanyTest() {
     const company = {
       name: 'Test Company',
@@ -64,7 +64,7 @@ function LoginTemplate() {
       email: 'correo@server.com',
     };
     await insertCompany(company);
-  }
+  }*/
   return (
     <Container>
       <div className='card'>
@@ -112,10 +112,10 @@ function LoginTemplate() {
           width='100%'
           icono={<v.iconogoogle />}
         />
-        <SaveButton
+        {/*<SaveButton
           funcion={insertCompanyTest}
           titulo='Insertar Empresa Test'
-        />
+        />*/}
       </div>
 
       <Footer />
