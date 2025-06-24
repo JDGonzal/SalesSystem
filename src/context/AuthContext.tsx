@@ -5,12 +5,12 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { supabase } from '../supabase/supabase.config';
+import { supabase, getUser } from '../index.ts';
 import type { User } from '@supabase/supabase-js';
 
-type AuthContextType ={
+type AuthContextType = {
   authState: User | null | [];
-}
+};
 const AuthContext = createContext<AuthContextType>({ authState: null });
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -22,11 +22,12 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.info('Event:', event, 'session:', session);
+      console.info('Event:', event , 'session:', session);
       if (session == null) {
         setAuthState(null);
       } else {
-        setAuthState(session?.user);
+        setAuthState(session?.user || null);
+        insertUser(session?.user?.id || '');
       }
     });
 
@@ -36,6 +37,14 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       // data?.subscription?.unsubscribe(); // Copilot
     };
   }, []);
+
+  const insertUser = async (userId: string) => {
+    const response = await getUser(userId);
+    if (!response) {
+      console.error('User not found');
+    }
+  };
+
   return (
     <AuthContext.Provider value={{ authState }}>
       {children}

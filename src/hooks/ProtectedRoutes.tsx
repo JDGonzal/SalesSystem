@@ -11,7 +11,7 @@ export const ProtectedRoutes = ({
   redirectTo: string;
   children?: ReactNode;
 }) => {
-  console.info('ProtectedRoutes user:', authState);
+  // console.info('ProtectedRoutes user:', authState);
   if (authState === null) {
     return <Navigate to={redirectTo} replace />;
   }
