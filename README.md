@@ -2374,3 +2374,122 @@ export async function GetCategoriesByCompanyId(id_company: number) {
 ```
 5. Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
 
+
+### Probando insertar empresa (04:04:00)
+
+1. Empezamos creando el archivo **`src/supabase/crudCompanies.tsx`**.
+2. Empezamos importando `{supabase}` y `Swal` y la constante `tableName`:
+```js
+import { supabase } from '../index.ts';
+import Swal from 'sweetalert2';
+
+const tableName = 'companies';
+```
+3. Creamos la función `InsertCompany()` asincrónica y exportable, con algo de código:
+```js
+export async function InsertCompany(company: {
+  name: string;
+  cnpj: string;
+  logo: string;
+  address: string;
+  phone: string;
+  email: string;
+}) {
+  const { data, error } = await supabase.from(tableName).insert(company).select();
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return null;
+  }
+  return data;
+}
+```
+4.  Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
+5. Creamos este archivo **`src\store\CompanyStore.tsx`**.
+6. Empiezo importando elementos de `zustand` y de `supabase` y teniendo una _interface_ lista:
+```js
+import { create } from 'zustand';
+
+interface CompanyStore {
+  
+}
+```
+7. Creo una función tipo flecha exportable de nombre `useCompanyStore()`:
+```js
+export const useCompanyStore = create<CompanyStore>((set) => ({
+  
+}));
+```
+7. Empezamos con el primer objeto de nombre `inserCompany` y la definimos arriba la _interface_ de nombre `CompanyStore`:
+```js
+import { create } from 'zustand';
+import { InsertCompany } from '../index.ts';
+type companyType = {
+  name: string;
+  cnpj: string;
+  logo: string;
+  address: string;
+  phone: string;
+  email: string;
+};
+
+interface CompanyStore {
+  insertCompany: (company: companyType) => Promise<void>;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const useCompanyStore = create<CompanyStore>((set) => ({
+  insertCompany: async (company: companyType) => {
+    const data =  await InsertCompany(company);
+    console.log('Company inserted:', data);
+  },
+}));
+```
+8. Abrimos el archivo **`src/components/templates/LoginTemplate.tsx`**.
+9. Creo una constante deserializando el contenido de la nueva `useComanyStore()`:
+```js
+  const { insertCompany } = useCompanyStore();
+```
+10. Creamos una función de pruebas llamada `insertEmpresa()`,asíncrona y le cargamos un dato de pruebas:
+```js
+  const { insertCompany } = useCompanyStore();
+  async function insertCompanyTest() {
+    const company = {
+      name: 'Test Company',
+      cnpj: '1515151212',
+      logo: 'https://example.com/logo.png',
+      address: '123 Test St, Test City, TC 12345-678',  
+      phone: '1234567890',
+      email: 'correo@server.com'
+    }
+    await insertCompany(company);
+  }
+```
+11. Añado abajo un renderizado del componente `<SaveButton`, antews de cerrar el `</div>`:
+```js
+        <SaveButton
+          funcion={insertCompanyTest}
+          titulo='Insertar Empresa Test'
+          />
+```
+12. Ajusto en el componente `SaveButton`, para que alguanas propiedades sean Opcionales:
+```js
+interface SaveButtonProps {  
+  funcion?: ()=> void; // Optional, to pass a function on click
+  titulo: string;
+  bgcolor?: string; // Optional, to set the background color of the button|
+  icono?: JSX.Element; // Optional, import type { JSX } from 'react';
+  url?: string; // Optional, if you want to use it as a link
+  color?: string; // Optional, to set the text color of the button
+  disabled?: boolean; // Optional, if you want to disable the button
+  width?: string; // Optional, to set the width of the button
+}
+```
+13. Ahora si probando el nuevo botón para crear una _company_: <br> ![Insertar Empresa Test](images/2025-06-24_071118.gif "Insertar Empresa Test")
+14. En el archivo **`src\supabase\crudCompanies.tsx`**, le agrego al momento del proceso con `supabase`que al final despues del `select()` otra función `maybeSingle()`.
+15. Para probar de nuevo, borremos el último registro de la tabla  `companies` en `Supabase`, y así se ve el contenido en la consola después de la prueba: <br> ![maybeSingle()](images/2025-06-24_074837.png "maybeSingle()")
+16. 
+

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { supabase } from '../supabase/supabase.config';
+import { supabase } from '../index.ts';
 
 interface AuthStore {
   loginGoogle: () => Promise<void>;

@@ -6,10 +6,10 @@ import type { JSX } from 'react';
 interface SaveButtonProps {  
   funcion?: ()=> void; // Optional, to pass a function on click
   titulo: string;
-  bgcolor: string; 
-  icono?: JSX.Element; // import type { JSX } from 'react';
+  bgcolor?: string; // Optional, to set the background color of the button|
+  icono?: JSX.Element; // Optional, import type { JSX } from 'react';
   url?: string; // Optional, if you want to use it as a link
-  color: string; // Optional, to set the text color of the button
+  color?: string; // Optional, to set the text color of the button
   disabled?: boolean; // Optional, if you want to disable the button
   width?: string; // Optional, to set the width of the button
 }
