@@ -19,3 +19,7 @@ VALUES
     ('Empresa Ejemplo', '12345678000195'),
     ('Otra Empresa', '98765432000176');
 COMMIT;
+
+-- Add a new column `id_auth` to the `companies` table
+ALTER TABLE companies
+ADD COLUMN IF NOT EXISTS id_auth VARCHAR(36) UNIQUE;
