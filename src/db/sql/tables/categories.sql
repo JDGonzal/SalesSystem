@@ -1,4 +1,4 @@
--- Create tje `categories` table
+-- Create the `categories` table
 DROP TABLE IF EXISTS categories;
 CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,

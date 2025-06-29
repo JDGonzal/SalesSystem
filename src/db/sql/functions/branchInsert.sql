@@ -1,5 +1,5 @@
--- Create the `fnc_branch_insert` function to insert a new company into the database.
-CREATE OR REPLACE FUNCTION fnc_branch_insert()
+-- Create the `fnc_after_users_insert` function to insert a new branch into the database.
+CREATE OR REPLACE FUNCTION fnc_after_users_insert()
 RETURNS TRIGGER LANGUAGE plpgsql AS $$
 BEGIN
     -- Insert the new company into the `companies` table
@@ -21,4 +21,12 @@ BEGIN
     RETURN NEW;
 END
 $$;
+
 COMMIT;
+
+-- !Delete this function because it will be on `fnc_after_companies_insert`
+DROP FUNCTION IF EXISTS fnc_after_users_insert() CASCADE;
+
+/* ### Insertando Sucursales (03:13:30)
+  * No fue ejecutado en `Supabase`
+*/

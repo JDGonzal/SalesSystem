@@ -1,8 +1,8 @@
--- Create the `companyInsert` function to insert a new company into the database.
-CREATE OR REPLACE FUNCTION fnc_company_insert()
+-- Create the `fnc_after_companies_insert` function to insert a new elements after insert in `companies` table.
+CREATE OR REPLACE FUNCTION fnc_after_companies_insert()
 RETURNS TRIGGER LANGUAGE plpgsql AS $$
 BEGIN
-    -- Insert the new company into the `companies` table
+    -- Insert the new doc-Types into the `doc_types` table
     INSERT INTO doc_types (name, description, id_company)
     VALUES
         (CONCAT('CC',CAST(NEW.id AS VARCHAR)), 'Cédula de Ciudadanía', NEW.id),
@@ -10,9 +10,13 @@ BEGIN
         (CONCAT('RG',CAST(NEW.id AS VARCHAR)), 'Registro Geral', NEW.id),
         (CONCAT('CE',CAST(NEW.id AS VARCHAR)), 'Cédula de Extranjería', NEW.id),
         (CONCAT('Pasaporte',CAST(NEW.id AS VARCHAR)), 'Documento de viaje internacional', NEW.id);
-
+    -- Insert the new branches into the `branches` table
+    INSERT INTO branches (name, address, phone, email, id_company, logo, currency)
+    VALUES
+        (NEW.name, NEW.address, NEW.phone, NEW.email, NEW.id, NEW.logo, NEW.currency);
     -- Return the new row
     RETURN NEW;
 END
 $$;
+
 COMMIT;

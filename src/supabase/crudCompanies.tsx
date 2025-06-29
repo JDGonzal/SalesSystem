@@ -10,6 +10,7 @@ export async function InsertCompany(company: {
   address: string;
   phone: string;
   email: string;
+  id_auth: string;
 }) {
   const { data, error } = await supabase.from(tableName).insert(company).select().maybeSingle();
   if (error) {

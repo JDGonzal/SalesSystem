@@ -7,9 +7,10 @@ CREATE TABLE IF NOT EXISTS roles (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
--- Add foreign key constraint to `users` table
+-- Add foreign key from `users` to `roles` table
 ALTER TABLE users
 ADD CONSTRAINT fk_role FOREIGN KEY (id_role) REFERENCES roles(id) ON DELETE CASCADE;
+
 -- Insert initial data into `roles`
 INSERT INTO roles (name, description) VALUES
 ('Admin', 'Administrador del sistema'),

@@ -9,14 +9,17 @@ CREATE TABLE IF NOT EXISTS doc_types (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
--- Add foreign key constraint to `users` table
+-- Add foreign key from `users` to `doc_types` table
 ALTER TABLE users 
-ADD CONSTRAINT fk_doc_type FOREIGN KEY (id_type) REFERENCES doc_types(id) ON DELETE CASCADE;
+    ADD CONSTRAINT fk_doc_type FOREIGN KEY (id_type) REFERENCES doc_types(id) ON DELETE CASCADE;
+-- Add foreign key from `doc_types` to `companies` table
+ALTER TABLE doc_types 
+    ADD CONSTRAINT fk_company FOREIGN KEY (id_company) REFERENCES companies(id) ON DELETE CASCADE;  
 -- Insert initial data into `doc_types`
-INSERT INTO doc_types (name, description, id_company) VALUES
-('CC', 'Cédula de Ciudadanía', 1),
-('NIT', 'Registro Nacional de Persona Jurídica', 1),
-('RG', 'Registro Geral', 1),
-('CE', 'Cédula de Extranjería', 1),
-('Pasaporte', 'Documento de viaje internacional', 1);
-COMMIT;
+-- INSERT INTO doc_types (name, description, id_company) VALUES
+-- ('CC', 'Cédula de Ciudadanía', 1),
+-- ('NIT', 'Registro Nacional de Persona Jurídica', 1),
+-- ('RG', 'Registro Geral', 1),
+-- ('CE', 'Cédula de Extranjería', 1),
+-- ('Pasaporte', 'Documento de viaje internacional', 1);
+-- COMMIT;

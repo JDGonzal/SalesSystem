@@ -2519,9 +2519,9 @@ import { supabase } from '../index.ts';
 
 const tableName = 'users';
 ```
-8. Luego creo la función exportable y asincrónica de nombre `getUser()`:
+8. Luego creo la función exportable y asincrónica de nombre `GetUser()`:
 ```js
-export async function getUser(userId: string): Promise<unknown> {
+export async function GetUser(userId: string): Promise<unknown> {
   const { data } = await supabase
     .from(tableName)
     .select('*')
@@ -2536,14 +2536,14 @@ export async function getUser(userId: string): Promise<unknown> {
 * **`HomeTemplate.tsx`**
 * **`ProtectedRoutes.tsx`**
 * **`MyRoutes`**
-11.  Agrego en el archivo **`src/context/AuthContext.tsx`**, en la importación del `index.ts`, el nuevo `getUser`:
+11.  Agrego en el archivo **`src/context/AuthContext.tsx`**, en la importación del `index.ts`, el nuevo `GetUser`:
 ```js
-import { supabase, getUser } from '../index.ts';
+import { supabase, GetUser } from '../index.ts';
 ```
 12. Debajo del _hook_ de tipo `useEffect`, creamos una función tipo flecha de nombre `insertUser()`:
 ```js
   const insertUser = async (userId: string) => {
-    const response = await getUser(userId);
+    const response = await GetUser(userId);
     if (!response) {
       console.error('User not found');
     }
@@ -2569,4 +2569,203 @@ ALTER TABLE companies
 ADD COLUMN IF NOT EXISTS id_auth VARCHAR(36) UNIQUE;
 ```
 2. Ya con eso tenemos una columna nueva en la tabla de `companies`.
+
+
+### Insertando usuarios (04:29:38)
+
+1. Creamos el archivo **`src/db/sql/tables/branchAssignment.sql`**, que luego ejecutaremos en `Supabase`, para crear una nueva tabla:
+```sql
+-- Create the `branch_assignments` table
+DROP TABLE IF EXISTS branch_assignments;
+CREATE TABLE IF NOT EXISTS branch_assignments (
+    id SERIAL PRIMARY KEY,
+    id_branch INT NOT NULL,
+    id_user INT NOT NULL,
+    role VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_branch FOREIGN KEY (id_branch) REFERENCES branches(id) ON DELETE CASCADE,
+    CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
+);
+```
+2. Arreglamos la tabla `branches` y añadimos lo siguiente en el archivo **`src/db/sql/tables/branches.sql`**, para luego ejecutar en `Supabase`:
+```sql
+-- Delete the `id_user` column from the `branches` table
+ALTER TABLE branches
+    DROP COLUMN IF EXISTS id_user;
+-- Add a new columns `cnpj`, `logo`, `currency` to the `branches` table
+ALTER TABLE branches
+    ADD COLUMN IF NOT EXISTS logo VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS currency VARCHAR(10) DEFAULT '$';
+-- Add a check constraint for the `currency` column
+ALTER TABLE branches
+    ADD CONSTRAINT chk_currency CHECK (currency IN ('$','€','£','¥','₩','₹','₽','₺','₪','₫'));
+```
+3. Abrimos el archivo **`src/db/sqltables/companies.sql`**, para borrar el contenido, antes de crear la nueva columna `id_auth`, la misma que borramos antes de volverla a crear, para que la nueva columna `id_auth` quede con `NOT NULL`
+```sql
+-- Delete all content from the `companies` table
+DELETE FROM companies;
+-- Delete the `id_auth` column from the `companies` table
+ALTER TABLE companies
+    DROP COLUMN IF EXISTS id_auth;
+-- Add a new column `id_auth` to the `companies` table
+ALTER TABLE companies
+    ADD COLUMN IF NOT EXISTS id_auth VARCHAR(36) UNIQUE NOT NULL;
+```
+4. Abrimos el archivo **`src/context/AuthContext.tsx`**, ela función de flecha `insertUser()`, en el condicional ponemos el `else` y llamamos la función `InsertCompany`,y en los parámetros agregamos el nuevo campo `id_auth`, con el valor de `userId`:
+```js
+    if (!response) {
+      console.error('User not found');
+    } else {
+      await InsertCompany({
+        name: session?.user.user_metadata?.full_name || session?.user?.id,
+        cnpj: '',
+        logo: session?.user.user_metadata?.picture ||'',
+        address: '',
+        phone: session?.user?.phone || '',
+        email: session?.user?.email || '',
+        id_auth: session?.user?.id,
+      });
+    }
+```
+5. Se grega una resir de interfaces que hacen referencia a la session:
+```js
+export interface SessionInterface {
+  provider_token: string;
+  access_token:   string;
+  expires_in:     number;
+  expires_at:     number;
+  refresh_token:  string;
+  token_type:     string;
+  user:           UserInterface;
+}
+
+export interface UserInterface {
+  id:                 string;
+  aud:                string;
+  role:               string;
+  email:              string;
+  email_confirmed_at: Date;
+  phone:              string;
+  confirmed_at:       Date;
+  last_sign_in_at:    Date;
+  app_metadata:       AppMetadataInterface;
+  user_metadata:      DataInterface;
+  identities:         IdentityInterface[];
+  created_at:         Date;
+  updated_at:         Date;
+  is_anonymous:       boolean;
+}
+
+export interface AppMetadataInterface {
+  provider:  string;
+  providers: string[];
+}
+
+export interface IdentityInterface {
+  identity_id:     string;
+  id:              string;
+  user_id:         string;
+  identity_data:   DataInterface;
+  provider:        string;
+  last_sign_in_at: Date;
+  created_at:      Date;
+  updated_at:      Date;
+  email:           string;
+}
+
+export interface DataInterface {
+  avatar_url:     string;
+  email:          string;
+  email_verified: boolean;
+  full_name:      string;
+  iss:            string;
+  name:           string;
+  phone_verified: boolean;
+  picture:        string;
+  provider_id:    string;
+  sub:            string;
+}
+```
+6. Cosa que al llamar la función `insertUser()`, lo hagamos con los parámetros de enviar la `session`:
+```js
+        insertUser(session as unknown as SessionInterface);
+```
+7. Abrimos el archivo **`src\supabase\crudCompanies.tsx`**, y se añade el nuevo parámetro de `id_auth`.
+8. Hacemos la prueba, autenticándonos de nuevo y viendo que se crea el nuevo registro en la tabla `companies`: <br>![Hacer `Login` y crear registro en `companies`](images/2025-06-28_170935.gif "Hacer `Login` y crear registro en `companies`")
+9. El error que nos sale una vez se ingresa es porque la búsqueda del usuario se hace en la tabla `users` y hasta ahora el `id_auth`, solo se ha ingresado en la tabla `companies`: <br> ![Error: duplicate key](images/2025-06-28_171145.png "Error: duplicate key")
+10. Volvemos al archivo **`src/supabase/crudUsers.tsx`**, añadimos una función exportable y asincrónica de nombre `InsertAdminUser()`:
+```js
+export async function InsertAdminUser(user: {
+  username: string;
+  email: string;
+  password_hash: string;
+  name: string;
+  id_type: number;
+  document: string;
+  phone: string;
+  id_role: number;
+  address: string;
+  id_auth: string;
+  is_active: boolean;
+}): Promise<unknown> {
+  if (!user.id_auth) {
+    throw new Error('User ID is required');
+  }
+  
+  const { data, error } = await supabase
+    .from(tableName)
+    .insert([user])
+    .select()
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+} 
+```
+11. Volvemos a **`src/context/AuthContext.tsx`**, ponemos en las importaciones del `index.ts`, la nueva función `InsertAdminUser` y la llamamos debajo de `InsertCompany()`:
+```js
+      await InsertAdminUser({
+        username: session?.user.user_metadata?.full_name || session?.user?.id,
+        email: session?.user?.email || '',
+        password_hash: '', // Password hash should be handled securely
+        name: session?.user.user_metadata?.full_name || '',
+        id_type: 1, // Assuming 1 is the ID for 'company'
+        document: session?.user?.id.slice(-12), // Example document
+        phone: session?.user?.phone || '',
+        id_role: 1, // Assuming 1 is the ID for 'admin'
+        address: '', // Address can be added later
+        id_auth: session?.user?.id,
+        is_active: true,
+      });
+```
+12. Creamos el achivo **`src/db/sql/db_20250629.sql`**, que ejecuta toda la creación de tablas, índices,funciones y disparadores, para ser ejecutada en `Supabase`.
+13. Ya tenemos de nuevo toda la BD creada: <br> ![Database Schema 3](images/2025-06-29_162937.png "Database Schema 3")
+14. Creamos este archivo **`src/supabase/crudDocTypes.tsx`**, con este código:
+```js
+import { supabase } from '../index.ts';
+
+const tableName = 'doc_types';
+
+export async function GetDocType(companyId: string): Promise<unknown> {
+  if (!companyId) {
+    throw new Error('User ID is required');
+  }
+  const { data } = await supabase
+    .from(tableName)
+    .select('*')
+    .eq('id_company', companyId)
+    .maybeSingle();
+
+  return data;
+}
+
+```
+15. Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
+
+>[!WARNING]  
+>No ejecutamos pruebas. Por ahora faltan procesos para que funcione correctamente.
 
