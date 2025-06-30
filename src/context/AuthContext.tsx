@@ -5,7 +5,17 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { supabase, GetUser, InsertCompany, InsertAdminUser } from '../index.ts';
+import {
+  supabase,
+  GetUser,
+  InsertCompany,
+  InsertAdminUser,
+  GetDocType,
+  type docTypeInterface,
+  GetRoleByName,
+  type rolesInterface,
+  type CompanyInterface,
+} from '../index.ts';
 import type { User } from '@supabase/supabase-js';
 
 export interface SessionInterface {
@@ -15,10 +25,9 @@ export interface SessionInterface {
   expires_at: number;
   refresh_token: string;
   token_type: string;
-  user: UserInterface;
+  user: SessionUserInterface;
 }
-
-export interface UserInterface {
+export interface SessionUserInterface {
   id: string;
   aud: string;
   role: string;
@@ -27,24 +36,24 @@ export interface UserInterface {
   phone: string;
   confirmed_at: Date;
   last_sign_in_at: Date;
-  app_metadata: AppMetadataInterface;
-  user_metadata: DataInterface;
-  identities: IdentityInterface[];
+  app_metadata: SessionAppMetadataInterface;
+  user_metadata: SessionDataInterface;
+  identities: SessionIdentityInterface[];
   created_at: Date;
   updated_at: Date;
   is_anonymous: boolean;
 }
 
-export interface AppMetadataInterface {
+export interface SessionAppMetadataInterface {
   provider: string;
   providers: string[];
 }
 
-export interface IdentityInterface {
+export interface SessionIdentityInterface {
   identity_id: string;
   id: string;
   user_id: string;
-  identity_data: DataInterface;
+  identity_data: SessionDataInterface;
   provider: string;
   last_sign_in_at: Date;
   created_at: Date;
@@ -52,7 +61,7 @@ export interface IdentityInterface {
   email: string;
 }
 
-export interface DataInterface {
+export interface SessionDataInterface {
   avatar_url: string;
   email: string;
   email_verified: boolean;
@@ -96,35 +105,38 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const insertUser = async (session: SessionInterface) => {
-    const response = await GetUser(session?.user?.id || '');
-    if (response) {
-      console.info('User already exists:', response);
-    } else {
-      await InsertCompany({
+    const resUser = await GetUser(session?.user?.id || '');
+    if (!resUser) {
+      const resCompany = (await InsertCompany({
         name: session?.user.user_metadata?.full_name || session?.user?.id,
-        cnpj: session?.user?.id.slice(-12),
+        tax_id: session?.user?.id.slice(-12),
         logo: session?.user.user_metadata?.picture || '',
         address: '',
         phone: session?.user?.phone || '',
         email: session?.user?.email || '',
         id_auth: session?.user?.id,
-      });
-      
+      })) as CompanyInterface;
 
-      await InsertAdminUser({
-        username: session?.user?.email || session?.user?.id,
-        email: session?.user?.email || '',
-        password_hash: '', // Password hash should be handled securely
-        name: session?.user.user_metadata?.full_name || '',
-        id_type: 1, // Assuming 1 is the ID for 'company'
-        document: session?.user?.id.slice(-12), // Example document
-        phone: session?.user?.phone || '',
-        id_role: 1, // Assuming 1 is the ID for 'admin'
-        address: '', // Address can be added later
-        id_auth: session?.user?.id,
-        is_active: true,
-      });
+      if (resCompany) {
+        const resDocType = (await GetDocType(
+          resCompany.id
+        )) as docTypeInterface;
 
+        const resRole = (await GetRoleByName('admin')) as rolesInterface;
+
+        await InsertAdminUser({
+          email: resCompany?.email || session?.user?.email,
+          password_hash: '', // Password hash should be handled securely
+          name: resCompany?.name || session?.user.user_metadata?.full_name,
+          id_type: resDocType?.id || 1, // Assuming docType has an id field
+          document: resCompany?.tax_id || session?.user?.id.slice(-12), // Example document
+          phone: resCompany?.phone || session?.user?.phone,
+          id_role: resRole?.id || 1, // Assuming 1 is the ID for 'admin'
+          address: resCompany?.address || '', // Address can be added later
+          id_auth: resCompany?.id_auth || session?.user?.id,
+          is_active: true,
+        });
+      }
     }
   };
 

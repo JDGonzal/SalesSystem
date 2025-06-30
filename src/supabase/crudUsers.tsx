@@ -2,6 +2,20 @@ import { supabase } from '../index.ts';
 
 const tableName = 'users';
 
+export interface UserInterface {
+  id: number;
+  email: string;
+  password_hash: string;
+  name: string;
+  id_type: number;
+  document: string;
+  phone: string;
+  id_role: number;
+  address: string;
+  id_auth: string;
+  is_active: boolean;
+}
+
 export async function GetUser(userId: string): Promise<unknown> {
   if (!userId) {
     throw new Error('User ID is required');
@@ -12,11 +26,10 @@ export async function GetUser(userId: string): Promise<unknown> {
     .eq('id_auth', userId)
     .maybeSingle();
 
-  return data;
+  return data as UserInterface;
 }
 
 export async function InsertAdminUser(user: {
-  username: string;
   email: string;
   password_hash: string;
   name: string;
@@ -42,5 +55,5 @@ export async function InsertAdminUser(user: {
     throw error;
   }
 
-  return data;
+  return data as UserInterface;
 } 

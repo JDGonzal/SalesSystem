@@ -2640,51 +2640,51 @@ export interface SessionInterface {
   user:           UserInterface;
 }
 
-export interface UserInterface {
-  id:                 string;
-  aud:                string;
-  role:               string;
-  email:              string;
+export interface SessionUserInterface {
+  id: string;
+  aud: string;
+  role: string;
+  email: string;
   email_confirmed_at: Date;
-  phone:              string;
-  confirmed_at:       Date;
-  last_sign_in_at:    Date;
-  app_metadata:       AppMetadataInterface;
-  user_metadata:      DataInterface;
-  identities:         IdentityInterface[];
-  created_at:         Date;
-  updated_at:         Date;
-  is_anonymous:       boolean;
+  phone: string;
+  confirmed_at: Date;
+  last_sign_in_at: Date;
+  app_metadata: SessionAppMetadataInterface;
+  user_metadata: SessionDataInterface;
+  identities: SessionIdentityInterface[];
+  created_at: Date;
+  updated_at: Date;
+  is_anonymous: boolean;
 }
 
-export interface AppMetadataInterface {
-  provider:  string;
+export interface SessionAppMetadataInterface {
+  provider: string;
   providers: string[];
 }
 
-export interface IdentityInterface {
-  identity_id:     string;
-  id:              string;
-  user_id:         string;
-  identity_data:   DataInterface;
-  provider:        string;
+export interface SessionIdentityInterface {
+  identity_id: string;
+  id: string;
+  user_id: string;
+  identity_data: SessionDataInterface;
+  provider: string;
   last_sign_in_at: Date;
-  created_at:      Date;
-  updated_at:      Date;
-  email:           string;
+  created_at: Date;
+  updated_at: Date;
+  email: string;
 }
 
-export interface DataInterface {
-  avatar_url:     string;
-  email:          string;
+export interface SessionDataInterface {
+  avatar_url: string;
+  email: string;
   email_verified: boolean;
-  full_name:      string;
-  iss:            string;
-  name:           string;
+  full_name: string;
+  iss: string;
+  name: string;
   phone_verified: boolean;
-  picture:        string;
-  provider_id:    string;
-  sub:            string;
+  picture: string;
+  provider_id: string;
+  sub: string;
 }
 ```
 6. Cosa que al llamar la función `insertUser()`, lo hagamos con los parámetros de enviar la `session`:
@@ -2697,7 +2697,6 @@ export interface DataInterface {
 10. Volvemos al archivo **`src/supabase/crudUsers.tsx`**, añadimos una función exportable y asincrónica de nombre `InsertAdminUser()`:
 ```js
 export async function InsertAdminUser(user: {
-  username: string;
   email: string;
   password_hash: string;
   name: string;
@@ -2729,7 +2728,6 @@ export async function InsertAdminUser(user: {
 11. Volvemos a **`src/context/AuthContext.tsx`**, ponemos en las importaciones del `index.ts`, la nueva función `InsertAdminUser` y la llamamos debajo de `InsertCompany()`:
 ```js
       await InsertAdminUser({
-        username: session?.user.user_metadata?.full_name || session?.user?.id,
         email: session?.user?.email || '',
         password_hash: '', // Password hash should be handled securely
         name: session?.user.user_metadata?.full_name || '',
@@ -2768,4 +2766,117 @@ export async function GetDocType(companyId: string): Promise<unknown> {
 
 >[!WARNING]  
 >No ejecutamos pruebas. Por ahora faltan procesos para que funcione correctamente.
+
+
+### Registrando varios usuarios (04:40:45)
+
+1. Abrimos el archivo **`src/context/AuthContext.tsx`** y estamos llamando las funciones `InsertCompany()` y `InsertAdminUser()`, le agregamos al momento de `InsertCompany()`, asignar el valor obtenido a una constante de nombre `company`.
+2. En el archivo **`src/supabase/crudDocTypes.tsx`**, defino una _interface_ para `docType`:
+```js
+export interface docTypeInterface  {
+  id: number;
+  name: string;
+  description: string;
+  id_company: string;
+};
+
+export async function GetDocType(companyId: string): Promise<unknown> {
+  if (!companyId) {
+    throw new Error('User ID is required');
+  }
+  const { data, error } = await supabase...
+  return data as docTypeInterface;
+}
+```
+3. Luego llamamos la función `GetDocType()` con un `await` y lo asignamos a la constante `resDocType`:
+```js
+      const resCompany =await InsertCompany({
+        ...
+      });
+      
+      const resDocType = await GetDocType(resCompany.id) as docTypeInterface;
+      console.info('get docType:', resDocType);
+```
+4. la función `InsertAdminUser()`, la mejoro con los datos ya obtenidos tantto en `resCompany`, como en `resDocType`:
+```js
+      await InsertAdminUser({
+        email: resCompany?.email || session?.user?.email,
+        password_hash: '', // Password hash should be handled securely
+        name: resCompany?.name || session?.user.user_metadata?.full_name,
+        id_type: resDocType?.id || 1, // Assuming docType has an id field
+        document: resCompany?.tax_id || session?.user?.id.slice(-12), // Example document
+        phone: resCompany?.phone || session?.user?.phone,
+        id_role: 1, // Assuming 1 is the ID for 'admin'
+        address: resCompany?.address || '', // Address can be added later
+        id_auth: resCompany?.id_auth || session?.user?.id,
+        is_active: true,
+      });
+```
+5. Creamos el archivo **``**, para el manejo de roles:
+```js
+import { supabase } from '../index.ts';
+
+const tableName = 'roles';
+
+export interface rolesInterface  {
+  id: number;
+  name: string;
+  description: string;
+};
+
+export async function GetRoleByName(roleName: string): Promise<unknown> {
+  if (!roleName) {
+    throw new Error('Role Name is required');
+  }
+  const { data, error } = await supabase
+    .from(tableName)
+    .select('*')
+    .eq('name', roleName)
+    .maybeSingle();
+  if (error) {
+    return null;
+  }
+  return data as rolesInterface;
+}
+```
+6. Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
+7. Regresamos al archivo **`src/context/AuthContext.tsx`** y llamo la nueva función `GetRoleByName()`:
+```js
+      const resRole = await GetRoleByName('admin') as rolesInterface;
+
+      await InsertAdminUser({
+        ...
+        id_role: resRole?.id || 1, // Assuming 1 is the ID for 'admin'
+        ...
+      });
+```
+8. Agrego al archivo **`src/supabase/crudCompanies.tsx`** el exportable de la _interface_ de nombre `CompanyInterface`.
+9. Agrego al archivo **`src/supabase/crudUsers.tsx`** el exportable de la _interface_ de nombre `UserInterface`.
+10. Corrijo conflictos en el archivo **`src/context/AuthContext.tsx`**, para la _interface_ de los elementos de la _session_.
+11. En el archivo **`src/supabase/crudCompanies.tsx`**, quito lo relacionado con `Swal`.
+12. El el **`src/context/AuthContext.tsx`**, agrego un condicional si el `resCompany` obtuve algo:
+```js
+const insertUser = async (session: SessionInterface) => {
+    const resUser = await GetUser(session?.user?.id || '');
+    if (!resUser) {
+      const resCompany = (await InsertCompany({
+        ...
+      })) as CompanyInterface;
+
+      if (resCompany) {
+        const resDocType = (await GetDocType(
+          resCompany.id
+        )) as docTypeInterface;
+
+        const resRole = (await GetRoleByName('admin')) as rolesInterface;
+
+        await InsertAdminUser({
+          ...
+        });
+      }
+    }
+  };
+```
+13. Probamos si ya almacena los datos una vez hace el ingreso del _Login_ de `Google`: <br> ![Creación de registros en `Companies`, `Users` y otros](images/2025-06-30_155038.gif "Creación de registros en `Companies`, `Users` y otros")
+
 
