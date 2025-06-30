@@ -25,6 +25,7 @@ export * from './styles/variables';
 export * from './supabase/crudCategories';
 export * from './supabase/crudCompanies';
 export * from './supabase/crudDocTypes';
+export * from './supabase/crudRoles';
 export * from './supabase/crudUsers';
 export * from './supabase/supabase.config';
 export * from './utils/dataEstatica';

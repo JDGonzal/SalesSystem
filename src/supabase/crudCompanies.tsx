@@ -1,11 +1,21 @@
 import { supabase } from '../index.ts';
-import Swal from 'sweetalert2';
 
 const tableName = 'companies';
 
+export interface CompanyInterface {
+  id: number;
+  name: string;
+  tax_id: string;
+  logo: string;
+  address: string;
+  phone: string;
+  email: string;
+  id_auth: string;
+}
+
 export async function InsertCompany(company: {
   name: string;
-  cnpj: string;
+  tax_id: string;
   logo: string;
   address: string;
   phone: string;
@@ -14,12 +24,8 @@ export async function InsertCompany(company: {
 }) {
   const { data, error } = await supabase.from(tableName).insert(company).select().maybeSingle();
   if (error) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: error.message,
-    });
+    console.error('Error inserting company:', error);
     return null;
   }
-  return data;
+  return data as CompanyInterface;
 }
