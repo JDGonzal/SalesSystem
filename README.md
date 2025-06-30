@@ -2880,3 +2880,64 @@ const insertUser = async (session: SessionInterface) => {
 13. Probamos si ya almacena los datos una vez hace el ingreso del _Login_ de `Google`: <br> ![Creación de registros en `Companies`, `Users` y otros](images/2025-06-30_155038.gif "Creación de registros en `Companies`, `Users` y otros")
 
 
+### Insertar asignación de sucursales (04:57:39)
+
+1. Copiamos el archivo **`db_20250629.sql`** en uno nuevo **`src/db/sql/db_20250630.sql`**
+2. Editamos el archivo **`src/db/sql/tables/branchAssignment.sql`**, para que el campo `id_user`, permita el _NULL_, y lo mismo en el respectivo **`db_20250630.sql`**.
+3. En el los mismos archivos quitamos el campo `id_role`.
+4. Ponemos un `CONSTRAINT` para que sean únicos el `id_branch` y el `id_user`:
+```sql
+-- Create the `branch_assignments` table
+DROP TABLE IF EXISTS branch_assignments;
+CREATE TABLE IF NOT EXISTS branch_assignments (
+    id SERIAL PRIMARY KEY,
+    id_branch INT NOT NULL,
+    id_user INT, -- NOT NULL,
+    --role VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_branch FOREIGN KEY (id_branch) REFERENCES branches(id) ON DELETE CASCADE,
+    CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT unique_branch_user UNIQUE (id_branch, id_user)
+);
+
+COMMIT;
+```
+5. Creamos el archivo **`src/db/sql/functions/userInsert.sql`** con la función `fnc_after_users_insert()`:
+```sql
+-- Create the `fnc_after_users_insert` function to insert a new elements after insert in `users` table.
+CREATE OR REPLACE FUNCTION fnc_after_users_insert()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+DECLARE new_id_branch INT;
+BEGIN
+    -- Select the last user ID to assign the new branch
+    SELECT MAX(id) INTO new_id_branch FROM branches;
+    -- Update the new user assignment into the `branch_assignments` table
+    INSERT INTO branch_assignments (id_branch, id_user)
+        VALUES (new_id_branch, NEW.id)
+        ON CONFLICT (id_branch, id_user) DO UPDATE
+        SET id_branch = EXCLUDED.id_branch, id_user = EXCLUDED.id_user;
+    -- Return the new row
+    RETURN NEW;
+END
+$$;
+
+COMMIT;
+```
+6. Creamos el archivo **`src/db/sql/triggers/userInsert.sql`**, será un _trigger_ para llamar la nueva función:
+```sql
+-- Create trigger to update branch assignment after a new user is inserted.
+CREATE OR REPLACE TRIGGER trg_after_users_insert
+  AFTER INSERT ON users
+  FOR EACH ROW
+  EXECUTE FUNCTION fnc_after_users_insert();
+
+COMMIT;
+```
+7. Añadimos estos dos nuevos _queries_ dentro del archivo **`db_20250630.sql`** y ejecutamos el contenido de **`db_20250630.sql`**, dentro de `Supabase`.
+>[!TIP]  
+>El instructor da muchas vueltas, añadiendo a la tabla `companies` un `id_user`, pero esto no es necesario.<br> Lo mismo que ingresar en la _function_ de BD de nombre `fnc_after_companies_insert()` el _insert_ en la tabla `branch_assignments`, cuando esto se puede dejar todo en la _function_ de BD de nombre `fnc_after_users_insert()`.
+8. Hacemos una prueba y este es el resultado: <br>![Agregando datos en `branch_assignments`](images/2025-06-30_183525.gif "Agregando datos en `branch_assignments`")
+
+
+
