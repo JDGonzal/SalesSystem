@@ -19,6 +19,7 @@ export { default as Login } from './pages/Login';
 export * from './routes/MyRoutes';
 export * from './store/AuthStore';
 export * from './store/CompanyStore';
+export * from './store/ModulesStore';
 export * from './store/ThemeStore';
 export * from './styles/GlobalStyles';
 export * from './styles/breakpoints';
