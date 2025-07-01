@@ -47,7 +47,7 @@ export const SecondarylinksArray = [
   {
     label: 'Configuración',
     icon: 'icon-park:setting-two',
-    to: '/configurar',
+    to: '/config',
     color: '#CE82FF',
   },
 ];
