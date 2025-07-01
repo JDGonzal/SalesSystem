@@ -2941,3 +2941,81 @@ COMMIT;
 
 
 
+
+### Diseño de pagina configuraciones (05:14:06)
+
+1. Creamos la página de nombre **`src/pages/Configurations.tsx`**.
+2. Llamamos el `rfce` _snippet_ y hacemos los ajustes necesarios:
+```js
+import styled from 'styled-components';
+
+const Container = styled.div``;
+
+function Configurations() {
+  return (
+    <Container>
+      <span>Configurations</span>
+    </Container>
+  );
+}
+
+export default Configurations;
+```
+3. Creamos el _template_ de nombre **``**:
+4. Ejecutamos el _snippet_ `rfce` y hacemos algunas correcciones:
+```js
+import styled from 'styled-components';
+
+const Container = styled.div``;
+
+function ConfigurationsTemplate() {
+  return (
+    <Container>
+      <span>Configurations</span>
+    </Container>
+  );
+}
+
+export default ConfigurationsTemplate;
+```
+5. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+6. Regresamos a **`src/pages/Configurations.tsx`**, importamos de `'../index.tx'` el componente `ConfigurationsTemplate` y lo renderizamos en el `return`:
+```js
+import { ConfigurationsTemplate } from '../index.ts';
+
+function Configurations() {
+  return <ConfigurationsTemplate />;
+}
+
+export default Configurations;
+```
+7. Abrimos el archivo **`src/routes/MyRoutes.tsx`**, para agregar debajo de la `<Route` al `Home`, otra a `Configurations`, tambien se agrega en la importación del `'../index.tx'`:
+```js
+...
+import {
+  Configurations,
+  ...
+} from '../index.ts';
+
+export function MyRoutes() {
+  const { authState } = useAuthContext();
+  // console.info('MyRoutes authState:', authState);
+  return (
+    <Routes>
+      <Route
+        element={<ProtectedRoutes authState={authState} redirectTo='/login' />}
+      >
+        <Route path='/' element={<Home />} />
+        <Route path='/config' element={<Configurations />} />
+      </Route>
+
+      <Route path='*' element={<div>404 Not Found</div>} />
+      <Route path='/login' element={<Login />} />
+    </Routes>
+  );
+}
+```
+8. Abrimos el archivo **`src/utils/dataEstatica.ts`**,  en la constante `SecondarylinksArray`, <br>Cambiamos el texto de:<br> `    to: '/configurar',` <br>Por el texto de: <br>`    to: '/config',`
+9. Cerremos los otros archivos y dejamos solo abierto **`src/components/templates/ConfigurationsTemplate.tsx`**.
+
+
