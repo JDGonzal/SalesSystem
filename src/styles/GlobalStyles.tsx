@@ -15,6 +15,9 @@ declare module 'styled-components' {
     bg3: string;
     bg  : string;
     bg4 : string;
+    bgcards: string;
+    colorsubtitlecard: string;
+    colortitlecard: string;
   }
 }
 export const GlobalStyles = createGlobalStyle`

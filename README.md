@@ -2942,7 +2942,7 @@ COMMIT;
 
 
 
-### Diseño de pagina configuraciones (05:14:06)
+### Creando pagina de configuración (05:14:06)
 
 1. Creamos la página de nombre **`src/pages/Configurations.tsx`**.
 2. Llamamos el `rfce` _snippet_ y hacemos los ajustes necesarios:
@@ -3018,4 +3018,50 @@ export function MyRoutes() {
 8. Abrimos el archivo **`src/utils/dataEstatica.ts`**,  en la constante `SecondarylinksArray`, <br>Cambiamos el texto de:<br> `    to: '/configurar',` <br>Por el texto de: <br>`    to: '/config',`
 9. Cerremos los otros archivos y dejamos solo abierto **`src/components/templates/ConfigurationsTemplate.tsx`**.
 
+
+### Diseño de pagina configuraciones (05:16:24)
+
+1. Copiamos del repositorio el archivo [fondocuadros.svg](https://github.com/Franklin369/pos-react-curso-hasta-seccion-categorias/blob/main/src/assets/fondocuadros.svg), en nuestra carpeta **"src/assets"**.
+2. Teniendo abierto el archivo **`ConfigurationsTemplate.tsx`**, Copiamos el contenido del repositorio [ConfiguracionesTemplate.jsx](https://github.com/Franklin369/pos-react-curso-hasta-seccion-categorias/blob/main/src/components/templates/ConfiguracionesTemplate.jsx), con los ajustes que se requieran.
+>[!WARNING]  
+>Nos aparece un error :<br>`Module '"../../index"' has no exported member 'useModulosStore'.`<br> para una solución temporal, hacemos esto:
+>1. Creamos el archivo **`src/store/ModulesStore.tsx`**, con este código base:
+>```js
+>import { create } from 'zustand';
+>
+>// eslint-disable-next-line @typescript-eslint/no-unused-vars
+>export const useModulosStore = create((set) => ({
+>  dataModulos: [],
+>  mostrarModulos: async () => {
+>    return null;
+>  },
+>}));
+>```
+>2. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+>3. Así al menos ejecuta el aplicativo.
+3. Ante los errores relacionados con `theme`, abrimos el archivo **`src/styles/GlobalStyles.tsx`**, y en la _interface_ de nombre `DefaultTheme`, añadimos los temas o propiedades faltantes:
+```js
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    bgtotal: string;
+    text: string;
+    color2: string;
+    colorScroll: string;
+    logorotate: string;
+    bgAlpha: string;
+    bg6: string;
+    bg5: string;  
+    color1: string; 
+    bgtgderecha: string;  
+    bg3: string;
+    bg  : string;
+    bg4 : string;
+    bgcards: string;
+    colorsubtitlecard: string;
+    colortitlecard: string;
+  }
+}
+```
+4. El Instructor muestra imagenes en la página de `configuracion`, pero esto depende de datos almacenados en `Supabase`, que aun no hemos creado, es decir estos resultados se verán mas adelante.
+5. Aún hay errores de _Typescript_ en el archivo **`src/components/templates/ConfigurationsTemplate.tsx`**, que se podrán solucionar en el futuro.
 
