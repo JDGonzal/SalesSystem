@@ -3065,3 +3065,55 @@ declare module 'styled-components' {
 4. El Instructor muestra imagenes en la página de `configuracion`, pero esto depende de datos almacenados en `Supabase`, que aun no hemos creado, es decir estos resultados se verán mas adelante.
 5. Aún hay errores de _Typescript_ en el archivo **`src/components/templates/ConfigurationsTemplate.tsx`**, que se podrán solucionar en el futuro.
 
+
+
+### Instalando TanStack (05:18:44)
+
+1. Vamos a esta página [TanStack
+Query](https://tanstack.com/query/latest), que menciona esta información:<br> **Potente gestión de estados asincrónicos para TS/JS, React, Solid, Vue, Svelte y Angular**<br>`Olvídate de la gestión granular de estados, la recarga manual y la infinidad de código asincrónico. TanStack Query te ofrece consultas y mutaciones declarativas, siempre actualizadas y autogestionadas que mejoran directamente la experiencia del desarrollador y del usuario.`.
+>[!IMPORTANT]  
+>#### Hay que detener la ejecución que tenemos de :<br> `pnpm dev` <br> Para poder instalar lo de `TanStack`.
+2. Vamos a ver el proceso de instalación en este sitio [TanStack -> React -> Installation](https://tanstack.com/query/latest/docs/framework/react/installation).
+3. En una `TERMINAL`, ejecutamos este comando:<br>`pnpm add @tanstack/react-query -E`
+4. También hay una recomendación de ejecutar:<br>`pnpm add -D @tanstack/eslint-plugin-query -E`
+5. En este sitio [Quick Start](https://tanstack.com/query/latest/docs/framework/react/quick-start), hay un ejemplo de como utilizarlo, y lo vamos a probar en el archivo **`src/main.tsx`**, empezamos importando solo el `QueryClient` y el `QueryClientProvider`:
+```js
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
+```
+6. Definimos un cliente:
+```js
+// Create a client
+const queryClient = new QueryClient();
+```
+7. Debajo del renderizado de `<BrowserRouter`, rodeamos la `<App />` con el renderizado de `<QueryClientProvider`:
+```js
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </BrowserRouter>
+```
+8. Adicional instalamos el _Devtools_ de TanStack Query de este sitio [Devtools](https://tanstack.com/query/v4/docs/framework/react/devtools), y ejecutamos en una `TERMINAL` este comando:<br>`pnpm add @tanstack/react-query-devtools -E`
+9.  Abrimos el archivo **`package.json`** y borramos los _carets_ o `^`, si aparecen estos símbolos.
+10. Abrimos el archivo **`src/App.tsx`**, para añadir la importación de `ReactQueryDevtools`:
+```js
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+```
+11.  Agregamos el renderizado de este `<ReactQueryDevtools`, debajo de un cierre llaves `}`,justo antes de `</AuthContextProvider>`:
+```js
+      <AuthContextProvider>
+        <GlobalStyles />
+        {...}
+        <ReactQueryDevtools initialIsOpen={true} />
+      </AuthContextProvider>
+```
+>[!IMPORTANT]  
+>#### Volvemos a ejecutar en una `TERMINAL` el comando :<br> `pnpm dev`
+12. Así luce la pantalla del sitio de `login`, con el botón abajo de ![TanStack](https://tanstack.com/favicon-32x32.png "TanStack"):<br>![TanStack -> Devtools](images/2025-07-02_090821.png "TanStack -> Devtools")
+13. Al darle clic a ese botón de `Devtools`, aparece una ventan abajo para visualizar los movimientos de `TanStack`: <br> ![TanStack -> Visor](images/2025-07-02_120850.png "TanStack -> Visor")
+
+
+

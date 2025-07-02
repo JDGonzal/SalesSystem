@@ -11,6 +11,8 @@ import { Device } from './styles/breakpoints.ts';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 const Container = styled.main`
   // Es un componente de estilo
   display: grid;
@@ -76,6 +78,7 @@ function App() {
             </section>
           </Container>
         )}
+        <ReactQueryDevtools initialIsOpen={false} />
       </AuthContextProvider>
     </ThemeProvider>
   );
