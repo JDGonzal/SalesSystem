@@ -70,12 +70,14 @@ export const DataModulosConfiguracion = [
     subtitle: 'registra tus productos',
     icono: 'https://i.ibb.co/85zJ6yG/caja-del-paquete.png',
     link: '/configurar/productos',
+    state: true,
   },
   {
     title: 'Personal',
     subtitle: 'ten el control de tu personal',
     icono: 'https://i.ibb.co/5vgZ0fX/hombre.png',
     link: '/configurar/usuarios',
+    state: true,
   },
 
   {
@@ -83,18 +85,21 @@ export const DataModulosConfiguracion = [
     subtitle: 'configura tus opciones básicas',
     icono: 'https://i.ibb.co/x7mHPgm/administracion-de-empresas.png',
     link: '/configurar/empresa',
+    state: true
   },
   {
     title: 'Categoria de productos',
     subtitle: 'asigna categorias a tus productos',
     icono: 'https://i.ibb.co/VYbMRLZ/categoria.png',
-    link: '/configurar/categorias',
+    link: '/config/categories',
+    state: true,
   },
   {
     title: 'Marca de productos',
     subtitle: 'gestiona tus marcas',
     icono: 'https://i.ibb.co/1qsbCRb/piensa-fuera-de-la-caja.png',
     link: '/configurar/marca',
+    state: true,
   },
 ];
 //tipo usuario

@@ -15,8 +15,6 @@ CREATE TABLE IF NOT EXISTS companies (
     CHECK (currency IN ('$','€','£','¥','₩','₹','₽','₺','₪','₫'))
 );
 
-COMMIT;
-
 -- Delete all content from the `companies` table
 DELETE FROM companies;
 -- Delete the `id_auth` column from the `companies` table
@@ -25,3 +23,35 @@ ALTER TABLE companies
 -- Add a new column `id_auth` to the `companies` table
 ALTER TABLE companies
     ADD COLUMN IF NOT EXISTS id_auth VARCHAR(50) UNIQUE NOT NULL;
+
+-- ?Policies for `companies` table
+-- SELECT
+CREATE POLICY "Enable read access for all users" 
+ON "public"."companies"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (true);
+
+-- INSERT
+CREATE POLICY "Enable insert access for all users"
+ON "public"."companies"
+AS PERMISSIVE FOR INSERT
+TO authenticated
+WITH CHECK (true);
+
+-- UPDATE
+CREATE POLICY "Enable update access for all users"
+ON "public"."companies"
+AS PERMISSIVE FOR UPDATE
+TO authenticated
+USING (id=id)
+WITH CHECK (id=id);
+
+-- DELETE
+CREATE POLICY "Enable delete access for all users"
+ON "public"."companies"
+AS PERMISSIVE FOR DELETE
+TO authenticated
+USING (id=id);
+
+COMMIT;

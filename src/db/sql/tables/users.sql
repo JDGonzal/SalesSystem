@@ -15,4 +15,35 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ?Policies for `users` table
+-- SELECT
+CREATE POLICY "Enable read access for all users" 
+ON "public"."users"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (true);
+
+-- INSERT
+CREATE POLICY "Enable insert access for all users"
+ON "public"."users"
+AS PERMISSIVE FOR INSERT
+TO authenticated
+WITH CHECK (true);
+
+-- UPDATE
+CREATE POLICY "Enable update access for all users"
+ON "public"."users"
+AS PERMISSIVE FOR UPDATE
+TO authenticated
+USING (id=id)
+WITH CHECK (id=id);
+
+-- DELETE
+CREATE POLICY "Enable delete access for all users"
+ON "public"."users"
+AS PERMISSIVE FOR DELETE
+TO authenticated
+USING (id=id);
+
 COMMIT;

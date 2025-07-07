@@ -38,7 +38,9 @@ nvm list
 ## Section 2: Login
 
 >[!IMPORTANT]  
->### Temas puntuales de la sección  
+>
+>### Temas puntuales de la sección (Login) 
+>
 >**Descripción de la sección:**  
 >En esta sección exploraremos todo lo relacionado con el desarrollo del módulo de `Login`. Aprenderás desde la creación del proyecto hasta la implementación completa del sistema de autenticación utilizando herramientas modernas como `Zustand` y `Supabase`. Además, diseñaremos una interfaz intuitiva y funcional, enfocándonos en detalles como maquetado, estilos globales, y componentes reutilizables.
 >
@@ -126,7 +128,7 @@ pnpm run dev
 ### Configuración de `Auto Barrel` (00:07:37)
 
 >[!NOTE]  
->El instructor habla de configurar el `Auto Barrel` por 
+>El instructor habla de configurar el `Auto Barrel` por
 >`Extension Settings`, pero este no requiere dicho cambio en la versión 1.19.x.
 
 ### Organizando Carpetas (00:08:01)
@@ -147,8 +149,8 @@ pnpm run dev
 
 ### Instalando dependencias básicas (00:09:32)
 
-1. Empezamos en una `TERMINAL` con 
-[`styled-components`](https://www.npmjs.com/package/styled-components) y su respectivo 
+1. Empezamos en una `TERMINAL` con
+[`styled-components`](https://www.npmjs.com/package/styled-components) y su respectivo
 [`@types`](https://www.npmjs.com/package/@types/styled-components):
 ```bash
 pnpm add styled-components @types/styled-components -E
@@ -162,8 +164,8 @@ pnpm add react-router-dom @types/react-router-dom -E
 ```
 
 3. En la `TERMINAL` otra librería o dependencia,
-[`react-icons`](https://www.npmjs.com/package/react-icons) 
-y no requiere el adicional 
+[`react-icons`](https://www.npmjs.com/package/react-icons)
+y no requiere el adicional
 [`@types`](https://www.npmjs.com/package/@types/react-icons)
 pues el sitio dice "`This is a stub types definition. react-icons provides its own type definitions, so you do not need this installed`":
 ```bash
@@ -200,7 +202,7 @@ pnpm add --save-dev @iconify/react -E
   </body>
 </html>
 ```
-7. Agrego la imagen de un ícono para nuestro proyecto en extensión `.PNG`, la obtengo con la _A.I_ de `Copilot`, y consigo dos imágens, esta ![](images/2025-05-25_192832.png) y esta ![](images/2025-05-25_192915.png), que la voy a copiar en las carpetas **"public"** y **"src/assets"**, en diferentes tamaños.
+7. Agrego la imagen de un ícono para nuestro proyecto en extensión `.PNG`, la obtengo con la _A.I_ de `Copilot`, y consigo dos imágens, esta ![calculator](images/2025-05-25_192832.png "calculator") y esta ![lector](images/2025-05-25_192915.png "lector"), que la voy a copiar en las carpetas **"public"** y **"src/assets"**, en diferentes tamaños.
 8. En el archivo **`index.html`**, cambiamos la `url` del `<link rel="icon"`, por el de la imagen de 32x32:
 ```html
     <link rel="icon" type="image/png" href="/poss2_32x32.png" />
@@ -223,13 +225,13 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 ```
-12.  Vamos a crear un `Auto Barrel`, en la carpeta **"src"**, esto crea un arhivo de nombre **`index.ts`**, el instructor sugiere que solo se utilice para _Componentes_, con esto por ahora:
+12. Vamos a crear un `Auto Barrel`, en la carpeta **"src"**, esto crea un arhivo de nombre **`index.ts`**, el instructor sugiere que solo se utilice para _Componentes_, con esto por ahora:
 ```js
 export { default as App } from './App';
 export * from './main';
 export * from './styles/GlobalStyles';
 ```
-13.    En el archivo **`src/App.tsx`**, agregamos un `import` al `./index.ts` el elemento `{GlobalStyles}`, y el renderizado de `<GlobalStyles />`:
+13. En el archivo **`src/App.tsx`**, agregamos un `import` al `./index.ts` el elemento `{GlobalStyles}`, y el renderizado de `<GlobalStyles />`:
 ```js
 import { GlobalStyles } from './index.ts';
 
@@ -244,14 +246,14 @@ function App() {
 
 export default App;
 ```
-14.  Y así se ve la pantalla hasta el momento: <br> ![`App.tsx` con `GlobalStyles`](images/2025-05-26_165400.png "`App.tsx` con `GlobalStyles`")
+14. Y así se ve la pantalla hasta el momento: </br> ![`App.tsx` con `GlobalStyles`](images/2025-05-26_165400.png "`App.tsx` con `GlobalStyles`")
 
 
 
 
 ### Primer maquetado (00:20:40)
 
-1. En el archivo **`src/App.tsx`**, agregamos esta importación: <br> `import styled from 'styled-components';`.
+1. En el archivo **`src/App.tsx`**, agregamos esta importación: </br> `import styled from 'styled-components';`.
 2. Creamos una constante `Container` igual a `styled.main` al lado de `main` abrimos y cerramos la comilla invertida o en el teclado _ascii_ el [`ALT`]+[9]+[6]:
 ```js
 import styled from 'styled-components';
@@ -283,7 +285,7 @@ function App() {
 
 export default App;
 ```
-3. Creamos el archivo **`breakpoints.ts`** y copiamos el contenido del repositorio [breakpoints.jsx](https://github.com/Franklin369/pos-react-login/blob/main/src/styles/breakpoints.jsx). <br> Como explica el instructor, estos son _objetos_ No _componentes_ por ende la extensión debe ser `.ts`.
+3. Creamos el archivo **`breakpoints.ts`** y copiamos el contenido del repositorio [breakpoints.jsx](https://github.com/Franklin369/pos-react-login/blob/main/src/styles/breakpoints.jsx). </br> Como explica el instructor, estos son _objetos_ No _componentes_ por ende la extensión debe ser `.ts`.
 4. En el archivo **`src/App.tsx`**, en la definición del componente `Container`, agregamos definiciones de cada clase usada en las `<section`:
 ```css
 const Container = styled.main`
@@ -513,7 +515,7 @@ export default Home;
     }
   }
 ```
-5. Así se ve la pantalla hasta el momento, tanto en presentación `tablet` o `mobile`: <br> ![t, ](images/2025-05-28_063213.png "tablet o PC") <br> ![mobile: Samsung Galaxy](images/2025-05-28_063257.png "mobile: Samsung Galaxy")
+5. Así se ve la pantalla hasta el momento, tanto en presentación `tablet` o `mobile`: </br> ![t, ](images/2025-05-28_063213.png "tablet o PC") </br> ![mobile: Samsung Galaxy](images/2025-05-28_063257.png "mobile: Samsung Galaxy")
 
 
 
@@ -522,7 +524,7 @@ export default Home;
 
 ### Implementando temas con zustand (00:44:38)
 
-1. En una `TERMINAL`, instalamos la despendencia de <br>[![Zustand](images/2025-05-28_141011.jpg "Zustand")](https://www.npmjs.com/package/zustand)):
+1. En una `TERMINAL`, instalamos la despendencia de </br>[![Zustand](images/2025-05-28_141011.jpg "Zustand")](https://www.npmjs.com/package/zustand)):
 ```bash
 pnpm add zustand -E
 ```
@@ -612,7 +614,7 @@ function App() {
 >* `import { v } from '../../../styles/variables';`
 2. Copiamos el contenido de esta ruta [`ToggleTema.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/ToggleTema.jsx), dentro del archivo **`src/components/organisms/ToggleTema.tsx`**, que debemos crear.
 3. Creamos el archivo **`src\styles\variables.ts`** y copiamos el contenido de [`variables.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/styles/variables.jsx).
-4. En el archivo de **`variables.ts`**, correjimos el logo por el que tenemos en la carpeta **"assets"**: <br> `import logo from '../assets/poss2_32x32.png';`
+4. En el archivo de **`variables.ts`**, correjimos el logo por el que tenemos en la carpeta **"assets"**: </br> `import logo from '../assets/poss2_32x32.png';`
 5. Creamos el archivo **`src/utils/dataEstatica.ts`** y copiamos el contenido de [`dataEstatica.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/utils/dataEstatica.jsx)
 6. Actualizao el `Auto Barrel` o el archivo **`index.ts`**.
 7. Hago correcciones de _TypeScript_ en el archivo **`src/components/organisms/sidebar/Sidebar.tsx`**:
@@ -634,7 +636,7 @@ export function Sidebar({ state, setState, $isopen }: SidebarProps) {
 ```js
   const [sidebarOpen, setSidebarOpen] = useState(false);
 ```
-* E importar el respectivo _hook_: <br> `import { useState } from 'react';`
+* E importar el respectivo _hook_: </br> `import { useState } from 'react';`
 9. Quitamos el renderizadode `<BrowserRouter` del archivo **`src/routes/MyRoutes.tsx`** y nos lo llevamos al archivo **`src\main.tsx`**:
 ```js
 import { StrictMode } from 'react';
@@ -667,7 +669,7 @@ function MyRoutes() {
 
 export default MyRoutes;
 ```
-11. Así se ve hasta el momento el aplicativo en pantalla: <br> ![pantalla con el Sidebar](images/2025-05-28_170447.png "pantalla con el Sidebar")
+11. Así se ve hasta el momento el aplicativo en pantalla: </br> ![pantalla con el Sidebar](images/2025-05-28_170447.png "pantalla con el Sidebar")
 
 
 
@@ -675,8 +677,8 @@ export default MyRoutes;
 
 
 12. Los íconos que se están utilizando en el archivo **`src\utils\dataEstatica.ts`**, vienen de este sitio [Iconify for React](https://iconify.design/docs/icon-components/react/), mas específicamente de este [icons](https://icon-sets.iconify.design/).
-13. Hay un sitio para almacenar las imágenes a parte del poyecto, utiliza este sitio [imgbb](https://es.imgbb.com/), se aloja las imagenes, tiene este texto: <br> `ImgBB es un servicio gratuito de alojamiento de imágenes. Actualiza tu suscripción para acceder a todas las funciones.`
-14. Así luce el proyecto con el cambio de _Dark_ o _Light_: <br> ![Sideboard Dark Mode](images/2025-05-28_172544.png "Sideboard Dark Mode") ![Sideboard Light Mode](images/2025-05-28_172603.png "Sideboard Light Mode")
+13. Hay un sitio para almacenar las imágenes a parte del poyecto, utiliza este sitio [imgbb](https://es.imgbb.com/), se aloja las imagenes, tiene este texto: </br> `ImgBB es un servicio gratuito de alojamiento de imágenes. Actualiza tu suscripción para acceder a todas las funciones.`
+14. Así luce el proyecto con el cambio de _Dark_ o _Light_: </br> ![Sideboard Dark Mode](images/2025-05-28_172544.png "Sideboard Dark Mode") ![Sideboard Light Mode](images/2025-05-28_172603.png "Sideboard Light Mode")
 
 
 
@@ -720,9 +722,9 @@ export const GlobalStyles = createGlobalStyle`
     }
 `;
 ```
-7. Ahora bien nos salen muchos errores relacionados con el `theme` y los valores que se requieren representar, como por ejemplo:<br> `Property 'bgtotal' does not exist on type 'DefaultTheme'.`.<br> Entonces se declara un `module` de `'styled-components'` y dentro una _interface_ que se exporta de nombre `interface DefaultTheme`, y dentro todos los valores que el `theme` se van a utilizar tanto en: 
-* **`src/styles/GlobalStyles.tsx`**, como en 
-* **`src/components\organisms\sidebar\Sidebar.tsx`**. 
+7. Ahora bien nos salen muchos errores relacionados con el `theme` y los valores que se requieren representar, como por ejemplo:</br> `Property 'bgtotal' does not exist on type 'DefaultTheme'.`.</br> Entonces se declara un `module` de `'styled-components'` y dentro una _interface_ que se exporta de nombre `interface DefaultTheme`, y dentro todos los valores que el `theme` se van a utilizar tanto en:
+* **`src/styles/GlobalStyles.tsx`**, como en
+* **`src/components\organisms\sidebar\Sidebar.tsx`**.
 ```js
 declare module 'styled-components' {
   export interface DefaultTheme {
@@ -754,7 +756,7 @@ const Main = styled.div<{ $isopen: string }>`
   ...
 `;
 ```
-10.  Se comenta esta llamada de función `onClick={() => SetstateDesplegableLinks(!stateDesplegableLinks)}`, que por ahora está pendiente se ser creada, en el archivo: **`src/components/organisms/sidebar/Sidebar.tsx`**.
+10. Se comenta esta llamada de función `onClick={() => SetstateDesplegableLinks(!stateDesplegableLinks)}`, que por ahora está pendiente se ser creada, en el archivo: **`src/components/organisms/sidebar/Sidebar.tsx`**.
 11. Del archivo **`src/components/organisms/sidebar/Sidebar.tsx`**, nos copiamos la propiedad del _css_ `transition: 0.1s ease-in-out;`, para el archivo **`src/App.tsx`**, en el _css_ del `Container`.
 12. Comentamos en el mismo archivo, en el _css_ para la definición de la clase `.leftSidebar` para _mobile_ la parte `background-color: lightblue;`.
 
@@ -762,7 +764,7 @@ const Main = styled.div<{ $isopen: string }>`
 ### Diseño del login (01:19:14)
 
 >[!TIP]
->El instructor pone en el archivo **`src/App.tsx`**, la definición en el _css_ del `color`: <br> `color:${({ theme }) => theme.text};` <br> La cuestión es que esto ya se hizo en el sitio correcto, en el archivo: **`src/styles/GlobalStyles.tsx`**.
+>El instructor pone en el archivo **`src/App.tsx`**, la definición en el _css_ del `color`: </br> `color:${({ theme }) => theme.text};` </br> La cuestión es que esto ya se hizo en el sitio correcto, en el archivo: **`src/styles/GlobalStyles.tsx`**.
 
 1. Creamos el archivo **`src/pages/Login.tsx`**, se ejecuta el _snippet_ `rfce` y se hacen los ajustes correspondientes:
 ```js
@@ -827,7 +829,7 @@ function MyRoutes() {
 
 export default MyRoutes;
 ```
-6. Probamos poniendo en la _url_ la ruta del `login` y obtenemos esto en pantalla:<br>![localhost/login](images/2025-06-07_094203.png "localhost/login").
+6. Probamos poniendo en la _url_ la ruta del `login` y obtenemos esto en pantalla:</br>![localhost/login](images/2025-06-07_094203.png "localhost/login").
 7. Regresamos al archivo **`src/components/templates/LoginTemplate.tsx`**, y empezamos a maquetar lo que veríamos luego en pantalla:
 ```js
 import styled from 'styled-components';
@@ -926,8 +928,8 @@ const Container = styled.div`
   align-items: center;
 `;
 ```
-13. Clonamos este archivo [**`InputText2.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/formularios/InputText2.jsx), en el siguiente archivo: <br> **`src/components/organisms/forms/InputText2.tsx`**.
-14. Por ahora solo tenemos un error :<br> `Binding element 'children' implicitly has an 'any' type.`, <br> lo corregimos de la siguiente manera:
+13. Clonamos este archivo [**`InputText2.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/formularios/InputText2.jsx), en el siguiente archivo: </br> **`src/components/organisms/forms/InputText2.tsx`**.
+14. Por ahora solo tenemos un error :</br> `Binding element 'children' implicitly has an 'any' type.`, </br> lo corregimos de la siguiente manera:
 ```js
 import styled from 'styled-components';
 import { type ReactNode } from 'react';
@@ -978,15 +980,15 @@ const Container = styled.div`
             </InputText2>
           </form>
 ```
-22. Así luce hasta el momento la página `login`:<br>![Página `login` con los dos `input`](images/2025-06-07_172544.png "Página `login` con los dos `input`")
+22. Así luce hasta el momento la página `login`:</br>![Página `login` con los dos `input`](images/2025-06-07_172544.png "Página `login` con los dos `input`")
 
 
 ### Agregando Buttons (01:29:52)
 
 
-1. Empezamos clonando del repositorio el archivo [**`Btnsave.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/moleculas/Btnsave.jsx), en el archivo **`src/components/molecules/SaveButton.tsx`**, con los ajustes respectivos, como el nombre de la función a exportar por esta: <br> `export function SaveButton({...`
-2. Tenemos errores varios, pero el primero a solucionar es el de:<br> `Module '"../../index"' has no exported member 'Icono'.`, se logra clonando del repositorio [**`Icono.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/atomos/Icono.jsx), en el archivo nuevo de nombre **`src/components/atoms/Icon.tsx`**, con el respectivo ajuste.
-3. El error que tenemos de `Property '$color' does not exist on type 'ExecutionContext' `, lo solucionamos con una `interface`, quedando así el archivo:
+1. Empezamos clonando del repositorio el archivo [**`Btnsave.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/moleculas/Btnsave.jsx), en el archivo **`src/components/molecules/SaveButton.tsx`**, con los ajustes respectivos, como el nombre de la función a exportar por esta: </br> `export function SaveButton({...`
+2. Tenemos errores varios, pero el primero a solucionar es el de:</br> `Module '"../../index"' has no exported member 'Icono'.`, se logra clonando del repositorio [**`Icono.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/atomos/Icono.jsx), en el archivo nuevo de nombre **`src/components/atoms/Icon.tsx`**, con el respectivo ajuste.
+3. El error que tenemos de `Property '$color' does not exist on type 'ExecutionContext'`, lo solucionamos con una `interface`, quedando así el archivo:
 ```js
 import styled from 'styled-components';
 interface IconoProps {
@@ -1088,7 +1090,7 @@ const Container = styled.button<{ $width?: string; $bgcolor: string; $color: str
               />
             </InputText2>
 ```
-9. Así se ve hasta el momento la pantalla, con el primer botón: <br>![Dos `input` y un `SaveButton`](images/2025-06-08_092417.png "Dos `input` y un `SaveButton`")
+9. Así se ve hasta el momento la pantalla, con el primer botón: </br>![Dos `input` y un `SaveButton`](images/2025-06-08_092417.png "Dos `input` y un `SaveButton`")
 10. Creo un archivo en la carpeta **"atoms"** de nombre **`Line.tsx`**, con este código:
 ```js
 import styled from 'styled-components';
@@ -1121,7 +1123,7 @@ export const Linea = styled.div`
     font-weight: 700;
   }
 ```
-14. Así se ve la pantallas hasta el momento:<br>![Linea debajo del botón](images/2025-06-08_095054.png "Linea debajo del botón")
+14. Así se ve la pantallas hasta el momento:</br>![Linea debajo del botón](images/2025-06-08_095054.png "Linea debajo del botón")
 15. Debajo de `Linea` agregamos otro renderizado de `<SaveButton`, con algunas propiedades:
 ```js
           <SaveButton
@@ -1132,8 +1134,8 @@ export const Linea = styled.div`
             icono={<v.iconogoogle/>}
           />
 ```
-16. Debemos importar las variables `v` del archivo `'../../styles/variables.ts'`, que es de donde sacamos el:<br>`icono={<v.iconogoogle/>}`
-17. Así luce nuestra pantalla de `login`:<br>![](images/2025-06-08_100216.png "")
+16. Debemos importar las variables `v` del archivo `'../../styles/variables.ts'`, que es de donde sacamos el:</br>`icono={<v.iconogoogle/>}`
+17. Así luce nuestra pantalla de `login`:</br>![página de Login inicial](images/2025-06-08_100216.png "página de Login inicial")
 
 
 
@@ -1177,7 +1179,7 @@ const Container = styled.div`
     }
 ```
 4. Vamos a eliminar la clase `.ContentCard`.
-5. El renderizado de ` <SaveButton`, lo ponemos por fuer del `<InputText2`.
+5. El renderizado de `<SaveButton`, lo ponemos por fuer del `<InputText2`.
 6. En el archivo **`src/components/atoms/Title.tsx`**, agrego mas estilos pero los pongo de dinámica, es decir que llegan como _props_ desde donde lo llaman o renderizan:
 ```js
 import styled from 'styled-components';
@@ -1197,13 +1199,13 @@ export default Title;
 ```js
           <Title $paddingBottom='20px'>Ingresar</Title>
 ```
-8. Así luce nuestra pantalla en `tablet` y en `mobile`:<br>![Modo `tablet`](images/2025-06-08_110203.png "Modo `tablet`") ![Modo `mobile`](images/2025-06-08_110614.png "Modo `mobile`")
+8. Así luce nuestra pantalla en `tablet` y en `mobile`:</br>![Modo `tablet`](images/2025-06-08_110203.png "Modo `tablet`") ![Modo `mobile`](images/2025-06-08_110614.png "Modo `mobile`")
 
 
 
 ### Footer (01:46:19)
 
-1. Empezamos clonando del repositorio [**`Footer.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/Footer.jsx), en el archivo <br>**`src/components/organisms/Footer.tsx`**<br> El contenido no genera errores.
+1. Empezamos clonando del repositorio [**`Footer.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/Footer.jsx), en el archivo </br>**`src/components/organisms/Footer.tsx`**</br> El contenido no genera errores.
 2. Ejecutamos en una terminal el siguiente comando:
 ```bash
 pnpm i --save-dev @types/node -E
@@ -1246,7 +1248,7 @@ export function Footer() {
 ```
 5. Actualizamos el _barrel_ es decir el archivo **`src/index.
 6. Vamos al archivo **`src/components/templates/LoginTemplate.tsx`**, se añade la importación de `Footer` del `'../../index.ts'`, y se renderiza antes de cerrar el `</Container>`.
-7. Así nos sale en pantalla:<br>![Login con el `Footer`](images/2025-06-08_120107.png "`Footer`")
+7. Así nos sale en pantalla:</br>![Login con el `Footer`](images/2025-06-08_120107.png "`Footer`")
 8. Se debe ajustar la posición del `Footer`, lo hacemos con estilos en el `Container`:
 ```css
 const Container = styled.div`
@@ -1258,8 +1260,8 @@ const Container = styled.div`
   }
 `;
 ```
-9. Elimino la etiqueta `<section>` y ahora si el `Footer` se ubica del todo abajo:<br>![Modo `tablet`, con el `Footer` abajo](images/2025-06-08_120856.png "Modo `tablet`, con el `Footer` abajo") ![Modo `mobile`, con el `Footer` abajo](images/2025-06-08_121022.png "Modo `mobile`, con el `Footer` abajo")
-10. En el archivo **`.gitignore`**, para no subir al repositorio, se añaden los tipo **`*.env`** y similares. 
+9. Elimino la etiqueta `<section>` y ahora si el `Footer` se ubica del todo abajo:</br>![Modo `tablet`, con el `Footer` abajo](images/2025-06-08_120856.png "Modo `tablet`, con el `Footer` abajo") ![Modo `mobile`, con el `Footer` abajo](images/2025-06-08_121022.png "Modo `mobile`, con el `Footer` abajo")
+10. En el archivo **`.gitignore`**, para no subir al repositorio, se añaden los tipo **`*.env`** y similares.
 
 
 
@@ -1272,7 +1274,7 @@ const Container = styled.div`
 >![Supabase con Github](images/2025-03-29_144114.gif "Supabase con Github")
 
 1. Entramos al sitio [supabase](https://supabase.com/dashboard).
-2. Si nos falta o no tenemos la _Organization_ de nombre `Tutorials`, damos clic al botón `[New Organization]` y le ponemos de nombre `Tutorials` y damos clic en el botón `[Create Organization]`:<br> ![Create a new organization](images/2025-03-29_154115.png "Create a new organization")
+2. Si nos falta o no tenemos la _Organization_ de nombre `Tutorials`, damos clic al botón `[New Organization]` y le ponemos de nombre `Tutorials` y damos clic en el botón `[Create Organization]`:</br> ![Create a new organization](images/2025-03-29_154115.png "Create a new organization")
 3. Regresamos al [supabase/dashboard](https://supabase.com/dashboard).
 4. Damos clic al boton de `[New Project]` y dejamos la _Organization_ de nombre `Tutorials`.
 5. Completamos el formulario:
@@ -1280,11 +1282,11 @@ const Container = styled.div`
     * Project-name: `SalesSystem`
     * Database password: ~~xoxoxoxo~~ (Usamos una buena contraseña)
     * Region: `East US (North Virginia)`
-* Así se ve el formulario:<br>![Create new project](images/2025-06-08_171420.png "Create new project") ![Create new project](images/2025-06-08_172020.png "Create new project")
-6. Y le damos clic en el botón `[Create new project]`: <br>![project: SalesSystem](images/2025-06-08_172548.png "project: SalesSystem").
+* Así se ve el formulario:</br>![Create new project](images/2025-06-08_171420.png "Create new project") ![Create new project](images/2025-06-08_172020.png "Create new project")
+6. Y le damos clic en el botón `[Create new project]`: </br>![project: SalesSystem](images/2025-06-08_172548.png "project: SalesSystem").
 7. En la página de `Supabase`, buscamos el símbolo de configuración que es como engranaje o _gear_ <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>, al final del menú a la izquierda.
 8. En el mismo menú de la izquierda buscamos `API` o `Data API`, copiamos la `URL` y la llevamos al archivo **`.env`**, con el siguiente _key_ `VITE_SUPABASE_URL=`.
-9.  Le damos clic al botón `[Go to API Keys]` o en el mismo menú de la izquierda buscamos `API Keys`.
+9. Le damos clic al botón `[Go to API Keys]` o en el mismo menú de la izquierda buscamos `API Keys`.
 10. Copiamos el `anon` `public`, en el arhico **`.env`** con la _key_ `VITE_SUPABASE_ANON_KEY=`.
 11. Se crea el siguiente archivo **`src/supabase/supabase.config.tsx`**.
 12. Entramos a este sitio [Use Supabase with React](https://supabase.com/docs/guides/getting-started/quickstarts/reactjs) y buscamos el paso `(3)`, para ejecutar este comando en una `TERMINAL`:
@@ -1307,29 +1309,29 @@ export const supabase = createClient(
 ### AuthStore (01:54:48)
 
 1. Empezamos buscando en este sitio: [`Consola de Google Cloud`](https://cloud.google.com/storage/docs/cloud-console?hl=es-419).
-2. Dar clic al botón `[Consola]` y debe aparecer algo similar a esto: <br> ![Consola de Google Cloud: Te damos la bienvenida](images/2025-06-09_064719.png "Consola de Google Cloud: Te damos la bienvenida").
+2. Dar clic al botón `[Consola]` y debe aparecer algo similar a esto: </br> ![Consola de Google Cloud: Te damos la bienvenida](images/2025-06-09_064719.png "Consola de Google Cloud: Te damos la bienvenida").
 3. Clic en el menú de hamburguesa en la parte superior izquierda: <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/></svg>.
-4. Luego seleccionamos `APIs y Servicios` y ahí `APIs y Servicios habilitados`: <br> ![APIs y Servicios habilitados](images/2025-06-09_070654.png "APIs y Servicios habilitados")
+4. Luego seleccionamos `APIs y Servicios` y ahí `APIs y Servicios habilitados`: </br> ![APIs y Servicios habilitados](images/2025-06-09_070654.png "APIs y Servicios habilitados")
 5. Damos clic en `Credenciales`.
-6. Arriba en `+Crear Credenciales`, empezamos con `ID de cliente de OAuth`. 
+6. Arriba en `+Crear Credenciales`, empezamos con `ID de cliente de OAuth`.
 7. Damos clic en el botón de _Warning_ `[Configurar pantalla de consentimiento]`.
-8. Se requiere Completar el proceso de `Información de marca`:<br>![Información de Marca](images/2025-06-09_160805.gif "Información de Marca")
-9. Regresamos a `APIs y Servicios` y ahí `APIs y Servicios habilitados`: <br> ![APIs y Servicios habilitados 2](images/2025-06-09_165923.png "APIs y Servicios habilitados 2").
+8. Se requiere Completar el proceso de `Información de marca`:</br>![Información de Marca](images/2025-06-09_160805.gif "Información de Marca")
+9. Regresamos a `APIs y Servicios` y ahí `APIs y Servicios habilitados`: </br> ![APIs y Servicios habilitados 2](images/2025-06-09_165923.png "APIs y Servicios habilitados 2").
 10. Entramos en el Menú de la izquierda a `Credenciales`.
 11. Seleccionamos la parte de arriba `+Crear Credenciales` y de las opciones clic en ` ID de cliente de OAuth `.
-12. En `Tipo de Aplicación`, seleccionamos `Aplicación Web`:<br>![Crear ID de cliente de OAuth](images/2025-06-09_173730.png "Crear ID de cliente de OAuth")
+12. En `Tipo de Aplicación`, seleccionamos `Aplicación Web`:</br>![Crear ID de cliente de OAuth](images/2025-06-09_173730.png "Crear ID de cliente de OAuth")
 13. En el `Nombre` va `Sales System`.
 14. En la sección `URIs de redireccionamiento autorizados`, damos clic al botón `[+ Agregar URI]`.
-15. Regresamos al sitio de [`Supabase - > Google`](https://supabase.com/dashboard/project/{proyect}/auth/providers?provider=Google):<br>![](images/2025-06-09_175708.png "")
+15. Regresamos al sitio de [`Supabase -> Google`](https://supabase.com/dashboard/project/{proyect}/auth/providers?provider=Google):</br>![Supabase -> Google](images/2025-06-09_175708.png "Supabase -> Google")
 16. Seleccionamos de `Callback URL (for OAuth)` el texto para dar un `copy`.
 17. Y lo llevamos al sitio de `Google` en `Crear ID de cliente de OAuth` y lo pegamos en la `URI` pendiente.
 18. Y allí le damos clic en `Crear` y esperamos varios minutos.
-19. Sale una ventana y copiamos el `ID de cliente`: <br> "![Se creó del CLiente OAuth](images/2025-06-09_180336.png "Se creó el cliente OAuth").
+19. Sale una ventana y copiamos el `ID de cliente`: </br> "![Se creó del CLiente OAuth](images/2025-06-09_180336.png "Se creó el cliente OAuth").
 20. Se pega en la pagina de `Supabase` pega en `Client ID for OAuth`.
-21. Se repite el proceso de `Secreto del Cliente` de `Google`, para `Client Secret ` de `Supabase`.
+21. Se repite el proceso de `Secreto del Cliente` de `Google`, para `Client Secret` de `Supabase`.
 22. En `Supabase` estar seguro que el botón `[Enable Sign in in Google]` esté activo o en verde y dar clic en el botón `[Save]`.
 23. Nos vamos a este sitio a revisar los pasos a proceder [`Supabase -> Login with Google`](https://supabase.com/docs/guides/auth/social-login/auth-google).
-24. Creamos el archivo **`src/store/AuthStore.tsx`**, empezamos con la importación de `{create}` de `zustand`:<br>`import { create } from 'zustand';`
+24. Creamos el archivo **`src/store/AuthStore.tsx`**, empezamos con la importación de `{create}` de `zustand`:</br>`import { create } from 'zustand';`
 25. Creamos una función tipo flecha de nombre `useAuthStore` y luego la exportamos:
 ```js
 export const useAuthStore = create((set) => ({
@@ -1351,7 +1353,7 @@ const useAuthStore = create((set) => ({
 }));
 ```
 27. El error en la línea de `supabase.auth.signInWithOAuth`, se requiere importar  `{supabase}` de `'../supabase/supabase.config'`.
-28. En este sitio buscamos como desconectarnos de la sesión [``Signing out](https://supabase.com/docs/guides/auth/signout), y parece ser este simple comando :<br> `const { error } = await supabase.auth.signOut()`, completamos todo el códio de esta manera:
+28. En este sitio buscamos como desconectarnos de la sesión [``Signing out](https://supabase.com/docs/guides/auth/signout), y parece ser este simple comando :</br> `const { error } = await supabase.auth.signOut()`, completamos todo el códio de esta manera:
 ```js
 import { create } from 'zustand';
 import { supabase } from '../supabase/supabase.config';
@@ -1382,14 +1384,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
 }));
 ```
 >[!TIP]  
->#### En el contexto de cerrar sesión en una aplicación o sitio web, "signing out" y "logout" son esencialmente intercambiables y significan lo mismo: finalizar una sesión y desconectarse de una cuenta. 
->El significado de ambos términos: 
->*"Signing out" (o "sign out"):*
+>
+>#### En el contexto de cerrar sesión en una aplicación o sitio web, "signing out" y "logout" son esencialmente intercambiables y significan lo mismo: finalizar una sesión y desconectarse de una cuenta.
+>
+>El significado de ambos términos:
+>_"Signing out" (o "sign out"):_
 >Se utiliza para indicar el acto de cerrar sesión o desconectar de una cuenta, especialmente en el contexto de aplicaciones o sitios web.
->*"Logout":*
->Es una forma más informal de decir "signing out". También significa cerrar sesión o desconectar de una cuenta. 
->_En resumen:_ 
->"Signing out" y "logout" son sinónimos en el contexto de cerrar sesión. La forma en que se use dependerá del contexto específico, pero ambos significan lo mismo. 
+>_"Logout":_
+>Es una forma más informal de decir "signing out". También significa cerrar sesión o desconectar de una cuenta.
+>_En resumen:_
+>"Signing out" y "logout" son sinónimos en el contexto de cerrar sesión. La forma en que se use dependerá del contexto específico, pero ambos significan lo mismo.
 29. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
 30. Abrimos el archivo **`src/components/templates/LoginTemplate.tsx`**, para hacer la prueba de ingresar con una cuenta de `Google`, en la función `LoginTemplate()`, hago uso de la función nueva de `zustand` de nombre `useAuthStore`:
 ```js
@@ -1419,16 +1423,16 @@ function LoginTemplate() {
 
 ### Probando login (02:06:13)
 
-1. Vamos a la pagina de [`supabase -> `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-auth "><path d="M5.24121 15.0674H12.7412M5.24121 15.0674V18.0674H12.7412V15.0674M5.24121 15.0674V12.0674H12.7412V15.0674M15 7.60547V4.60547C15 2.94861 13.6569 1.60547 12 1.60547C10.3431 1.60547 9 2.94861 9 4.60547V7.60547M5.20898 9.60547L5.20898 19.1055C5.20898 20.21 6.10441 21.1055 7.20898 21.1055H16.709C17.8136 21.1055 18.709 20.21 18.709 19.1055V9.60547C18.709 8.5009 17.8136 7.60547 16.709 7.60547L7.20899 7.60547C6.10442 7.60547 5.20898 8.5009 5.20898 9.60547Z"></path></svg>`Authentication -> URL Configuration`](https://supabase.com/dashboard/project/{proyect-name}/auth/url-configuration):<br>![supabase -> Authentication -> URL Configuration](images/2025-06-13_205643.png "supabase -> Authentication -> URL Configuration")
+1. Vamos a la pagina de [`supabase ->`<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-auth "><path d="M5.24121 15.0674H12.7412M5.24121 15.0674V18.0674H12.7412V15.0674M5.24121 15.0674V12.0674H12.7412V15.0674M15 7.60547V4.60547C15 2.94861 13.6569 1.60547 12 1.60547C10.3431 1.60547 9 2.94861 9 4.60547V7.60547M5.20898 9.60547L5.20898 19.1055C5.20898 20.21 6.10441 21.1055 7.20898 21.1055H16.709C17.8136 21.1055 18.709 20.21 18.709 19.1055V9.60547C18.709 8.5009 17.8136 7.60547 16.709 7.60547L7.20899 7.60547C6.10442 7.60547 5.20898 8.5009 5.20898 9.60547Z"></path></svg>`Authentication -> URL Configuration`](https://supabase.com/dashboard/project/{proyect-name}/auth/url-configuration):</br>![supabase -> Authentication -> URL Configuration](images/2025-06-13_205643.png "supabase -> Authentication -> URL Configuration")
 >[!WARNING]  
 >Corrigiendo el paso [Conectando a SUPABASE (01:47:35)](#conectando-a-supabase-014735), las variables serán:
 >```ini
 >VITE_SUPABASE_URL=<SUBSTITUTE_SUPABASE_URL>
 >VITE_SUPABASE_ANON_KEY=<SUBSTITUTE_SUPABASE_ANON_KEY>
 >```
->Sin la partícula `APP`, para que quede igual a la configuración en el sito [`Use Supabase with React` paso (4)](https://supabase.com/docs/guides/getting-started/quickstarts/reactjs) 
+>Sin la partícula `APP`, para que quede igual a la configuración en el sito [`Use Supabase with React` paso (4)](https://supabase.com/docs/guides/getting-started/quickstarts/reactjs)
 2. Cambiamos la dirección local existente para `NextJs` de `http://localhost:3000` por esta otra también local de `react+Vite` que es `http://localhost:5173/` en el campo `Site URL`.
-3. Ahora si vamos a probar:<br>![Login con Google](images/2025-06-14_144938.gif "Login con Google")
+3. Ahora si vamos a probar:</br>![Login con Google](images/2025-06-14_144938.gif "Login con Google")
 
 
 
@@ -1635,7 +1639,9 @@ function HomeTemplate() {
 ### Rutas Protegidas (02:30:36)
 
 >[!WARNING]  
+>
 >#### Solución al error mencionado en el paso anterior de `Property 'authState' does not exist on type 'unknown'`.
+>
 >1. En el archivo **`src\context\AuthContext.tsx`**, cree una `interface` de nombre `AuthContextType`:
 >```js
 >interface AuthContextType {
@@ -1768,7 +1774,9 @@ export const v = {
 
 
 >[!NOTE]  
->### Temas puntuales de la sección
+>
+>### Temas puntuales de la sección (Categoría de productos)
+>
 >**Descripción de la sección:**  
 >En esta sección desarrollaremos el módulo de `Categoría de productos`, abarcando desde la creación de tablas y estructuras básicas hasta funcionalidades avanzadas como la integración con `Storage` y el uso de `TanStack Query`. Este módulo será clave para organizar y manejar la información de productos, empresas, usuarios y configuraciones.
 >
@@ -1816,8 +1824,8 @@ CREATE TABLE IF NOT EXISTS users (
 COMMIT;
 ```
 5. El instructor sugiere el uso de `TEXT` en vez de `VARCHAR`, pero en consultas es mas eficiente el uso de `VARCHAR`.
-6. Copio el contenido del archivo **`users.sql`**, en el `SQL Editor` de `Supabase` y clic en el botón `[Run Ctrl <┘]`, nos hace una advertencia de:<br> `Potential issue detected with your query`<br> Pero le damos clic en el botón [`Run this query`], esto es por el _borrado_ de la tabla al principio con el `DROP`.
-7. Revisamos la opción `Table Editor`, luego de darle la tecla [`F5`] y esto es lo que visualizamos: <br> ![`users` Table](images/2025-06-17_171746.png "`users` Table")
+6. Copio el contenido del archivo **`users.sql`**, en el `SQL Editor` de `Supabase` y clic en el botón `[Run Ctrl <┘]`, nos hace una advertencia de:</br> `Potential issue detected with your query`</br> Pero le damos clic en el botón [`Run this query`], esto es por el _borrado_ de la tabla al principio con el `DROP`.
+7. Revisamos la opción `Table Editor`, luego de darle la tecla [`F5`] y esto es lo que visualizamos: </br> ![`users` Table](images/2025-06-17_171746.png "`users` Table")
 
 
 
@@ -1914,7 +1922,7 @@ INSERT INTO roles (name, description) VALUES
 ('Support', 'Soporte técnico');
 COMMIT;
 ```
-5. Así se visualiza la estructura o _Schema_ de nuestra base de datos en `Supabase`:<br>![Database Schema 1](images/2025-06-17_194525.png "Database Schema 1") 
+5. Así se visualiza la estructura o _Schema_ de nuestra base de datos en `Supabase`:</br>![Database Schema 1](images/2025-06-17_194525.png "Database Schema 1")
 
 
 
@@ -1987,9 +1995,9 @@ CREATE TABLE IF NOT EXISTS categories (
 );
 COMMIT;
 ```
-2. Estas reglas o _Policies_ deben de configurarse en `Supabase`, y nos vamos al icono<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-editor "><path d="M2.9707 15.3494L20.9707 15.355M20.9405 9.61588H2.99699M8.77661 9.61588V21.1367M20.9405 5.85547V19.1367C20.9405 20.2413 20.0451 21.1367 18.9405 21.1367H4.99699C3.89242 21.1367 2.99699 20.2413 2.99699 19.1367V5.85547C2.99699 4.7509 3.89242 3.85547 4.99699 3.85547H18.9405C20.0451 3.85547 20.9405 4.7509 20.9405 5.85547Z"></path></svg> `Table Editor`, da clic en la tabla `categories`, luego en los puntos suspensivoa al lado del nombre de la tabla:<br>![`categories` -> `View policies`](images/2025-06-20_143318.png "`categories` -> `View policies`")
+2. Estas reglas o _Policies_ deben de configurarse en `Supabase`, y nos vamos al icono<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-editor "><path d="M2.9707 15.3494L20.9707 15.355M20.9405 9.61588H2.99699M8.77661 9.61588V21.1367M20.9405 5.85547V19.1367C20.9405 20.2413 20.0451 21.1367 18.9405 21.1367H4.99699C3.89242 21.1367 2.99699 20.2413 2.99699 19.1367V5.85547C2.99699 4.7509 3.89242 3.85547 4.99699 3.85547H18.9405C20.0451 3.85547 20.9405 4.7509 20.9405 5.85547Z"></path></svg> `Table Editor`, da clic en la tabla `categories`, luego en los puntos suspensivoa al lado del nombre de la tabla:</br>![`categories` -> `View policies`](images/2025-06-20_143318.png "`categories` -> `View policies`")
 3. Damos clic al botón `[Create policy]`
-4. Nos aparece una pantalla base y damos clic a la derecha en la columna `Templates` o Plantillas, al que dice `SELECT`(Es lo mismo que hacerlo en el que dice `Policy Command`):<br>![Categories -> new policiy -> SELECT](images/2025-06-20_143837.png "Categories -> new policiy -> SELECT")
+4. Nos aparece una pantalla base y damos clic a la derecha en la columna `Templates` o Plantillas, al que dice `SELECT`(Es lo mismo que hacerlo en el que dice `Policy Command`):</br>![Categories -> new policiy -> SELECT](images/2025-06-20_143837.png "Categories -> new policiy -> SELECT")
 5. En `Target Roles`, selecciono `authenticated` y este es el texto del comando:
 ```sql
 create policy "Enable read access for all users"
@@ -2056,12 +2064,12 @@ create policy "Enable delete for users based on user_id"
         id=id
     );
 ```
-13. Damos clic en el botón `[Save policy]`, así se ve el _CRUD_ de las reglas o _policies_ para la table `categories`: <br>![`Policies` de `categories`](images/2025-06-20_154612.png "`Policies` de `categories`")
+13. Damos clic en el botón `[Save policy]`, así se ve el _CRUD_ de las reglas o _policies_ para la table `categories`: </br>![`Policies` de `categories`](images/2025-06-20_154612.png "`Policies` de `categories`")
 14. Regresamos a <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-editor "><path d="M2.9707 15.3494L20.9707 15.355M20.9405 9.61588H2.99699M8.77661 9.61588V21.1367M20.9405 5.85547V19.1367C20.9405 20.2413 20.0451 21.1367 18.9405 21.1367H4.99699C3.89242 21.1367 2.99699 20.2413 2.99699 19.1367V5.85547C2.99699 4.7509 3.89242 3.85547 4.99699 3.85547H18.9405C20.0451 3.85547 20.9405 4.7509 20.9405 5.85547Z"></path></svg> `Table Editor`.
-15. Y el Instructor sugiere quitar de cada tabla en `Supabase` todas las `RLS` (_Row Level Security_), pero resulta que esta versión de `Supabase` (jun-20-2025), todas las tablas tienen los `RLS` inactivos:<br>![10 cuestiones que necesitan atención](images/2025-06-20_174342.png "10 cuestiones que necesitan atención")
+15. Y el Instructor sugiere quitar de cada tabla en `Supabase` todas las `RLS` (_Row Level Security_), pero resulta que esta versión de `Supabase` (jun-20-2025), todas las tablas tienen los `RLS` inactivos:</br>![10 cuestiones que necesitan atención](images/2025-06-20_174342.png "10 cuestiones que necesitan atención")
 
 >[!TIP]  
-> En `Supabase`, RLS significa **Seguridad a Nivel de Fila** (_Row Level Security_, por sus siglas en inglés). Es una característica de Postgresql que permite controlar el acceso a los datos a nivel de fila individual dentro de una tabla. En otras palabras, RLS permite definir políticas que determinan qué usuarios o roles pueden ver, insertar, actualizar o eliminar filas específicas en una tabla. 
+> En `Supabase`, RLS significa **Seguridad a Nivel de Fila** (_Row Level Security_, por sus siglas en inglés). Es una característica de Postgresql que permite controlar el acceso a los datos a nivel de fila individual dentro de una tabla. En otras palabras, RLS permite definir políticas que determinan qué usuarios o roles pueden ver, insertar, actualizar o eliminar filas específicas en una tabla.
 >
 >¿Cómo funciona RLS en `Supabase`?
 >* **Políticas:**  
@@ -2069,7 +2077,7 @@ create policy "Enable delete for users based on user_id"
 >* **Acceso condicional:**  
 >Estas políticas pueden basarse en el usuario autenticado, roles, columnas de la tabla u otras condiciones.
 >* **Control granular:**  
->RLS proporciona un control muy granular sobre el acceso a los datos, permitiendo que los desarrolladores definan políticas muy específicas para diferentes usuarios o roles. 
+>RLS proporciona un control muy granular sobre el acceso a los datos, permitiendo que los desarrolladores definan políticas muy específicas para diferentes usuarios o roles.
 >
 >Beneficios de usar RLS en `Supabase`:
 >* **Mayor seguridad:**  
@@ -2079,9 +2087,9 @@ create policy "Enable delete for users based on user_id"
 >* **Escalabilidad:**  
 >RLS puede ayudar a escalar aplicaciones multiusuario, ya que permite definir políticas específicas para diferentes usuarios o roles.
 >* **Integración con la autenticación:**  
->RLS se integra con el sistema de autenticación de `Supabase`, lo que permite utilizar la información del usuario autenticado para aplicar las políticas de seguridad. 
+>RLS se integra con el sistema de autenticación de `Supabase`, lo que permite utilizar la información del usuario autenticado para aplicar las políticas de seguridad.
 >
->En resumen, RLS es una herramienta poderosa en `Supabase` que permite a los desarrolladores proteger sus datos y controlar el acceso a ellos de manera granular y centralizada 
+>En resumen, RLS es una herramienta poderosa en `Supabase` que permite a los desarrolladores proteger sus datos y controlar el acceso a ellos de manera granular y centralizada
 
 
 
@@ -2147,7 +2155,7 @@ END
 $$;
 COMMIT;
 ```
-6. Así se ve el _schema_ o esquema de la base de datos:<br>![Database Schema 2](images/2025-06-21_180009.png "Database Schema 2")
+6. Así se ve el _schema_ o esquema de la base de datos:</br>![Database Schema 2](images/2025-06-21_180009.png "Database Schema 2")
 7. Como falta la llamada dentro del archivo **`src\supabase\crudCategories.tsx`** a la función recien creada en `Supabase`, hice este arreglo temporal a la función `InsertCategory()`:
 ```js
 import { supabase } from '../index.ts';
@@ -2173,7 +2181,7 @@ export async function InsertCategory(category: {
 2. Puedes llamar a las funciones de Postgres como _Llamadas a Procedimientos Remotos_ (`RPC`), lógica en tu base de datos que puedes ejecutar desde cualquier lugar. Las funciones son útiles cuando la lógica rara vez cambia, como para restablecer y actualizar contraseñas.
 3. El paso anterior ya lo había hecho en el archivo **`src\supabase\crudCategories.tsx`**.
 4. Antes de continuar vamo a instalar unos _Mensajes Emerjentes_ y los buscamos en este sitio [`sweetalert2`](https://sweetalert2.github.io/).
-5. Vamos a la parte de [_Installation_](https://sweetalert2.github.io/#download) y usamos este código en una `TERMINAL`:<br>`pnpm install sweetalert2 -E`
+5. Vamos a la parte de [_Installation_](https://sweetalert2.github.io/#download) y usamos este código en una `TERMINAL`:</br>`pnpm install sweetalert2 -E`
 6. Completamos el contenido de **`src\supabase\crudCategories.tsx`**, usando la nueva biblioteca de `'sweetalert2'` y empezamos con la importación y luego su uso en un condicional:
 ```js
 ...
@@ -2204,13 +2212,13 @@ export async function InsertCategory(
   const new_category_id = data;
 ```
 8. Regresamos a `Supabase` y buscamos en el menú a <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-storage "><path d="M19.4995 11.3685V8.50725L14.0723 3.10584H5.49951C4.94722 3.10584 4.49951 3.55355 4.49951 4.10584V9.1051M19.4468 8.48218L14.0701 3.10547L14.0701 7.48218C14.0701 8.03446 14.5178 8.48218 15.0701 8.48218L19.4468 8.48218ZM6.86675 9.1051H3.96045C3.40816 9.1051 2.96045 9.55282 2.96045 10.1051V19.1051C2.96045 20.2097 3.85588 21.1051 4.96045 21.1051H18.9604C20.065 21.1051 20.9604 20.2097 20.9604 19.1051V12.3685C20.9604 11.8162 20.5127 11.3685 19.9605 11.3685H9.98622C9.72382 11.3685 9.47194 11.2654 9.28489 11.0813L7.56808 9.39226C7.38103 9.20824 7.12915 9.1051 6.86675 9.1051Z"></path></svg> `Storage`.
-9. Damos clic al botón `[New bucket]` y en el campo de `Name of the bucket`, le ponemos `images`, activamos el botón de `Public bucket` y le damos `[Save]`:<br>![Create storage bucket - > images](images/2025-06-22_141544.png "Create storage bucket - > images")
+9. Damos clic al botón `[New bucket]` y en el campo de `Name of the bucket`, le ponemos `images`, activamos el botón de `Public bucket` y le damos `[Save]`:</br>![Create storage bucket - > images](images/2025-06-22_141544.png "Create storage bucket - > images")
 10. Dentro de este _bucket_ de nombre `images`, damos clic en el botón `[Create folder]` y en el nombre le ponemos `categories`.
 11. Estando en el _bucket_ de nombre `images`, damos clic a la izquierda en `Policies`.
 12. Damos click al botón `[New policy]`, y seleccionamos el de abajo <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>`For full customization`.
 13. En el campo `Policy name`, le ponemos `Image Permissions`
 14. Pongo los cuatro _chulos_ o _check_ (✅), para `SELECT`, `INSERT`, `UPDATE` y `DELETE`, que son `Allowed operation`.
-15. Selcciono en `Target roles` la opción de `authenticated`: <br> ![Storage -> images ->Policies](images/2025-06-22_142838.png "Storage -> images ->Policies")
+15. Selcciono en `Target roles` la opción de `authenticated`: </br> ![Storage -> images ->Policies](images/2025-06-22_142838.png "Storage -> images ->Policies")
 16. Damos clic en `[Review]`, nos aparecen las cuatro operaciones y damos clic en el botón `[Save policy]`.
 
 
@@ -2219,7 +2227,9 @@ export async function InsertCategory(
 
 1. Podemos empezar con el sitio [`STORAGE->Upload a file`](https://supabase.com/docs/reference/javascript/storage-from-upload).
 >[!NOTE]  
+>
 >#### Subir un archivo  
+>
 >Sube un archivo a un depósito existente.
 >
 >* Permisos de política RLS requeridos:
@@ -2229,25 +2239,25 @@ export async function InsertCategory(
 >* En React Native, usar Blob, Fileo FormDatano funciona correctamente. Suba el archivo usando ArrayBufferdatos de archivo base64 (vea el ejemplo a continuación).
 >
 >Parámetros
->* **camino** *Requerido* cadena
+>* **camino** _Requerido_ cadena
 >   * La ruta del archivo, incluido el nombre, debe tener el formato folder/subfolder/filename.png. El contenedor debe existir antes de intentar cargarlo.
->* **cuerpo del archivo** *Requerido* Cuerpo del archivo
+>* **cuerpo del archivo** _Requerido_ Cuerpo del archivo
 >   * El cuerpo del archivo que se almacenará en el depósito.
-> 
+>
 >Opciones del archivo
->* **Control de caché** *Opcional* cadena
+>* **Control de caché** _Opcional_ cadena
 >   * El tiempo que el recurso se almacena en caché en el navegador y en la CDN de Supabase. Se configura en el Cache-Control: max-age=<seconds>encabezado. El valor predeterminado es 3600 segundos.
->* **tipo de contenido** *Opcional* cadena
+>* **tipo de contenido** _Opcional_ cadena
 >   * El Content-Typevalor del encabezado. Debe especificarse si se usa un fileBodyvalor que no sea Blobni Fileni FormData; de lo contrario, el valor predeterminado será text/plain;charset=UTF-8.
->* **dúplex** *Opcional* cadena
+>* **dúplex** _Opcional_ cadena
 >   * La opción dúplex es un parámetro de cadena que habilita o deshabilita la transmisión dúplex, lo que permite leer y escribir datos en la misma secuencia. Se puede pasar como opción al método fetch().
->* **encabezados** *Opcional* Registro<cadena, cadena>
+>* **encabezados** _Opcional_ Registro<cadena, cadena>
 >   * Opcionalmente, agregue encabezados adicionales
->* **metadatos** *Opcional* Registro<cadena, cualquier>
+>* **metadatos** _Opcional_ Registro<cadena, cualquier>
 >   * La opción de metadatos es un objeto que permite almacenar información adicional sobre el archivo. Esta información se puede usar para filtrar y buscar archivos. El objeto de metadatos puede contener cualquier par clave-valor que desee almacenar.
->* **inserción** *Opcional* booleano
->   * Cuando upsert se establece en verdadero, el archivo se sobrescribe si existe. Cuando se establece en falso, se genera un error si el objeto ya existe. El valor predeterminado es falso. 
-> 
+>* **inserción** _Opcional_ booleano
+>   * Cuando upsert se establece en verdadero, el archivo se sobrescribe si existe. Cuando se establece en falso, se genera un error si el objeto ya existe. El valor predeterminado es falso.
+>
 1. Regresando al archivo **`src/supabase/crudCategories.tsx`**, creamos la función asíncrona de nombre `uploadImage()`, y copio un código del sitio antes consultado:
 ```js
 async function uploadImage(){
@@ -2407,7 +2417,7 @@ export async function InsertCompany(company: {
   return data;
 }
 ```
-4.  Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
+4. Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
 5. Creamos este archivo **`src\store\CompanyStore.tsx`**.
 6. Empiezo importando elementos de `zustand` y de `supabase` y teniendo una _interface_ lista:
 ```js
@@ -2488,9 +2498,9 @@ interface SaveButtonProps {
   width?: string; // Optional, to set the width of the button
 }
 ```
-13. Ahora si probando el nuevo botón para crear una _company_: <br> ![Insertar Empresa Test](images/2025-06-24_071118.gif "Insertar Empresa Test")
+13. Ahora si probando el nuevo botón para crear una _company_: </br> ![Insertar Empresa Test](images/2025-06-24_071118.gif "Insertar Empresa Test")
 14. En el archivo **`src\supabase\crudCompanies.tsx`**, le agrego al momento del proceso con `supabase`que al final despues del `select()` otra función `maybeSingle()`.
-15. Para probar de nuevo, borremos el último registro de la tabla  `companies` en `Supabase`, y así se ve el contenido en la consola después de la prueba: <br> ![maybeSingle()](images/2025-06-24_074837.png "maybeSingle()")
+15. Para probar de nuevo, borremos el último registro de la tabla  `companies` en `Supabase`, y así se ve el contenido en la consola después de la prueba: </br> ![maybeSingle()](images/2025-06-24_074837.png "maybeSingle()")
 
 
 
@@ -2536,7 +2546,7 @@ export async function GetUser(userId: string): Promise<unknown> {
 * **`HomeTemplate.tsx`**
 * **`ProtectedRoutes.tsx`**
 * **`MyRoutes`**
-11.  Agrego en el archivo **`src/context/AuthContext.tsx`**, en la importación del `index.ts`, el nuevo `GetUser`:
+11. Agrego en el archivo **`src/context/AuthContext.tsx`**, en la importación del `index.ts`, el nuevo `GetUser`:
 ```js
 import { supabase, GetUser } from '../index.ts';
 ```
@@ -2549,7 +2559,7 @@ import { supabase, GetUser } from '../index.ts';
     }
   };
 ```
-13. Dentro del `useEffect`, justo cuando definimos este <br>`setAuthState(session?.user);`<br> llamamos la función nueva de `insertUser()`:
+13. Dentro del `useEffect`, justo cuando definimos este </br>`setAuthState(session?.user);`</br> llamamos la función nueva de `insertUser()`:
 ```js
       if (session == null) {
         setAuthState(null);
@@ -2692,8 +2702,8 @@ export interface SessionDataInterface {
         insertUser(session as unknown as SessionInterface);
 ```
 7. Abrimos el archivo **`src\supabase\crudCompanies.tsx`**, y se añade el nuevo parámetro de `id_auth`.
-8. Hacemos la prueba, autenticándonos de nuevo y viendo que se crea el nuevo registro en la tabla `companies`: <br>![Hacer `Login` y crear registro en `companies`](images/2025-06-28_170935.gif "Hacer `Login` y crear registro en `companies`")
-9. El error que nos sale una vez se ingresa es porque la búsqueda del usuario se hace en la tabla `users` y hasta ahora el `id_auth`, solo se ha ingresado en la tabla `companies`: <br> ![Error: duplicate key](images/2025-06-28_171145.png "Error: duplicate key")
+8. Hacemos la prueba, autenticándonos de nuevo y viendo que se crea el nuevo registro en la tabla `companies`: </br>![Hacer `Login` y crear registro en `companies`](images/2025-06-28_170935.gif "Hacer `Login` y crear registro en `companies`")
+9. El error que nos sale una vez se ingresa es porque la búsqueda del usuario se hace en la tabla `users` y hasta ahora el `id_auth`, solo se ha ingresado en la tabla `companies`: </br> ![Error: duplicate key](images/2025-06-28_171145.png "Error: duplicate key")
 10. Volvemos al archivo **`src/supabase/crudUsers.tsx`**, añadimos una función exportable y asincrónica de nombre `InsertAdminUser()`:
 ```js
 export async function InsertAdminUser(user: {
@@ -2741,7 +2751,7 @@ export async function InsertAdminUser(user: {
       });
 ```
 12. Creamos el achivo **`src/db/sql/db_20250629.sql`**, que ejecuta toda la creación de tablas, índices,funciones y disparadores, para ser ejecutada en `Supabase`.
-13. Ya tenemos de nuevo toda la BD creada: <br> ![Database Schema 3](images/2025-06-29_162937.png "Database Schema 3")
+13. Ya tenemos de nuevo toda la BD creada: </br> ![Database Schema 3](images/2025-06-29_162937.png "Database Schema 3")
 14. Creamos este archivo **`src/supabase/crudDocTypes.tsx`**, con este código:
 ```js
 import { supabase } from '../index.ts';
@@ -2877,7 +2887,7 @@ const insertUser = async (session: SessionInterface) => {
     }
   };
 ```
-13. Probamos si ya almacena los datos una vez hace el ingreso del _Login_ de `Google`: <br> ![Creación de registros en `Companies`, `Users` y otros](images/2025-06-30_155038.gif "Creación de registros en `Companies`, `Users` y otros")
+13. Probamos si ya almacena los datos una vez hace el ingreso del _Login_ de `Google`: </br> ![Creación de registros en `Companies`, `Users` y otros](images/2025-06-30_155038.gif "Creación de registros en `Companies`, `Users` y otros")
 
 
 ### Insertar asignación de sucursales (04:57:39)
@@ -2936,8 +2946,8 @@ COMMIT;
 ```
 7. Añadimos estos dos nuevos _queries_ dentro del archivo **`db_20250630.sql`** y ejecutamos el contenido de **`db_20250630.sql`**, dentro de `Supabase`.
 >[!TIP]  
->El instructor da muchas vueltas, añadiendo a la tabla `companies` un `id_user`, pero esto no es necesario.<br> Lo mismo que ingresar en la _function_ de BD de nombre `fnc_after_companies_insert()` el _insert_ en la tabla `branch_assignments`, cuando esto se puede dejar todo en la _function_ de BD de nombre `fnc_after_users_insert()`.
-8. Hacemos una prueba y este es el resultado: <br>![Agregando datos en `branch_assignments`](images/2025-06-30_183525.gif "Agregando datos en `branch_assignments`")
+>El instructor da muchas vueltas, añadiendo a la tabla `companies` un `id_user`, pero esto no es necesario.</br> Lo mismo que ingresar en la _function_ de BD de nombre `fnc_after_companies_insert()` el _insert_ en la tabla `branch_assignments`, cuando esto se puede dejar todo en la _function_ de BD de nombre `fnc_after_users_insert()`.
+8. Hacemos una prueba y este es el resultado: </br>![Agregando datos en `branch_assignments`](images/2025-06-30_183525.gif "Agregando datos en `branch_assignments`")
 
 
 
@@ -3015,7 +3025,7 @@ export function MyRoutes() {
   );
 }
 ```
-8. Abrimos el archivo **`src/utils/dataEstatica.ts`**,  en la constante `SecondarylinksArray`, <br>Cambiamos el texto de:<br> `    to: '/configurar',` <br>Por el texto de: <br>`    to: '/config',`
+8. Abrimos el archivo **`src/utils/dataEstatica.ts`**,  en la constante `SecondarylinksArray`, </br>Cambiamos el texto de:</br> `to: '/configurar',` </br>Por el texto de: </br>`to: '/config',`
 9. Cerremos los otros archivos y dejamos solo abierto **`src/components/templates/ConfigurationsTemplate.tsx`**.
 
 
@@ -3024,7 +3034,7 @@ export function MyRoutes() {
 1. Copiamos del repositorio el archivo [fondocuadros.svg](https://github.com/Franklin369/pos-react-curso-hasta-seccion-categorias/blob/main/src/assets/fondocuadros.svg), en nuestra carpeta **"src/assets"**.
 2. Teniendo abierto el archivo **`ConfigurationsTemplate.tsx`**, Copiamos el contenido del repositorio [ConfiguracionesTemplate.jsx](https://github.com/Franklin369/pos-react-curso-hasta-seccion-categorias/blob/main/src/components/templates/ConfiguracionesTemplate.jsx), con los ajustes que se requieran.
 >[!WARNING]  
->Nos aparece un error :<br>`Module '"../../index"' has no exported member 'useModulosStore'.`<br> para una solución temporal, hacemos esto:
+>Nos aparece un error :</br>`Module '"../../index"' has no exported member 'useModulosStore'.`</br> para una solución temporal, hacemos esto:
 >1. Creamos el archivo **`src/store/ModulesStore.tsx`**, con este código base:
 >```js
 >import { create } from 'zustand';
@@ -3065,17 +3075,25 @@ declare module 'styled-components' {
 4. El Instructor muestra imagenes en la página de `configuracion`, pero esto depende de datos almacenados en `Supabase`, que aun no hemos creado, es decir estos resultados se verán mas adelante.
 5. Aún hay errores de _Typescript_ en el archivo **`src/components/templates/ConfigurationsTemplate.tsx`**, que se podrán solucionar en el futuro.
 
+>[!WARNING]  
+>
+>### Error en **`ConfigurationsTemplate.tsx`**, no aparecen los iconos:
+>
+>* [Solución parcial](#solución-parcial-para-ver-los-elementos-de-configuración)
+
 
 
 ### Instalando TanStack (05:18:44)
 
 1. Vamos a esta página [TanStack
-Query](https://tanstack.com/query/latest), que menciona esta información:<br> **Potente gestión de estados asincrónicos para TS/JS, React, Solid, Vue, Svelte y Angular**<br>`Olvídate de la gestión granular de estados, la recarga manual y la infinidad de código asincrónico. TanStack Query te ofrece consultas y mutaciones declarativas, siempre actualizadas y autogestionadas que mejoran directamente la experiencia del desarrollador y del usuario.`.
+Query](https://tanstack.com/query/latest), que menciona esta información:</br> **Potente gestión de estados asincrónicos para TS/JS, React, Solid, Vue, Svelte y Angular**</br>`Olvídate de la gestión granular de estados, la recarga manual y la infinidad de código asincrónico. TanStack Query te ofrece consultas y mutaciones declarativas, siempre actualizadas y autogestionadas que mejoran directamente la experiencia del desarrollador y del usuario.`.
 >[!IMPORTANT]  
->#### Hay que detener la ejecución que tenemos de :<br> `pnpm dev` <br> Para poder instalar lo de `TanStack`.
+>
+>#### Hay que detener la ejecución que tenemos de :</br> `pnpm dev` </br> Para poder instalar lo de `TanStack`.
+
 2. Vamos a ver el proceso de instalación en este sitio [TanStack -> React -> Installation](https://tanstack.com/query/latest/docs/framework/react/installation).
-3. En una `TERMINAL`, ejecutamos este comando:<br>`pnpm add @tanstack/react-query -E`
-4. También hay una recomendación de ejecutar:<br>`pnpm add -D @tanstack/eslint-plugin-query -E`
+3. En una `TERMINAL`, ejecutamos este comando:</br>`pnpm add @tanstack/react-query -E`
+4. También hay una recomendación de ejecutar:</br>`pnpm add -D @tanstack/eslint-plugin-query -E`
 5. En este sitio [Quick Start](https://tanstack.com/query/latest/docs/framework/react/quick-start), hay un ejemplo de como utilizarlo, y lo vamos a probar en el archivo **`src/main.tsx`**, empezamos importando solo el `QueryClient` y el `QueryClientProvider`:
 ```js
 import {
@@ -3096,13 +3114,13 @@ const queryClient = new QueryClient();
       </QueryClientProvider>
     </BrowserRouter>
 ```
-8. Adicional instalamos el _Devtools_ de TanStack Query de este sitio [Devtools](https://tanstack.com/query/v4/docs/framework/react/devtools), y ejecutamos en una `TERMINAL` este comando:<br>`pnpm add @tanstack/react-query-devtools -E`
-9.  Abrimos el archivo **`package.json`** y borramos los _carets_ o `^`, si aparecen estos símbolos.
+8. Adicional instalamos el _Devtools_ de TanStack Query de este sitio [Devtools](https://tanstack.com/query/v4/docs/framework/react/devtools), y ejecutamos en una `TERMINAL` este comando:</br>`pnpm add @tanstack/react-query-devtools -E`
+9. Abrimos el archivo **`package.json`** y borramos los _carets_ o `^`, si aparecen estos símbolos.
 10. Abrimos el archivo **`src/App.tsx`**, para añadir la importación de `ReactQueryDevtools`:
 ```js
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 ```
-11.  Agregamos el renderizado de este `<ReactQueryDevtools`, debajo de un cierre llaves `}`,justo antes de `</AuthContextProvider>`:
+11. Agregamos el renderizado de este `<ReactQueryDevtools`, debajo de un cierre llaves `}`,justo antes de `</AuthContextProvider>`:
 ```js
       <AuthContextProvider>
         <GlobalStyles />
@@ -3111,9 +3129,174 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
       </AuthContextProvider>
 ```
 >[!IMPORTANT]  
->#### Volvemos a ejecutar en una `TERMINAL` el comando :<br> `pnpm dev`
-12. Así luce la pantalla del sitio de `login`, con el botón abajo de ![TanStack](https://tanstack.com/favicon-32x32.png "TanStack"):<br>![TanStack -> Devtools](images/2025-07-02_090821.png "TanStack -> Devtools")
-13. Al darle clic a ese botón de `Devtools`, aparece una ventan abajo para visualizar los movimientos de `TanStack`: <br> ![TanStack -> Visor](images/2025-07-02_120850.png "TanStack -> Visor")
+>
+>#### Volvemos a ejecutar en una `TERMINAL` el comando :</br> `pnpm dev`
 
+12. Así luce la pantalla del sitio de `login`, con el botón abajo de ![TanStack](https://tanstack.com/favicon-32x32.png "TanStack"):</br>![TanStack -> Devtools](images/2025-07-02_090821.png "TanStack -> Devtools")
+13. Al darle clic a ese botón de `Devtools`, aparece una ventana abajo para visualizar los movimientos de `TanStack`: </br> ![TanStack -> Visor](images/2025-07-02_120850.png "TanStack -> Visor")
+
+
+
+
+### Mostrar módulos (05:23:04)
+
+
+1. Creamos el archivo **`src\pages\Categories.tsx`**, escribimos el _snippet_ `rfce` y le completamos la información:
+```js
+import styled from 'styled-components';
+
+const Container = styled.div``;
+
+function Categories() {
+  return <Container>Categories</Container>;
+}
+
+export default Categories;
+```
+2. Creamos este otro **`src/components/templates/CategoriesTemplate.tsx`**, ponemos el _snippet_ `rfce` y completamos:
+```js
+import styled from 'styled-components';
+
+const Container = styled.div``;
+
+function CategoriesTemplate() {
+  return <Container>CategoriesTemplate</Container>;
+}
+
+export default CategoriesTemplate;
+```
+3. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+4. Regresamos al archivo **`src\pages\Categories.tsx`**, e importamos el `{ CategoriesTemplate }`, del `'../index.ts'`.
+5. Renderizado el recién importado `<CategoriesTemplate />`:
+```js
+import styled from 'styled-components';
+import { CategoriesTemplate } from '../index.ts';
+
+const Container = styled.div``;
+
+function Categories() {
+  return (
+    <Container>
+      <CategoriesTemplate />
+    </Container>
+  );
+}
+
+export default Categories;
+```
+6. Abrimos el archivo **`src/routes/MyRoutes.tsx`**, para añadir la ruta a la nueva página:
+```js
+    <Routes>
+      <Route
+        element={<ProtectedRoutes {...}/>}
+      >
+        ...
+        <Route path='/config/categories' element={<Categories />} />
+      </Route>
+      ...
+    </Routes>
+```
+7. Abrimos el archivo **`src\utils\dataEstatica.ts`**, y buscamos _array_ de nombre `DataModulosConfiguracion`y cambiamos el objeto `title: 'Categoria de productos'`, en la llave del `link`, por este valor :</br>`link: '/config/categories',`.
+>[!WARNING]  
+>
+>### Solución parcial para ver los elementos de configuración
+>
+>* [Error en la página `config`](#error-en-configurationstemplatetsx-no-aparecen-los-iconos)
+>* [Diseño de la página `config`](#diseño-de-pagina-configuraciones-051624)
+8. Abrimos el archivo para revisar **`src\components\templates\ConfigurationsTemplate.tsx`**:</br>-> Se reorganiza el contenido de la constante `Container`.</br>-> En `.card > .card-content`, se quita lo de `position: absolute;`. </br> -> Se cambia `dataModulos.map((item, index)`, por `DataModulosConfiguracion.map((item, index)`.</br>-> Por ende se importa `DataModulosConfiguracion` de `'../../utils/dataEstatica.ts'`.
+9. Al menos nos salen los cinco elementos de la configuración, salen sin colores y en una sola columna:</br>![Solución parcial a la página `config`](images/2025-07-04_111340.png "Solución parcial a la página `config`")
+10. Creamos un archivo **`src/db/sql/tables/modules.sql`**, para ejecutar luego en `Supabase`, lo mismo que copiamos en un nuevo **`src/db/sql/db_20250704.sql`**:
+```sql
+-- Create the `modules` table
+DROP TABLE IF EXISTS modules;
+CREATE TABLE IF NOT EXISTS modules (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) UNIQUE NOT NULL,
+    description VARCHAR(100),
+    checked BOOLEAN DEFAULT FALSE,
+    icon VARCHAR(100),
+    link VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert initial data into `modules`
+INSERT INTO modules (name, description, checked, icon, link) VALUES
+('Productos',	'registra tus productos',	TRUE,	'https://i.ibb.co/85zJ6yG/caja-del-paquete.png',	'/configurar/productos'),
+('Personal',	'ten el control de tu personal',	TRUE,	'',	'/configurar/usuarios'),
+('Tu empresa',	'configura tus opciones básicas',	TRUE,	'',	'/configurar/empresa'),
+('Categoria de productos',	'asigna categorias a tus productos',	TRUE,	'',	'/config/categories'),
+('Marca de productos',	'gestiona tus marcas',	TRUE,	'',	'/configurar/marca');
+
+-- ?Policies for `modules` table
+```
+11. Así se ve la estructura de la base de datos en `Supabase`, con la nueva tabla:</br>![Database Schema 4](images/2025-07-04_135422.png "Database Schema 4")
+12. Creamos el archivo **`src/supabase/crudModules.tsx`**, copiamos de **`src/supabase/crudRoles.tsx`** y ajustamos:
+```js
+import { supabase } from '../index.ts';
+
+const tableName = 'modules';
+
+export interface modulesInterface {
+  id: number;
+  name: string;
+  description: string;
+  checked: boolean;
+  icon: string;
+  link: string;
+}
+
+export async function GetAllModules(): Promise<unknown> {
+  const { data, error } = await supabase.from(tableName).select('*');
+  if (error) {
+    return null;
+  }
+  return data as modulesInterface[];
+}
+```
+13. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+14. Abrimos el archivo **`src\store\ModulesStore.tsx`**, y hacemos uso del nuevo `GetAllModules()`:
+```js
+import { create } from 'zustand';
+import { GetAllModules } from '../index.ts';
+
+type moduleType = {
+  id: number;
+  name: string;
+  description: string;
+  checked: boolean;
+  icon: string;
+  link: string;
+};
+
+export const useModulosStore = create((set) => ({
+  dataModulos: [],
+  getAllModules: async () => {
+    const data = await GetAllModules();
+    return set({
+      dataModulos: data as moduleType[],
+    });
+    /*
+    El instructor sugiere:
+    set({
+      dataModulos: data as moduleType[],
+    });
+    return data as moduleType[]; // Retorna los datos obtenidos
+    */
+  },
+}));
+```
+15. Aprovecho y corrijo **`src\store\CompanyStore.tsx`**:
+```js
+type companyType = {
+  name: string;
+  tax_id: string;
+  logo: string;
+  address: string;
+  phone: string;
+  email: string;
+  id_auth: string;
+};
+```
 
 

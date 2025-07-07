@@ -11,60 +11,8 @@ import {
 import { v } from '../../styles/variables.ts';
 import { Device } from '../../styles/breakpoints.ts';
 
-const Container = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-
-  .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    margin: 0 auto;
-
-    @media ${Device.tablet} {
-      width: 400px;
-    }
-  }
-`;
-
-const ContentLogo = styled.section`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-
-  span {
-    font-weight: 700;
-  }
-`;
-
 function LoginTemplate() {
   const { loginGoogle } = useAuthStore();
-  /*const { insertCompany } = useCompanyStore();
-  async function insertCompanyTest() {
-    const company = {
-      name: 'Test Company',
-      cnpj: '1515151212',
-      logo: 'https://example.com/logo.png',
-      address: '123 Test St, Test City, TC 12345-678',
-      phone: '1234567890',
-      email: 'correo@server.com',
-    };
-    await insertCompany(company);
-  }*/
   return (
     <Container>
       <div className='card'>
@@ -122,5 +70,45 @@ function LoginTemplate() {
     </Container>
   );
 }
+
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    margin: 0 auto;
+
+    @media ${Device.tablet} {
+      width: 400px;
+    }
+  }
+`;
+
+const ContentLogo = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  span {
+    font-weight: 700;
+  }
+`;
 
 export default LoginTemplate;

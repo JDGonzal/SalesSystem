@@ -1,8 +1,61 @@
 import styled from 'styled-components';
-import fondocuadros from "../../assets/fondocuadros.svg";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useModulosStore } from "../../index";
+import fondocuadros from '../../assets/fondocuadros.svg';
+import { Link } from 'react-router-dom';
+import { DataModulosConfiguracion } from '../../utils/dataEstatica.ts';
+import { useEffect } from 'react';
+
+function ConfigurationsTemplate() {
+  useEffect(() => {
+    const handleMouseMove = (e: { clientX: number; clientY: number }) => {
+      document.querySelectorAll('.card').forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+        (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+      });
+    };
+    const cardsContainer = document.getElementById('cards');
+    if (cardsContainer) {
+      cardsContainer.addEventListener('mousemove', handleMouseMove);
+      return () => {
+        cardsContainer.removeEventListener('mousemove', handleMouseMove);
+      };
+    }
+  }, []);
+  return (
+    <Container>
+      <div id='cards'>
+        {DataModulosConfiguracion.map((item, index) => {
+          // console.info(`item (${index}):`, item);
+          return (
+            <Link
+              to={item.link}
+              className={item.state ? 'card' : 'card false'}
+              key={index}
+            >
+              <div className='card-content'>
+                <div className='card-image'>
+                  <img src={item.icono} />
+                </div>
+
+                <div className='card-info-wrapper'>
+                  <div className='card-info'>
+                    <i className='fa-duotone fa-unicorn'></i>
+                    <div className='card-info-title'>
+                      <h3>{item.title}</h3>
+                      <h4>{item.subtitle}</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </Container>
+  );
+}
 
 const Container = styled.div`
   background-image: url(${fondocuadros});
@@ -16,6 +69,7 @@ const Container = styled.div`
   justify-content: center;
   width: 100%;
   align-items: flex-start;
+
   #cards {
     display: flex;
     flex-wrap: wrap;
@@ -34,8 +88,9 @@ const Container = styled.div`
     border-radius: 10px;
     cursor: pointer;
     display: flex;
+    flex-wrap: wrap;
     height: 260px;
-    flex-direction: column;
+    flex-direction: row;
     position: relative;
     width: 300px;
     &:hover {
@@ -54,7 +109,7 @@ const Container = styled.div`
   .card::before,
   .card::after {
     border-radius: inherit;
-    content: "";
+    content: '';
     height: 100%;
     left: 0px;
     opacity: 0;
@@ -72,26 +127,29 @@ const Container = styled.div`
     );
     z-index: 3;
   }
-
-  .card::after {
+  */ .card::after {
     background: radial-gradient(
       600px circle at var(--mouse-x) var(--mouse-y),
       rgba(255, 255, 255, 0.4),
-      transparent 40%
+      transparent 80%
     );
     z-index: 1;
   }
 
+  /* * card class and card-content class */
   .card > .card-content {
     background-color: ${({ theme }) => theme.bgcards};
     border-radius: inherit;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    flex-wrap: wrap;
     inset: 1px;
     padding: 10px;
-    position: absolute;
+    /* position: absolute; show only the last element */
+    position: relative; // Changed to relative for better layout
     z-index: 2;
+    align-items: center; // Added to center content
   }
 
   h1,
@@ -100,7 +158,7 @@ const Container = styled.div`
   h4,
   span {
     color: ${({ theme }) => theme.colorsubtitlecard};
-    font-family: "Rubik", sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-weight: 600;
     margin: 0px;
   }
@@ -164,11 +222,11 @@ const Container = styled.div`
     );
     z-index: 3;
   }
-
+  /* * $ {(props) => props. $color0}, - Unknown*/
   &::after {
     background: radial-gradient(
       600px circle at var(--mouse-x) var(--mouse-y),
-      ${(props) => props.$color0},
+      ${(props) => props.color || 'rgba(255, 255, 255, 0.4)'},
       transparent 40%
     );
     z-index: 1;
@@ -220,58 +278,4 @@ const Container = styled.div`
   }
 `;
 
-function ConfigurationsTemplate() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { dataModulos } = useModulosStore() as { dataModulos: any[] | null }; // Replace 'any' with the appropriate type if known
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      document.querySelectorAll(".card").forEach((card) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty("--mouse-x", `${x}px`);
-        card.style.setProperty("--mouse-y", `${y}px`);
-      });
-    };
-    const cardsContainer = document.getElementById("cards");
-    if (cardsContainer) {
-      cardsContainer.addEventListener("mousemove", handleMouseMove);
-      return () => {
-        cardsContainer.removeEventListener("mousemove", handleMouseMove);
-      };
-    }
-  }, []);
-  return (
-    <Container>
-      <div id="cards">
-        {dataModulos.map((item, index) => {
-          return (
-            <Link
-              to={item.link}
-              className={item.state ? "card" : "card false"}
-              key={index}
-            >
-              <div className="card-content">
-                <div className="card-image">
-                  <img src={item.icono} />
-                </div>
-
-                <div className="card-info-wrapper">
-                  <div className="card-info">
-                    <i className="fa-duotone fa-unicorn"></i>
-                    <div className="card-info-title">
-                      <h3>{item.nombre}</h3>
-                      <h4>{item.descripcion}</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-    </Container>
-  );
-}
-
-export default ConfigurationsTemplate
+export default ConfigurationsTemplate;

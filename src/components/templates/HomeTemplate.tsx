@@ -2,10 +2,6 @@ import styled from 'styled-components';
 import { useAuthStore } from '../../store/AuthStore';
 import { useAuthContext } from '../../context/AuthContext';
 
-const Container = styled.div`
-  height: 100vh;
-`;
-
 function HomeTemplate() {
   const { logout } = useAuthStore();
   const { authState } = useAuthContext();
@@ -18,5 +14,9 @@ function HomeTemplate() {
     </Container>
   );
 }
+
+const Container = styled.div`
+  height: 100vh;
+`;
 
 export default HomeTemplate;

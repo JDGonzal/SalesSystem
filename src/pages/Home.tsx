@@ -1,14 +1,7 @@
-import styled from 'styled-components';
-import {HomeTemplate} from '../index.ts'; 
-
-const Container = styled.div``;
+import { HomeTemplate } from '../index.ts';
 
 function Home() {
-  return (
-    <Container>
-      <HomeTemplate/>
-    </Container>
-  );
+  return <HomeTemplate />;
 }
 
 export default Home;
