@@ -11,4 +11,35 @@ CREATE TABLE IF NOT EXISTS categories (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_company FOREIGN KEY (id_company) REFERENCES companies(id) ON DELETE CASCADE
 );
+
+-- ?Policies `categories` table
+-- SELECT
+CREATE POLICY "Enable read access for all users" 
+ON "public"."categories"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (true);
+
+-- INSERT
+CREATE POLICY "Enable insert access for all users"
+ON "public"."categories"
+AS PERMISSIVE FOR INSERT
+TO authenticated
+WITH CHECK (true);
+
+-- UPDATE
+CREATE POLICY "Enable update access for all users"
+ON "public"."categories"
+AS PERMISSIVE FOR UPDATE
+TO authenticated
+USING (id=id)
+WITH CHECK (id=id);
+
+-- DELETE
+CREATE POLICY "Enable delete access for all users"
+ON "public"."categories"
+AS PERMISSIVE FOR DELETE
+TO authenticated
+USING (id=id);
+
 COMMIT;

@@ -13,7 +13,10 @@ export const useAuthStore = create<AuthStore>((set) => ({
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin,
+        redirectTo:
+          import.meta.env.VITE_LOCAL_URL ??
+          import.meta.env.VITE_PUBLIC_URL ??
+          window.location.origin,
       },
     });
   },

@@ -13,6 +13,41 @@ import { useLocation } from 'react-router-dom';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+function App() {
+  // Estado para Sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Estado para el tema
+  const { themesStyle } = useThemeStore();
+  // Para obtener ubicación actual
+  const { pathname } = useLocation();
+  return (
+    <ThemeProvider theme={themesStyle}>
+      <AuthContextProvider>
+        <GlobalStyles />
+        {pathname == '/login' ? (
+          <Login />
+        ) : (
+          <Container className={sidebarOpen ? 'active' : ''}>
+            <section className='leftSidebar'>
+              <Sidebar
+                state={sidebarOpen}
+                setState={() => setSidebarOpen(!sidebarOpen)}
+              />
+            </section>
+            <section className='mainMenu'>
+              <p>MainMenu</p>
+            </section>
+            <section className='rightRoutes'>
+              <MyRoutes />
+            </section>
+          </Container>
+        )}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </AuthContextProvider>
+    </ThemeProvider>
+  );
+}
+
 const Container = styled.main`
   // Es un componente de estilo
   display: grid;
@@ -48,40 +83,5 @@ const Container = styled.main`
     }
   }
 `;
-
-function App() {
-  // Estado para Sidebar
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  // Estado para el tema
-  const { themesStyle } = useThemeStore();
-  // Para obtener ubicación actual
-  const { pathname } = useLocation();
-  return (
-    <ThemeProvider theme={themesStyle}>
-      <AuthContextProvider>
-        <GlobalStyles />
-        {pathname == '/login' ? (
-          <Login />
-        ) : (
-          <Container className={sidebarOpen ? 'active' : ''}>
-            <section className='leftSidebar'>
-              <Sidebar
-                state={sidebarOpen}
-                setState={() => setSidebarOpen(!sidebarOpen)}
-              />
-            </section>
-            <section className='mainMenu'>
-              <p>MainMenu</p>
-            </section>
-            <section className='rightRoutes'>
-              <MyRoutes />
-            </section>
-          </Container>
-        )}
-        <ReactQueryDevtools initialIsOpen={false} />
-      </AuthContextProvider>
-    </ThemeProvider>
-  );
-}
 
 export default App;

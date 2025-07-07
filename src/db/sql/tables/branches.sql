@@ -13,7 +13,6 @@ CREATE TABLE IF NOT EXISTS branches (
     CONSTRAINT fk_company FOREIGN KEY (id_company) REFERENCES companies(id) ON DELETE CASCADE,
     CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 );
-COMMIT;
 
 -- Delete the `id_user` column from the `branches` table
 ALTER TABLE branches
@@ -25,3 +24,35 @@ ALTER TABLE branches
 -- Add a check for the `currency` column in `branches` table
 ALTER TABLE branches
     ADD CONSTRAINT chk_currency CHECK (currency IN ('$','€','£','¥','₩','₹','₽','₺','₪','₫'));
+
+-- ?Policies for `branches` table
+-- SELECT
+CREATE POLICY "Enable read access for all users" 
+ON "public"."branches"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (true);
+
+-- INSERT
+CREATE POLICY "Enable insert access for all users"
+ON "public"."branches"
+AS PERMISSIVE FOR INSERT
+TO authenticated
+WITH CHECK (true);
+
+-- UPDATE
+CREATE POLICY "Enable update access for all users"
+ON "public"."branches"
+AS PERMISSIVE FOR UPDATE
+TO authenticated
+USING (id=id)
+WITH CHECK (id=id);
+
+-- DELETE
+CREATE POLICY "Enable delete access for all users"
+ON "public"."branches"
+AS PERMISSIVE FOR DELETE
+TO authenticated
+USING (id=id);
+
+COMMIT;

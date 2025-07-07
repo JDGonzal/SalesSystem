@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import {
+  Categories,
   Configurations,
   Home,
   Login,
@@ -17,6 +18,7 @@ export function MyRoutes() {
       >
         <Route path='/' element={<Home />} />
         <Route path='/config' element={<Configurations />} />
+        <Route path='/config/categories' element={<Categories />} />
       </Route>
 
       <Route path='*' element={<div>404 Not Found</div>} />
