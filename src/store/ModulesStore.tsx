@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { GetAllModules } from '../index.ts';
 
-type moduleType = {
+export type moduleType = {
   id: number;
   name: string;
   description: string;
@@ -10,19 +10,19 @@ type moduleType = {
   link: string;
 };
 
-export const useModulosStore = create((set) => ({
-  dataModulos: [],
+export const useModulesStore = create((set) => ({
+  dataModules: [],
   getAllModules: async () => {
+    /* Lo sugerido por Copilot
     const data = await GetAllModules();
     return set({
-      dataModulos: data as moduleType[],
+      dataModules: data as moduleType[],
     });
     /*
-    El instructor sugiere:
-    set({
-      dataModulos: data as moduleType[],
-    });
-    return data as moduleType[]; // Retorna los datos obtenidos
-    */
+    El instructor sugiere:*/
+    const response = await GetAllModules()
+    set({dataModules:response})
+    return response; // Retorna los datos obtenidos
+    /**/
   },
 }));
