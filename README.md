@@ -3034,14 +3034,14 @@ export function MyRoutes() {
 1. Copiamos del repositorio el archivo [fondocuadros.svg](https://github.com/Franklin369/pos-react-curso-hasta-seccion-categorias/blob/main/src/assets/fondocuadros.svg), en nuestra carpeta **"src/assets"**.
 2. Teniendo abierto el archivo **`ConfigurationsTemplate.tsx`**, Copiamos el contenido del repositorio [ConfiguracionesTemplate.jsx](https://github.com/Franklin369/pos-react-curso-hasta-seccion-categorias/blob/main/src/components/templates/ConfiguracionesTemplate.jsx), con los ajustes que se requieran.
 >[!WARNING]  
->Nos aparece un error :</br>`Module '"../../index"' has no exported member 'useModulosStore'.`</br> para una solución temporal, hacemos esto:
+>Nos aparece un error :</br>`Module '"../../index"' has no exported member 'useModulesStore'.`</br> para una solución temporal, hacemos esto:
 >1. Creamos el archivo **`src/store/ModulesStore.tsx`**, con este código base:
 >```js
 >import { create } from 'zustand';
 >
 >// eslint-disable-next-line @typescript-eslint/no-unused-vars
->export const useModulosStore = create((set) => ({
->  dataModulos: [],
+>export const useModulesStore = create((set) => ({
+>  dataModules: [],
 >  mostrarModulos: async () => {
 >    return null;
 >  },
@@ -3203,7 +3203,7 @@ export default Categories;
 >
 >* [Error en la página `config`](#error-en-configurationstemplatetsx-no-aparecen-los-iconos)
 >* [Diseño de la página `config`](#diseño-de-pagina-configuraciones-051624)
-8. Abrimos el archivo para revisar **`src\components\templates\ConfigurationsTemplate.tsx`**:</br>-> Se reorganiza el contenido de la constante `Container`.</br>-> En `.card > .card-content`, se quita lo de `position: absolute;`. </br> -> Se cambia `dataModulos.map((item, index)`, por `DataModulosConfiguracion.map((item, index)`.</br>-> Por ende se importa `DataModulosConfiguracion` de `'../../utils/dataEstatica.ts'`.
+8. Abrimos el archivo para revisar **`src\components\templates\ConfigurationsTemplate.tsx`**:</br>-> Se reorganiza el contenido de la constante `Container`.</br>-> En `.card > .card-content`, se quita lo de `position: absolute;`. </br> -> Se cambia `dataModules.map((item, index)`, por `dataModulosConfiguracion.map((item, index)`.</br>-> Por ende se importa `dataModulosConfiguracion` de `'../../utils/dataEstatica.ts'`.
 9. Al menos nos salen los cinco elementos de la configuración, salen sin colores y en una sola columna:</br>![Solución parcial a la página `config`](images/2025-07-04_111340.png "Solución parcial a la página `config`")
 10. Creamos un archivo **`src/db/sql/tables/modules.sql`**, para ejecutar luego en `Supabase`, lo mismo que copiamos en un nuevo **`src/db/sql/db_20250704.sql`**:
 ```sql
@@ -3269,17 +3269,17 @@ type moduleType = {
   link: string;
 };
 
-export const useModulosStore = create((set) => ({
-  dataModulos: [],
+export const useModulesStore = create((set) => ({
+  dataModules: [],
   getAllModules: async () => {
     const data = await GetAllModules();
     return set({
-      dataModulos: data as moduleType[],
+      dataModules: data as moduleType[],
     });
     /*
     El instructor sugiere:
     set({
-      dataModulos: data as moduleType[],
+      dataModules: data as moduleType[],
     });
     return data as moduleType[]; // Retorna los datos obtenidos
     */
@@ -3298,5 +3298,80 @@ type companyType = {
   id_auth: string;
 };
 ```
+
+
+### Usando Tanstack Query (05:33:34)
+
+1. Entramos al archivo **`src/pages/Configurations.tsx`**.
+2. Llamamos el _hook_ de nombre `useModuleStore` y lo llevamos una constante de nombre `{getAllModules}`:
+```js
+  // Replace 'YourStoreType' with the actual type/interface of your store
+  const { getAllModules } = useModulesStore() as {
+    getAllModules: () => unknown;
+  };
+```
+3. Luego usamos el _hook_ de `@tanstack` de nombre `useQuery`, con dos parámetros `queryKey` y `queryFn`, para luego hacer un _object destructuring_ o **desestructuración de objetos**, a tres valores o atributors con los nombres de `data`, `isLoading` y `error`:
+```js
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['showModules'],
+    queryFn: getAllModules,
+  });
+```
+4. Debajo del `useQuery`, añado una condicional, para `isLoading`:
+```js
+  if (isLoading) {
+    return(<span>cargando...</span>);
+  }
+```
+5. Añado otro condicional para `error`:
+```js
+  if (error) {
+    return <span>error...</span>;
+  }
+```
+6. Vamos al archivo **`src/components/templates/ConfigurationsTemplate.tsx`**, para consumir la `data`con un _hook_ de tipo `useModulesStore()`:
+```js
+import { useModulesStore } from '../../index.ts';
+
+function ConfigurationsTemplate() {
+  const {} = useModulesStore();
+  ...
+}
+```
+7. Solo consumimos de `useModulesStore()`, la `dataModules`:
+```js
+  const { dataModules } = useModulesStore() as {
+    dataModules: Array<{
+      link: string;
+      state: boolean;
+      icono: string;
+      title: string;
+      subtitle: string;
+    }>;
+  };
+```
+8. Cambiamos `{dataModulesConfiguracion.map` por `{dataModules.map`, por ende borramos la importación no requerida de</br> `import { dataModulesConfiguracion } from '../../utils/dataEstatica.ts';`
+9. Se pone en **`src/store/ModulesStore.tsx`** el proceso sugerido por el instructor en vez del de copilot:
+```js
+export const useModulesStore = create((set) => ({
+  dataModules: [],
+  getAllModules: async () => {
+    /* Lo sugerido por Copilot
+    const data = await GetAllModules();
+    return set({
+      dataModules: data as moduleType[],
+    });
+    /*
+    El instructor sugiere:*/
+    const response = await GetAllModules()
+    set({dataModules:response})
+    return response; // Retorna los datos obtenidos
+    /**/
+  },
+}));
+```
+10. En el archivo **`src/pages/Configurations.tsx`**, ocultamos o borramos lo relacionado con la `data`.
+11. Ajustamos los nombres en **`src/components/templates/ConfigurationsTemplate.tsx`**, de los campos a los que traemos de la base de datos de `Supabase`.
+12. Esto es traer la información de la Base de Datos en vez del archivo **`src/utils/dataEstatica.ts`**.
 
 

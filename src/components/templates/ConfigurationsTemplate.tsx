@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import fondocuadros from '../../assets/fondocuadros.svg';
 import { Link } from 'react-router-dom';
-import { DataModulosConfiguracion } from '../../utils/dataEstatica.ts';
+
 import { useEffect } from 'react';
+import { useModulesStore, type moduleType } from '../../index.ts';
 
 function ConfigurationsTemplate() {
+  const { dataModules } = useModulesStore() as {
+    dataModules: moduleType[];
+  };
   useEffect(() => {
     const handleMouseMove = (e: { clientX: number; clientY: number }) => {
       document.querySelectorAll('.card').forEach((card) => {
@@ -26,25 +30,25 @@ function ConfigurationsTemplate() {
   return (
     <Container>
       <div id='cards'>
-        {DataModulosConfiguracion.map((item, index) => {
-          // console.info(`item (${index}):`, item);
+        {dataModules.map((item, index) => {
           return (
             <Link
               to={item.link}
-              className={item.state ? 'card' : 'card false'}
+              className={item.checked ? 'card' : 'card false'}
               key={index}
             >
+              {/*{item.state}*/}
               <div className='card-content'>
                 <div className='card-image'>
-                  <img src={item.icono} />
+                  <img src={item.icon} /> {/*{item.icono}*/}
                 </div>
 
                 <div className='card-info-wrapper'>
                   <div className='card-info'>
                     <i className='fa-duotone fa-unicorn'></i>
                     <div className='card-info-title'>
-                      <h3>{item.title}</h3>
-                      <h4>{item.subtitle}</h4>
+                      <h3>{item.name}</h3> {/*{item.title}*/}
+                      <h4>{item.description}</h4> {/*{item.subtitle}*/}
                     </div>
                   </div>
                 </div>
@@ -71,10 +75,11 @@ const Container = styled.div`
   align-items: flex-start;
 
   #cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    max-width: 916px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 650px;
     width: calc(100% - 20px);
     padding: 10px;
   }
@@ -89,10 +94,10 @@ const Container = styled.div`
     cursor: pointer;
     display: flex;
     flex-wrap: wrap;
-    height: 260px;
+    height: 200px;
     flex-direction: row;
     position: relative;
-    width: 300px;
+    width: 100%;
     &:hover {
       .card-image {
         img {
@@ -238,17 +243,26 @@ const Container = styled.div`
 
     #cards {
       max-width: 1000px;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
     }
 
     .card {
       flex-shrink: 1;
-      width: calc(50% - 4px);
+      width: 100%;
     }
   }
 
   @media (max-width: 500px) {
+    #cards {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(5, 1fr);
+      gap: 12px;
+    }
+
     .card {
       height: 180px;
+      width: 100%;
     }
 
     .card-image {
