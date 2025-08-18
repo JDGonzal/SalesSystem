@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ConfigurationsTemplate, useModulesStore } from '../index.ts';
+import { ConfigurationsTemplate, Spinner, useModulesStore } from '../index.ts';
 
 function Configurations() {
   // Replace 'YourStoreType' with the actual type/interface of your store
@@ -12,7 +12,7 @@ function Configurations() {
     queryFn: getAllModules,
   });
   if (isLoading) {
-    return <span>cargando...</span>;
+    return <Spinner />;
   }
   if (error) {
     return <span>error...</span>;

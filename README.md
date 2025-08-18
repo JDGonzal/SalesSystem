@@ -3375,3 +3375,75 @@ export const useModulesStore = create((set) => ({
 12. Esto es traer la información de la Base de Datos en vez del archivo **`src/utils/dataEstatica.ts`**.
 
 
+### Agregando Spinner (05:41:48)
+
+
+1. Abrimos el archivo **`src/supabase/crudModules.tsx`** y nos copiamos la alerta o condicional `if (error) {` con la importación de `Swal` del rchivo **`src\supabase\crudCategories.tsx`**.
+2. Vamos al sitio [`React Spinners by David Hu`](https://www.davidhu.io/react-spinners/).
+3. Para instalarlo en una `TERMINAL`, ejecutar el comando: </br> `pnpm add --save react-spinners -E`
+4. En este sitio [`npm -> React Spinners`](https://www.npmjs.com/package/react-spinners) hay algunos ejemplos del modo de uso del `Spinner`, en la pate de `Usage`.
+5. Creamos el archivo **`src\components\molecules\Spinner.tsx`** y pnemos el _snippet_ de nombre `rfce`, y nos quedaría algo así:
+```js
+import styled from 'styled-components';
+
+function Spinner() {
+  return <div>Spinner</div>;
+}
+
+const Container = styled.div``;
+
+export default Spinner;
+```
+6. Importamos la biblioteca de `"react-spinners"` y hacemos uso de este entre el componente de estilos de nombre `Container`:
+```js
+function Spinner() {
+  return (
+    <Container>
+      <GridLoader
+        color='#36D7B7'
+        loading={true}
+        cssOverride={{
+          display: 'block',
+          margin: '0 auto',
+          borderColor: 'red',
+        }}
+        size={150}
+      />
+    </Container>
+  );
+}
+```
+7. Al componente de stilos `Container`, le agregamos unos _css_:
+```css
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+```
+9. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+10. Volvemos al archivo **`configurations.tsx`** y cambiamos el simple `<span>cargando...</span>` por el `<Spinner />`, actualizamos la importación del `'index.ts'`.
+11. Ajustamos el componente **`Spinner.tsx`**, con algunas cacterísticas:
+```js
+import { RingLoader } from 'react-spinners';
+
+function Spinner() {
+  return (
+    <Container>
+      <RingLoader
+        color='#36D7B7'
+        loading={true}
+        cssOverride={{
+          display: 'block',
+          margin: '0 auto',
+          borderColor: 'red',
+        }}
+        size={100}
+      />
+    </Container>
+  );
+}
+```
+
+
