@@ -28,13 +28,13 @@ export function SaveButton({
     <Container
       $width={width}
       disabled={disabled}
-      $color={color}
+      $color={color || 'black'}
       type='submit'
-      $bgcolor={bgcolor}
+      $bgcolor={bgcolor || '#007bff'}
       onClick={funcion}
     >
       <section className='content'>
-        <Icono $color={color}>{icono}</Icono>
+        <Icono $color={color || 'black'}>{icono}</Icono>
         {titulo && (
           <span className='btn'>
             <a href={url} target='_blank'>
