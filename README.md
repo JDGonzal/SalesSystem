@@ -39,7 +39,7 @@ nvm list
 
 >[!IMPORTANT]  
 >
->### Temas puntuales de la sección (Login) 
+>### Temas puntuales de la sección (Login)
 >
 >**Descripción de la sección:**  
 >En esta sección exploraremos todo lo relacionado con el desarrollo del módulo de `Login`. Aprenderás desde la creación del proyecto hasta la implementación completa del sistema de autenticación utilizando herramientas modernas como `Zustand` y `Supabase`. Además, diseñaremos una interfaz intuitiva y funcional, enfocándonos en detalles como maquetado, estilos globales, y componentes reutilizables.
@@ -3445,5 +3445,62 @@ function Spinner() {
   );
 }
 ```
+
+
+### Maquetado de categorias (05:48:15)
+
+1. Abrimos el archivo **`src/components/templates/CategoriesTemplate.tsx`**.
+2. Agregamos ajuste al _css_ de `styled.div`:
+```css
+const Container = styled.div`
+  height:100vh;
+  padding:15px;
+  width:100%;
+  display:grid;
+  grid-template:
+    "area1" 100px
+    "area2" 100px
+    "main" auto;
+`;
+```
+3. Cambiamos el `CategoriesTemplate`, por tres `<section`:
+```html
+      <section className='area1'></section>
+      <section className='area2'></section>
+      <section className='main'></section>
+```
+4. Regresamos a _css_ para agregar comportamientos de las _class_:
+```css
+  .area1{
+    grid-area:area1;
+    background-color:rgba(103,93,241,0.14);
+  }
+  .area2{
+    grid-area:area2;
+    background-color:rgba(229,67,26,0.14);
+  }
+  .main{
+    grid-area:main;
+    background-color:rgba(237,7,221,0.14);
+  }
+```
+5. Esto sería lo que se visualiza en el browser: </br> ![config/categories(light)](images/2025-08-24_115901.png "config/categories(light)") </br> ![config/categories(dark)](images/2025-08-24_115918.png "config/categories(dark)")
+6. Podemos ponerle los nombredentro de cada `<section`:
+```html
+    <Container>
+      <section className='area1'>
+        area1
+      </section>
+      <section className='area2'>
+        area2
+      </section>
+      <section className='main'>
+        main
+      </section>
+    </Container>
+```
+
+
+
 
 
