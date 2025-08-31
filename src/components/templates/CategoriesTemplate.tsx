@@ -1,17 +1,19 @@
 import styled from 'styled-components';
+import { BtnMolecule, Title } from '../../index.ts';
+import { v } from '../../styles/variables.ts';
 
 function CategoriesTemplate() {
   return (
     <Container>
       <section className='area1'>
-        area1
+        <Title $paddingBottom='0px'>Categorias</Title>
+        <BtnMolecule
+          title='Nuevo'
+          bgcolor={v.colorPrincipal}
+          icon={<v.iconoagregar/> /* {React.createElement(v.iconoagregar)} */}
+        />
       </section>
-      <section className='area2'>
-        area2
-      </section>
-      <section className='main'>
-        main
-      </section>
+      <section className='main'>main</section>
     </Container>
   );
 }
@@ -19,23 +21,20 @@ function CategoriesTemplate() {
 const Container = styled.div`
   height: 100vh;
   padding: 15px;
-  width: 100%;
   display: grid;
   grid-template:
-    'area1' 100px
-    'area2' 100px
+    'area1' 80px
     'main' auto;
-  .area1{
-    grid-area:area1;
-    background-color:rgba(103,93,241,0.14);
+  .area1 {
+    grid-area: area1;
+    background-color: rgba(103, 93, 241, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-  .area2{
-    grid-area:area2;
-    background-color:rgba(229,67,26,0.14);
-  }
-  .main{
-    grid-area:main;
-    background-color:rgba(237,7,221,0.14);
+  .main {
+    grid-area: main;
+    background-color: rgba(237, 7, 221, 0.14);
   }
 `;
 

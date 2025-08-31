@@ -3,27 +3,27 @@ import { Icono } from '../../index';
 import type { JSX } from 'react';
 
 
-interface SaveButtonProps {  
+interface BtnMoleculeProps {  
   funcion?: ()=> void; // Optional, to pass a function on click
-  titulo: string;
+  title: string;
   bgcolor?: string; // Optional, to set the background color of the button|
-  icono?: JSX.Element; // Optional, import type { JSX } from 'react';
+  icon?: JSX.Element; // Optional, import type { JSX } from 'react';
   url?: string; // Optional, if you want to use it as a link
   color?: string; // Optional, to set the text color of the button
   disabled?: boolean; // Optional, if you want to disable the button
   width?: string; // Optional, to set the width of the button
 }
 
-export function SaveButton({
+export function BtnMolecule({
   funcion,
-  titulo,
+  title,
   bgcolor,
-  icono,
+  icon,
   url,
   color,
   disabled,
   width,
-}: SaveButtonProps) {
+}: BtnMoleculeProps) {
   return (
     <Container
       $width={width}
@@ -34,11 +34,11 @@ export function SaveButton({
       onClick={funcion}
     >
       <section className='content'>
-        <Icono $color={color || 'black'}>{icono}</Icono>
-        {titulo && (
+        <Icono $color={color || 'black'}>{icon}</Icono>
+        {title && (
           <span className='btn'>
             <a href={url} target='_blank'>
-              {titulo}
+              {title}
             </a>
           </span>
         )}
@@ -70,7 +70,7 @@ const Container = styled.button<{ $width?: string; $bgcolor: string; $color: str
   }
   &:active {
     transform: translate(0, 0);
-    border-bottom: 2px solid rgba(50, 50, 50, 0.5);
+    border-bottom: 2px solid rgba(50, 50, 50, 0.2);
   }
   &[disabled] {
     background-color: #646464;

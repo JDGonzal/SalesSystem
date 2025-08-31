@@ -2,7 +2,7 @@ export { default as App } from './App';
 export * from './components/atoms/Icon';
 export * from './components/atoms/Line';
 export { default as Title } from './components/atoms/Title';
-export * from './components/molecules/SaveButton';
+export * from './components/molecules/BtnMolecule';
 export { default as Spinner } from './components/molecules/Spinner';
 export * from './components/organisms/Footer';
 export * from './components/organisms/ToggleTema';
