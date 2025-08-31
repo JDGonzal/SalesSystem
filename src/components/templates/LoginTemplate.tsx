@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {
   Title,
   InputText2,
-  SaveButton,
+  BtnMolecule,
   Linea,
   Footer,
   useAuthStore,
@@ -42,8 +42,8 @@ function LoginTemplate() {
               id='password'
             />
           </InputText2>{' '}
-          <SaveButton
-            titulo='INGRESAR'
+          <BtnMolecule
+            title='INGRESAR'
             bgcolor='#1cb0f6'
             color='255,255,255'
             width='100%'
@@ -52,17 +52,17 @@ function LoginTemplate() {
         <Linea>
           <span>O</span>
         </Linea>
-        <SaveButton
+        <BtnMolecule
           funcion={loginGoogle}
-          titulo='Google'
+          title='Google'
           bgcolor='#fff'
           color='0,0,0'
           width='100%'
-          icono={<v.iconogoogle />}
+          icon={<v.iconogoogle />}
         />
-        {/*<SaveButton
+        {/*<BtnMolecule
           funcion={insertCompanyTest}
-          titulo='Insertar Empresa Test'
+          title='Insertar Empresa Test'
         />*/}
       </div>
 

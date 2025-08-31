@@ -3502,5 +3502,108 @@ const Container = styled.div`
 
 
 
+### Agregando btn (05:52:59)
+
+1. Del archivo **`src\components\templates\CategoriesTemplate.tsx`** quitamos la línea de `width: 100%;`, para que se adapte al contenido que hay en pantalla.
+2. Borro `'area2' 100px`.
+3. Borramos en el _css_ lo relacionado con el `.area2`.
+4. Y en la parte del _html_, también borramos `<section className='area2'`:
+```html
+    <Container>
+      <section className='area1'>area1</section>
+      <section className='main'>main</section>
+    </Container>
+```
+```css
+  height: 100vh;
+  padding: 15px;
+  display: grid;
+  grid-template:
+    'area1' 100px
+    'main' auto;
+  .area1{
+    grid-area:area1;
+    background-color:rgba(103,93,241,0.14);
+  }
+  .main{
+    grid-area:main;
+    background-color:rgba(237,7,221,0.14);
+  }
+```
+5. Importamos del `index.ts` a `Title` y lo usamos en el `area1`:
+```js
+import { Title } from '../../index.ts';
+
+function CategoriesTemplate() {
+  return (
+    <Container>
+      <section className='area1'>
+        <Title $paddingBottom='0px'>Categorias</Title>
+      </section>
+      <section className='main'>main</section>
+    </Container>
+  );
+}
+```
+6. Renombramos el contenido del archivo **`src\components\molecules\SaveButton.tsx`**, lo que diga `SaveButton` por `BtnMolecule`
+7. Renombramos el archivo **`src\components\molecules\SaveButton.tsx`** por **`src\components\molecules\BtnMolecule.tsx`**.
+8. En el **`src\index.ts`**, revisamos y grabamos el cambio.
+9. Corregimos en el archivo **`src\components\templates\LoginTemplate.tsx`**, el uso del renombrado componente, tanto en la importación como en la renderización, es decir cambiar `SaveButton` por `BtnMolecule`.
+10. En el archivo **`src\components\molecules\BtnMolecule.tsx`**, renombramos la palabra `titulo` por `title`, también `icono` por `icon`, y debemos cambiar esto en el renderizado de **`src\components\templates\LoginTemplate.tsx`**.
+11. Regresamos a **`src\components\templates\CategoriesTemplate.tsx`** y agregamos tanto en la importación como en renderizado a `BtnMolecule`:
+```js
+function CategoriesTemplate() {
+  return (
+    <Container>
+      <section className='area1'>
+        <Title $paddingBottom='0px'>Categorias</Title>
+        <BtnMolecule title=''/>
+      </section>
+      <section className='main'>main</section>
+    </Container>
+  );
+}
+```
+11. El instructor sugiere en el archivo **`src\styles\variables.ts`**, poner al principio de la constante `v`, estos dos elementos: `colorPrincipal` y `colorSecundario` y cambiarlos por otros dos valores `colorPrincipal: '#F3D20C',` y `colorSecundario: '#DAC1FF',` se queda igual.
+12. En el archivo **`src\components\templates\CategoriesTemplate.tsx`** importamos las `variables.ts`: </br> `import { v } from '../../styles/variables.ts';`
+13. Usamos el `v.colorPrincipal` en el `<BtnMolecule`, para la propiedad `bgcolor`: </br> `<BtnMolecule title='' bgcolor={v.colorPrincipal} />`
+14. El `title=`, le asignamos el valor de `Nuevo`.
+15. Agregamo la porpiedad `icon`, con el valor de `<v.iconoagregar/>`:
+```js
+import { v } from '../../styles/variables.ts';
+
+function CategoriesTemplate() {
+  return (
+    <Container>
+      <section className='area1'>
+        <Title $paddingBottom='0px'>Categorias</Title>
+        <BtnMolecule
+          title='Nuevo'
+          bgcolor={v.colorPrincipal}
+          icon={<v.iconoagregar/> /* {React.createElement(v.iconoagregar)} */}
+        />
+      </section>
+      <section className='main'>main</section>
+    </Container>
+  );
+}
+```
+16. Mejoramos el _css_:
+```css
+  grid-template:
+    'area1' 80px
+    'main' auto;
+  .area1 {
+    grid-area: area1;
+    background-color: rgba(103, 93, 241, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+```
+17. El Instructor sugiere ir al archivo **`src\components\molecules\BtnMolecule.tsx`**  cambiar el valor de </br> `border-bottom: 2px solid rgba(50, 50, 50, 0.5);` </br> Por </br> `border-bottom: 2px solid rgba(50, 50, 50, 0.2);`
+18. Resultado final en pnatalla sería como este: </br> ![Categorias y + Nuevo](images/2025-08-31_101707.png "Categorias y + Nuevo")
+
+
 
 
