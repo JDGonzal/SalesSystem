@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BtnMolecule, Title } from '../../index.ts';
+import { BtnMolecule, Title, Finder } from '../../index.ts';
 import { v } from '../../styles/variables.ts';
 
 function CategoriesTemplate() {
@@ -10,8 +10,11 @@ function CategoriesTemplate() {
         <BtnMolecule
           title='Nuevo'
           bgcolor={v.colorPrincipal}
-          icon={<v.iconoagregar/> /* {React.createElement(v.iconoagregar)} */}
+          icon={<v.iconoagregar /> /* {React.createElement(v.iconoagregar)} */}
         />
+      </section>
+      <section className='area2'>
+        <Finder />
       </section>
       <section className='main'>main</section>
     </Container>
@@ -19,11 +22,12 @@ function CategoriesTemplate() {
 }
 
 const Container = styled.div`
-  height: 100vh;
+  height: calc(100vh - 30px);
   padding: 15px;
   display: grid;
   grid-template:
     'area1' 80px
+    'area2' 60px
     'main' auto;
   .area1 {
     grid-area: area1;
@@ -31,6 +35,13 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  .area2 {
+    grid-area: area2;
+    background-color: rgba(7, 237, 45, 0.14);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
   .main {
     grid-area: main;

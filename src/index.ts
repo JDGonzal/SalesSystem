@@ -4,6 +4,7 @@ export * from './components/atoms/Line';
 export { default as Title } from './components/atoms/Title';
 export * from './components/molecules/BtnMolecule';
 export { default as Spinner } from './components/molecules/Spinner';
+export { default as Finder } from './components/organisms/Finder';
 export * from './components/organisms/Footer';
 export * from './components/organisms/ToggleTema';
 export * from './components/organisms/forms/InputText2';

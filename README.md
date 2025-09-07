@@ -3606,4 +3606,127 @@ function CategoriesTemplate() {
 
 
 
+### Buscador (06:00:59)
+
+1. Abrimos el archivo **`src/components/templates/CategoriesTemplate.tsx`**.
+2. En la parte del _css_ mejoramos el `height:` con un cálculo:
+```css
+  height: calc(100vh - 30px);
+```
+3. Agrego una `<section` con el `className` de `area2`, para la zona de un buscador, y abajo el uso en el _css_:
+```html
+    <Container>
+      ...
+      <section className='area2'>area2</section>
+      ...
+    </Container>
+```
+```css
+  grid-template:
+    'area1' 80px
+    'area2' 60px
+    'main' auto;
+  .area1 {...}
+  .area2{
+    grid-area: area2;
+    background-color: rgba(7, 237, 45, 0.14);
+```
+4. Creamos un archivo de tipo _organisms_ (tener presente un _atoms_ de un solo elemento, un _molecules_ de 2 a 3 elementos, y un _organisms_ de muchos elementos ), con el nombre **`src/components/organisms/Finder.tsx`**.
+5. Ejecutamos el _snippet_ `rfce` y le hacemos los ajustes necesarios:
+```js
+import styled from 'styled-components';
+
+function Finder() {
+  return <Container>Finder</Container>;
+}
+
+const Container = styled.div``;
+
+export default Finder;
+```
+6. Actualizamos el _barrel_ es decir el archivo **`src/index.ts`**.
+7. Regresamos al componente **`CategoriesTemplate.tsx`**, importamos el `Finder` del `index.ts` y lo renderizamos en la `<section ... "area2"`.
+8. Abrimos el arhivo **`src/styles/variables.ts`**, para agregar un ícono de la página [react-icons -> search](https://react-icons.github.io/react-icons/search/#q=search):
+```js
+...
+import { FaSearch } from "react-icons/fa";
+
+export const v = {
+  iconobuscar: FaSearch,
+...
+```
+9. Regresamos al componente **`Finder.tsx`** y empezamos a complementar el código:
+```js
+import { v } from '../../styles/variables.ts';
+```
+```html
+      <section>
+        <v.iconobuscar className='icon' />
+        <input placeholder='buscar...' />
+      </section>
+```
+```css
+const Container = styled.div`
+  border-radius: 10px;
+  height: 60px;
+  align-items: center;
+  display: flex;
+  color: ${(props) => props.theme.text};
+  border: spx solid ${(props) => props.theme.color2};
+`;
+```
+10. En la etiqueta `<section`, agregamos un `className`, de nombre `content`.
+11. Agregamos los _css_ realcionado con esa nueva clase:
+```css
+  .content {
+    padding: 15px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    .icon {
+      font-size: 18px;
+    }
+    input {
+      font-size: 18px;
+      width: 100%;
+      outline: none;
+      background: none;
+      border: 0;
+      color: ${(props) => props.theme.text};
+    }
+  }
+```
+12. Agregamos en el componente **`CategoriesTemplate.tsx`**, mas estilos para `.area2`:
+```css
+  .area2 {
+    grid-area: area2;
+    background-color: rgba(7, 237, 45, 0.14);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+```
+13. Agregamos una función al componente **`Finder.tsx`** de nombre `onChangeFinder` con un parámetro de `setFinder` de tipo `React.Dispatch<React.SetStateAction<string>>`:
+```js
+function Finder({
+  setFinder,
+}: {
+  setFinder?: React.Dispatch<React.SetStateAction<string>>;
+}) {
+  function onChangeFinder(e: React.ChangeEvent<HTMLInputElement>) {
+    if (setFinder) setFinder(e.target.value);
+  }
+  return (
+    <Container>
+      <section className='content'>
+        <v.iconobuscar className='icon' />
+        <input placeholder='buscar...' onChange={onChangeFinder}/>
+      </section>
+    </Container>
+  );
+}
+```
+
 
