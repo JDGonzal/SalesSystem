@@ -47,8 +47,10 @@ import { BsEmojiDizzy } from 'react-icons/bs';
 import { FcImageFile } from 'react-icons/fc';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GrAdd } from 'react-icons/gr';
+import { FaSearch } from "react-icons/fa";
 
 export const v = {
+  iconobuscar: FaSearch,
   colorPrincipal: '#F3D20C', // '#00F34A',
   colorSecundario: '#DAC1FF',
   iconoagregar: GrAdd,
