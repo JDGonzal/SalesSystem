@@ -3730,3 +3730,123 @@ function Finder({
 ```
 
 
+### Editar Categorías (06:08:37)
+
+1. Abrimos el archivo **`src/supabase/crudCategories.tsx`**, creamos una función asíncrona para buscar las categorias, por el ID de la compañía y el nombre:
+```js
+export async function GetCategoriesByCompanyId_n_name(
+  id_company: number,
+  name: string
+) {
+  const { data, error } = await supabase
+    .from(tableName)
+    .select('id, name')
+    .eq('id_company', id_company)
+    .ilike('name', `%${name}%`)
+    .order('name', { ascending: true });
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return [];
+  }
+  return data;
+}
+```
+2. Añado otra función asíncrona para borrar la categoría y la imagen asociada a esta:
+```js
+export async function DeleteCategory(id: number, icon: string) {
+  // Elimina la categoría de la tabla
+  const { error } = await supabase.from(tableName).delete().eq('id', id);
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return null;
+  }
+
+  // Elimina la imagen asociada si no es el icono por defecto '-'
+  if (icon != '-') {
+    const pathFile = 'categories/' + id;
+    const { error: storageError } = await supabase.storage
+      .from('images')
+      .remove([pathFile]);
+    if (storageError) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: storageError.message,
+      });
+      return null;
+    }
+  }
+  return true;
+}
+```
+3. Otra función asíncrona para editar las categorias, basada en un procedimiento almacenado en `Supabase` o una función en la Base de Datos de nombre ``:
+```js
+export async function UpdateCategory( 
+  category: {
+    id: number;
+    name: string;
+    color: string;
+    description: string;
+    id_company: number;
+  },
+  imageFileOld: File | null,
+  imageFileNew: File | null
+) {
+  const { data, error } = await supabase.rpc('fnc_category_update', category);
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return null;
+  }
+}
+```
+4. Creamos el archivo **`src/db/sql/functions/categoryUpdate.sql`**, con esta información, que luego ejecutaremos en `Supbase`:
+```sql
+-- Create the `fnc_category_update` function to update an existing category into the database.
+CREATE OR REPLACE FUNCTION fnc_category_update(
+    _id INT,
+    _name VARCHAR(100), 
+    _color VARCHAR(20), 
+    _icon VARCHAR, 
+    _description TEXT, 
+    _id_company INT
+)
+RETURNS VOID LANGUAGE plpgsql AS $$
+-- delcare a variable to hold the new category ID
+DECLARE new_category_id INT;
+BEGIN
+    -- Check if the category name not exists
+    PERFORM 1 FROM categories WHERE id != _id AND name = _name ;
+    IF FOUND THEN
+        RAISE EXCEPTION 'Category with name "%" exists with another ID', _name;
+    ELSE
+        -- If not found, insert the new category
+        UPDATE categories SET
+            name = _name,
+            color = _color,
+            icon = _icon,
+            description = _description,
+            id_company = _id_company,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = _id;
+        -- Return nothing
+    END IF;
+END
+$$;
+COMMIT;
+```
+5. Agrego esta misma función en el archivo **`src/db/sql/db_20250704.sql`**.
+6. Ejecuto el contenido de **`categoryUpdate.sql`** en `Supabase`.
+
+

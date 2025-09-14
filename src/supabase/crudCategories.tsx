@@ -60,10 +60,7 @@ async function uploadImage(category_id: string, imageFile: File) {
   }
 }
 
-async function changeCategoryIcon(category: {
-  id: number;
-  icon: string;
-}) {
+async function changeCategoryIcon(category: { id: number; icon: string }) {
   const { error } = await supabase
     .from(tableName)
     .update(category)
@@ -93,4 +90,92 @@ export async function GetCategoriesByCompanyId(id_company: number) {
     return [];
   }
   return data;
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function GetCategoriesByCompanyId_n_name(
+  id_company: number,
+  name: string
+) {
+  const { data, error } = await supabase
+    .from(tableName)
+    .select('id, name')
+    .eq('id_company', id_company)
+    .ilike('name', `%${name}%`)
+    .order('name', { ascending: true });
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return [];
+  }
+  return data;
+}
+
+export async function DeleteCategory(id: number, icon: string) {
+  // Elimina la categoría de la tabla
+  const { error } = await supabase.from(tableName).delete().eq('id', id);
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return null;
+  }
+
+  // Elimina la imagen asociada si no es el icono por defecto '-'
+  if (icon != '-') {
+    const pathFile = 'categories/' + id;
+    const { error: storageError } = await supabase.storage
+      .from('images')
+      .remove([pathFile]);
+    if (storageError) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: storageError.message,
+      });
+      return null;
+    }
+  }
+  return true;
+}
+
+export async function UpdateCategory( 
+  category: {
+    id: number;
+    name: string;
+    color: string;
+    description: string;
+    id_company: number;
+  },
+  imageFileOld: File | null,
+  imageFileNew: File | null
+) {
+  const { data, error } = await supabase.rpc('fnc_category_update', category);
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return null;
+  }
+  if (imageFileOld && imageFileNew) {
+    const fileSize = imageFileNew.size; 
+    if (fileSize != undefined) {
+      // retorna directamente `urlData.publicUrl`
+      const imageUrl = await uploadImage(category.id.toString(), imageFileNew);
+      const updateCategory = {
+        id: category.id,
+        icon: imageUrl || '', // Provide a default empty string if imageUrl is null or undefined
+      };
+      await changeCategoryIcon(updateCategory);
+    }
+  }
+  return data;
+
 }
