@@ -39,7 +39,7 @@ nvm list
 
 >[!IMPORTANT]  
 >
->### Temas puntuales de la sección (Login)
+>### 02.00. Temas puntuales de la sección (Login)
 >
 >**Descripción de la sección:**  
 >En esta sección exploraremos todo lo relacionado con el desarrollo del módulo de `Login`. Aprenderás desde la creación del proyecto hasta la implementación completa del sistema de autenticación utilizando herramientas modernas como `Zustand` y `Supabase`. Además, diseñaremos una interfaz intuitiva y funcional, enfocándonos en detalles como maquetado, estilos globales, y componentes reutilizables.
@@ -55,7 +55,7 @@ nvm list
 >
 >Al finalizar esta sección, tendrás un módulo de login totalmente funcional y estilizado, listo para integrarse en cualquier aplicación.
 
-### Creando el Proyecto (00:04:30)
+### 02.01. Creando el Proyecto (00:04:30)
 
 1. Estando en la raíz de nuestro proyecto ejecutamos este comando
 usando `VITE`:
@@ -119,19 +119,19 @@ pnpm run dev
 
 
 
-### Instalar `Auto Barrel` (00:06:44)
+### 02.02. Instalar `Auto Barrel` (00:06:44)
 
 1. Instalar la extensión en `Visual Studio Code` de nombre `Auto Barrel for VSCode` de `Manuel Gil` 1.19.x.
 2. Acá está el link para descargar el propuesto por el instructor: [auto-barrel-1.10.0](images/auto-barrel-1.10.0_vsixhub.com.zip).
 
 
-### Configuración de `Auto Barrel` (00:07:37)
+### 02.03. Configuración de `Auto Barrel` (00:07:37)
 
 >[!NOTE]  
 >El instructor habla de configurar el `Auto Barrel` por
 >`Extension Settings`, pero este no requiere dicho cambio en la versión 1.19.x.
 
-### Organizando Carpetas (00:08:01)
+### 02.04. Organizando Carpetas (00:08:01)
 
 1. Creamos la carpeta **"components"** dentro de **"src"**.
 
@@ -147,7 +147,7 @@ pnpm run dev
 
 7. Creamos la carpeta **"store"** dentro de **"src"**.
 
-### Instalando dependencias básicas (00:09:32)
+### 02.05. Instalando dependencias básicas (00:09:32)
 
 1. Empezamos en una `TERMINAL` con
 [`styled-components`](https://www.npmjs.com/package/styled-components) y su respectivo
@@ -179,7 +179,7 @@ pnpm add react-icons -E
 pnpm add --save-dev @iconify/react -E
 ```
 
-### Agregando Estilos Globales (00:11:55)
+### 02.06. Agregando Estilos Globales (00:11:55)
 
 1. Empezamos borrando el archivo **`src/App.css`**.
 2. Borramos también el **`src/index.css`**.
@@ -251,7 +251,7 @@ export default App;
 
 
 
-### Primer maquetado (00:20:40)
+### 02.07. Primer maquetado (00:20:40)
 
 1. En el archivo **`src/App.tsx`**, agregamos esta importación: </br> `import styled from 'styled-components';`.
 2. Creamos una constante `Container` igual a `styled.main` al lado de `main` abrimos y cerramos la comilla invertida o en el teclado _ascii_ el [`ALT`]+[9]+[6]:
@@ -326,7 +326,7 @@ const Container = styled.main`
 
 
 
-### Definiendo secciones (00:32:29)
+### 02.08. Definiendo secciones (00:32:29)
 
 1. Al archivo **`src/App.tsx`**, agregamos mas estilos a la constante `Container`:
 ```css
@@ -474,7 +474,7 @@ function App() {
 
 
 
-### Definiendo return (00:43:22)
+### 02.09. Definiendo return (00:43:22)
 
 1. El archivo **`src/routes/MyRoutes.tsx`**, ya tiene el `return` para ser tratado como _Componente_.
 2. En el archivo **`src\components\templates\HomeTemplate.tsx`**, agregamos unos elementos _css_, dentro de las comillas invertidas de la definición de `Container`:
@@ -522,7 +522,7 @@ export default Home;
 
 
 
-### Implementando temas con zustand (00:44:38)
+### 02.10. Implementando temas con zustand (00:44:38)
 
 1. En una `TERMINAL`, instalamos la despendencia de </br>[![Zustand](images/2025-05-28_141011.jpg "Zustand")](https://www.npmjs.com/package/zustand)):
 ```bash
@@ -605,7 +605,7 @@ function App() {
 ```
 
 
-### Agregando el SIDEBAR (00:56:56)
+### 02.11. Agregando el SIDEBAR (00:56:56)
 
 1. Copiamos de esta ruta [`Sidebar.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/sidebar/Sidebar.jsx), el contenido en el archivo **`src\components\organisms\sidebar\Sidebar.tsx`**.
 >[!WARNING]
@@ -687,7 +687,7 @@ export default MyRoutes;
 >El archivo **`src/components/organisms/sidebar/Sidebar.tsx`**, presenta muchos errores de _TypeScript_, mas adelante se buscará el modo de solucionarlos.
 
 
-### Cambiando tamaños (01:11:05)
+### 02.12. Cambiando tamaños (01:11:05)
 
 1. En el archivo **`src/App.tsx`**, en el renderizado de `<Container` agregamos un `className` con un condicional terciario para poner o no el valor de `'active'`:
 ```js
@@ -761,7 +761,7 @@ const Main = styled.div<{ $isopen: string }>`
 12. Comentamos en el mismo archivo, en el _css_ para la definición de la clase `.leftSidebar` para _mobile_ la parte `background-color: lightblue;`.
 
 
-### Diseño del login (01:19:14)
+### 02.13. Diseño del login (01:19:14)
 
 >[!TIP]
 >El instructor pone en el archivo **`src/App.tsx`**, la definición en el _css_ del `color`: </br> `color:${({ theme }) => theme.text};` </br> La cuestión es que esto ya se hizo en el sitio correcto, en el archivo: **`src/styles/GlobalStyles.tsx`**.
@@ -983,7 +983,7 @@ const Container = styled.div`
 22. Así luce hasta el momento la página `login`:</br>![Página `login` con los dos `input`](images/2025-06-07_172544.png "Página `login` con los dos `input`")
 
 
-### Agregando Buttons (01:29:52)
+### 02.14. Agregando Buttons (01:29:52)
 
 
 1. Empezamos clonando del repositorio el archivo [**`Btnsave.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/moleculas/Btnsave.jsx), en el archivo **`src/components/molecules/SaveButton.tsx`**, con los ajustes respectivos, como el nombre de la función a exportar por esta: </br> `export function SaveButton({...`
@@ -1139,7 +1139,7 @@ export const Linea = styled.div`
 
 
 
-### Culminando diseño (01:41:00)
+### 02.15. Culminando diseño (01:41:00)
 
 1. En el archivo **`src\components\templates\LoginTemplate.tsx`**, añadimos para el `Container`, algunos estilos:
 ```css
@@ -1203,7 +1203,7 @@ export default Title;
 
 
 
-### Footer (01:46:19)
+### 02.16. Footer (01:46:19)
 
 1. Empezamos clonando del repositorio [**`Footer.jsx`**](https://github.com/Franklin369/pos-react-login/blob/main/src/components/organismos/Footer.jsx), en el archivo </br>**`src/components/organisms/Footer.tsx`**</br> El contenido no genera errores.
 2. Ejecutamos en una terminal el siguiente comando:
@@ -1265,7 +1265,7 @@ const Container = styled.div`
 
 
 
-### Conectando a SUPABASE (01:47:35)
+### 02.17. Conectando a SUPABASE (01:47:35)
 
 
 >[!TIP]  
@@ -1306,7 +1306,7 @@ export const supabase = createClient(
 15. En la lista `Auth Providers`, activamos si falta `Email` y `Google`, aunque para este último requiere mas pasos.
 
 
-### AuthStore (01:54:48)
+### 22.18. AuthStore (01:54:48)
 
 1. Empezamos buscando en este sitio: [`Consola de Google Cloud`](https://cloud.google.com/storage/docs/cloud-console?hl=es-419).
 2. Dar clic al botón `[Consola]` y debe aparecer algo similar a esto: </br> ![Consola de Google Cloud: Te damos la bienvenida](images/2025-06-09_064719.png "Consola de Google Cloud: Te damos la bienvenida").
@@ -1421,7 +1421,7 @@ function LoginTemplate() {
 31. Luego hacemos las respectiva pruebas para verificar la funcionalidad del botón y el ingreso usando una cuenta de `Google`.
 
 
-### Probando login (02:06:13)
+### 02.19. Probando login (02:06:13)
 
 1. Vamos a la pagina de [`supabase ->`<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-auth "><path d="M5.24121 15.0674H12.7412M5.24121 15.0674V18.0674H12.7412V15.0674M5.24121 15.0674V12.0674H12.7412V15.0674M15 7.60547V4.60547C15 2.94861 13.6569 1.60547 12 1.60547C10.3431 1.60547 9 2.94861 9 4.60547V7.60547M5.20898 9.60547L5.20898 19.1055C5.20898 20.21 6.10441 21.1055 7.20898 21.1055H16.709C17.8136 21.1055 18.709 20.21 18.709 19.1055V9.60547C18.709 8.5009 17.8136 7.60547 16.709 7.60547L7.20899 7.60547C6.10442 7.60547 5.20898 8.5009 5.20898 9.60547Z"></path></svg>`Authentication -> URL Configuration`](https://supabase.com/dashboard/project/{proyect-name}/auth/url-configuration):</br>![supabase -> Authentication -> URL Configuration](images/2025-06-13_205643.png "supabase -> Authentication -> URL Configuration")
 >[!WARNING]  
@@ -1436,7 +1436,7 @@ function LoginTemplate() {
 
 
 
-### Context (02:10:37)
+### 02.20. Context (02:10:37)
 
 1. Vamos a escuchar en todo momento el estado del usuario, para eso buscamos este sitio [`Listen to auth events`](https://supabase.com/docs/reference/javascript/auth-onauthstatechange), donde explica que podemos exsuchhr eventos en este canal `onAuthStateChange`.
 2. Creamos el archivo **`src/context/AuthContext.tsx`**.
@@ -1591,7 +1591,7 @@ function HomeTemplate() {
 ```
 
 
-### Data User (02:23:46)
+### 02.21. Data User (02:23:46)
 
 1. Abrimos el archivo **`src\context\AuthContext.tsx`** y agregamos un condicional en el `useEffect`, dentro del `onAuthStateChange` y antes del `console.log` y mejoramos la definición del _hook_ de tipo `useState` para `authState`:
 ```js
@@ -1636,7 +1636,7 @@ function HomeTemplate() {
 7. Solo por probar ponemos debajo del `<button` una etiqueta `<img` y con el valor de `user.user_metadata.avatar_url`:
 
 
-### Rutas Protegidas (02:30:36)
+### 02.22. Rutas Protegidas (02:30:36)
 
 >[!WARNING]  
 >
@@ -1704,7 +1704,7 @@ export const ProtectedRoutes = ({
 ```
 
 
-### Finalizando Login (02:37:57)
+### 02.23. Finalizando Login (02:37:57)
 
 1. Abrimos el archivo **`src/App.tsx`**, importamos de `'react-router-dom'` el _hook_ de nombre `useLocation`.
 2. Deserializamos el contenido del _hook_ `useLocation`:
@@ -1775,7 +1775,7 @@ export const v = {
 
 >[!NOTE]  
 >
->### Temas puntuales de la sección (Categoría de productos)
+>### 03.00. Temas puntuales de la sección (Categoría de productos)
 >
 >**Descripción de la sección:**  
 >En esta sección desarrollaremos el módulo de `Categoría de productos`, abarcando desde la creación de tablas y estructuras básicas hasta funcionalidades avanzadas como la integración con `Storage` y el uso de `TanStack Query`. Este módulo será clave para organizar y manejar la información de productos, empresas, usuarios y configuraciones.
@@ -1792,7 +1792,7 @@ export const v = {
 >Al finalizar esta sección, tendrás un sistema sólido y dinámico para gestionar productos y usuarios de manera profesional.
 
 
-### Creando la tabla de productos (02:42:44)
+### 03.01. Creando la tabla de productos (02:42:44)
 
 1. El instructor ingresa directamente a la página de `Supabase`, busca <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-editor "><path d="M2.9707 15.3494L20.9707 15.355M20.9405 9.61588H2.99699M8.77661 9.61588V21.1367M20.9405 5.85547V19.1367C20.9405 20.2413 20.0451 21.1367 18.9405 21.1367H4.99699C3.89242 21.1367 2.99699 20.2413 2.99699 19.1367V5.85547C2.99699 4.7509 3.89242 3.85547 4.99699 3.85547H18.9405C20.0451 3.85547 20.9405 4.7509 20.9405 5.85547Z"></path></svg> `Table Editor`, da clic en el botón `[Create a new table]`, pero prefiero hacerlo por comandos _SQL_.
 2. Busco la opción <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sql-editor "><path d="M7.89844 8.4342L11.5004 12.0356L7.89844 15.6375M12 15.3292H16.5M5 21.1055H19C20.1046 21.1055 21 20.21 21 19.1055V5.10547C21 4.0009 20.1046 3.10547 19 3.10547H5C3.89543 3.10547 3 4.0009 3 5.10547V19.1055C3 20.21 3.89543 21.1055 5 21.1055Z"></path></svg> `SQL Editor`, allí voy a crear las tablas, pero primero voy a crear los archivos de extesión **`*.sql`**.
@@ -1830,7 +1830,7 @@ COMMIT;
 
 
 
-### Creando tablas básicas (02:49:55)
+### 03.02. Creando tablas básicas (02:49:55)
 
 1. Para **Tipos de Documentos** creamos el archivo **`src/db/sql/tables/docTypes.sql`**, con este código:
 ```sql
@@ -1927,7 +1927,7 @@ COMMIT;
 
 
 
-### Testing Trigger (03:02:55)
+### 03.03. Probando Trigger (03:02:55)
 
 1. Vamos a crear la carpeta **"functions"**, dentro de la carpeta **"src/db/sql"**.
 2. Dentro de la nueva carpeta creamos el archivo **`src/db/sql/functions/companyInsert.sql`**, con este código:
@@ -1969,14 +1969,14 @@ COMMIT;
 5. Luego de ejecutar la última prueba comprobamos que el _trigger_ creo nuevos registros enla tabla `doc_types`, que mas adelante veremos el uso de estos registros.
 
 
-### Insertando Sucursales (03:13:30)
+### 03.04. Insertando Sucursales (03:13:30)
 
 1. Se crea el archivo **`src/db/sql/functions/branchInsert.sql`**, pero no lo ejecutamos aun en el servidor de `Supabase`.
 2. Lo mismo creamos **`src/db/sql/triggers/branchInsert.sql`**, pero no se ejecuta aun en `Supabase`.
 3. Este paso le falta mucho, toca esperar a lo que sigue.
 
 
-### Tabla Categorías (03:16:03)
+### 03.05. Tabla Categorías (03:16:03)
 
 1. Creamos el archivo **`src/db/sql/tables/categories.sql`**, con el siguiente código, y lo ejecutamos en `Supabase`:
 ```sql
@@ -2093,7 +2093,7 @@ create policy "Enable delete for users based on user_id"
 
 
 
-### Diagrama lógico para la subida de imágenes (03:22:42)
+### 03.06. Diagrama lógico para la subida de imágenes (03:22:42)
 
 ![Diagrama Lógico](images/2025-06-20_180440.png "Diagrama Lógico")
 
@@ -2105,7 +2105,7 @@ create policy "Enable delete for users based on user_id"
 6. La ruta con algunos cambios la almacenamos en la tabla `categories`.
 
 
-### Función insertar categorías (03:25:27)
+### 03.07. Función insertar categorías (03:25:27)
 
 1. Dentro de la carpeta **"src/supabase"**, creamos el archivo **`crudCategories.tsx`**.
 2. Empezamos por crear la función de tipo asíncrona y exportable de nombre `InsertCategory()`.
@@ -2175,7 +2175,7 @@ export async function InsertCategory(category: {
 ```
 
 
-### Configurando el Storage (03:38:34)
+### 03.08. Configurando el Storage (03:38:34)
 
 1. Empezamos con esta documentación [`Remote Procedure Calls`](https://supabase.com/docs/reference/javascript/rpc).
 2. Puedes llamar a las funciones de Postgres como _Llamadas a Procedimientos Remotos_ (`RPC`), lógica en tu base de datos que puedes ejecutar desde cualquier lugar. Las funciones son útiles cuando la lógica rara vez cambia, como para restablecer y actualizar contraseñas.
@@ -2223,7 +2223,7 @@ export async function InsertCategory(
 
 
 
-### Subiendo imagen al Storage (03:47:19)
+### 03.09. Subiendo imagen al Storage (03:47:19)
 
 1. Podemos empezar con el sitio [`STORAGE->Upload a file`](https://supabase.com/docs/reference/javascript/storage-from-upload).
 >[!NOTE]  
@@ -2319,7 +2319,7 @@ export async function InsertCategory(
 ```
 
 
-### Mostrar catergorías (03:58:00)
+### 03.10. Mostrar catergorías (03:58:00)
 
 1. En el archivo **`src/supabase/crudCategories.tsx`**, creamos la función asíncronica de nombre `changeCategoryIcon()`:
 ```js
@@ -2385,7 +2385,7 @@ export async function GetCategoriesByCompanyId(id_company: number) {
 5. Actualizo el _barrel_ es decir el archivo **`src/index.ts`**.
 
 
-### Probando insertar empresa (04:04:00)
+### 03.11. Probando insertar empresa (04:04:00)
 
 1. Empezamos creando el archivo **`src/supabase/crudCompanies.tsx`**.
 2. Empezamos importando `{supabase}` y `Swal` y la constante `tableName`:
@@ -2504,7 +2504,7 @@ interface SaveButtonProps {
 
 
 
-### Mostrar usuarios (04:16:08)
+### 03.12. Mostrar usuarios (04:16:08)
 
 1. Borremos o comentemos el botón de pruebas del archivo **`src/components/templates/LoginTemplate.tsx`**.
 2. Borremos o comentemos la función `insertCompanyTest()` y lo que se relaciona con esto dentro de este archivo.
@@ -2570,7 +2570,7 @@ import { supabase, GetUser } from '../index.ts';
 ```
 
 
-### Inserta empresa (04:26:36)
+### 03.13. Inserta empresa (04:26:36)
 
 1. En el archivo **`src/db/sql/tables/companies.sql`**, agregamos unas líneas que vamos luego a ejecutar en el <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sql-editor "><path d="M7.89844 8.4342L11.5004 12.0356L7.89844 15.6375M12 15.3292H16.5M5 21.1055H19C20.1046 21.1055 21 20.21 21 19.1055V5.10547C21 4.0009 20.1046 3.10547 19 3.10547H5C3.89543 3.10547 3 4.0009 3 5.10547V19.1055C3 20.21 3.89543 21.1055 5 21.1055Z"></path></svg> `SQL Editor`:
 ```sql
@@ -2581,7 +2581,7 @@ ADD COLUMN IF NOT EXISTS id_auth VARCHAR(36) UNIQUE;
 2. Ya con eso tenemos una columna nueva en la tabla de `companies`.
 
 
-### Insertando usuarios (04:29:38)
+### 03.14. Insertando usuarios (04:29:38)
 
 1. Creamos el archivo **`src/db/sql/tables/branchAssignment.sql`**, que luego ejecutaremos en `Supabase`, para crear una nueva tabla:
 ```sql
@@ -2778,7 +2778,7 @@ export async function GetDocType(companyId: string): Promise<unknown> {
 >No ejecutamos pruebas. Por ahora faltan procesos para que funcione correctamente.
 
 
-### Registrando varios usuarios (04:40:45)
+### 03.15. Registrando varios usuarios (04:40:45)
 
 1. Abrimos el archivo **`src/context/AuthContext.tsx`** y estamos llamando las funciones `InsertCompany()` y `InsertAdminUser()`, le agregamos al momento de `InsertCompany()`, asignar el valor obtenido a una constante de nombre `company`.
 2. En el archivo **`src/supabase/crudDocTypes.tsx`**, defino una _interface_ para `docType`:
@@ -2890,7 +2890,7 @@ const insertUser = async (session: SessionInterface) => {
 13. Probamos si ya almacena los datos una vez hace el ingreso del _Login_ de `Google`: </br> ![Creación de registros en `Companies`, `Users` y otros](images/2025-06-30_155038.gif "Creación de registros en `Companies`, `Users` y otros")
 
 
-### Insertar asignación de sucursales (04:57:39)
+### 03.16. Insertar asignación de sucursales (04:57:39)
 
 1. Copiamos el archivo **`db_20250629.sql`** en uno nuevo **`src/db/sql/db_20250630.sql`**
 2. Editamos el archivo **`src/db/sql/tables/branchAssignment.sql`**, para que el campo `id_user`, permita el _NULL_, y lo mismo en el respectivo **`db_20250630.sql`**.
@@ -2952,7 +2952,7 @@ COMMIT;
 
 
 
-### Creando pagina de configuración (05:14:06)
+### 03.17. Creando pagina de configuración (05:14:06)
 
 1. Creamos la página de nombre **`src/pages/Configurations.tsx`**.
 2. Llamamos el `rfce` _snippet_ y hacemos los ajustes necesarios:
@@ -3029,7 +3029,7 @@ export function MyRoutes() {
 9. Cerremos los otros archivos y dejamos solo abierto **`src/components/templates/ConfigurationsTemplate.tsx`**.
 
 
-### Diseño de pagina configuraciones (05:16:24)
+### 03.18. Diseño de pagina configuraciones (05:16:24)
 
 1. Copiamos del repositorio el archivo [fondocuadros.svg](https://github.com/Franklin369/pos-react-curso-hasta-seccion-categorias/blob/main/src/assets/fondocuadros.svg), en nuestra carpeta **"src/assets"**.
 2. Teniendo abierto el archivo **`ConfigurationsTemplate.tsx`**, Copiamos el contenido del repositorio [ConfiguracionesTemplate.jsx](https://github.com/Franklin369/pos-react-curso-hasta-seccion-categorias/blob/main/src/components/templates/ConfiguracionesTemplate.jsx), con los ajustes que se requieran.
@@ -3083,7 +3083,7 @@ declare module 'styled-components' {
 
 
 
-### Instalando TanStack (05:18:44)
+### 03.19. Instalando TanStack (05:18:44)
 
 1. Vamos a esta página [TanStack
 Query](https://tanstack.com/query/latest), que menciona esta información:</br> **Potente gestión de estados asincrónicos para TS/JS, React, Solid, Vue, Svelte y Angular**</br>`Olvídate de la gestión granular de estados, la recarga manual y la infinidad de código asincrónico. TanStack Query te ofrece consultas y mutaciones declarativas, siempre actualizadas y autogestionadas que mejoran directamente la experiencia del desarrollador y del usuario.`.
@@ -3138,7 +3138,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 
 
-### Mostrar módulos (05:23:04)
+### 03.20. Mostrar módulos (05:23:04)
 
 
 1. Creamos el archivo **`src\pages\Categories.tsx`**, escribimos el _snippet_ `rfce` y le completamos la información:
@@ -3199,7 +3199,7 @@ export default Categories;
 7. Abrimos el archivo **`src\utils\dataEstatica.ts`**, y buscamos _array_ de nombre `DataModulosConfiguracion`y cambiamos el objeto `title: 'Categoria de productos'`, en la llave del `link`, por este valor :</br>`link: '/config/categories',`.
 >[!WARNING]  
 >
->### Solución parcial para ver los elementos de configuración
+>### 03.21. Solución parcial para ver los elementos de configuración
 >
 >* [Error en la página `config`](#error-en-configurationstemplatetsx-no-aparecen-los-iconos)
 >* [Diseño de la página `config`](#diseño-de-pagina-configuraciones-051624)
@@ -3300,7 +3300,7 @@ type companyType = {
 ```
 
 
-### Usando Tanstack Query (05:33:34)
+### 03.22. Usando Tanstack Query (05:33:34)
 
 1. Entramos al archivo **`src/pages/Configurations.tsx`**.
 2. Llamamos el _hook_ de nombre `useModuleStore` y lo llevamos una constante de nombre `{getAllModules}`:
@@ -3375,7 +3375,7 @@ export const useModulesStore = create((set) => ({
 12. Esto es traer la información de la Base de Datos en vez del archivo **`src/utils/dataEstatica.ts`**.
 
 
-### Agregando Spinner (05:41:48)
+### 03.23. Agregando Spinner (05:41:48)
 
 
 1. Abrimos el archivo **`src/supabase/crudModules.tsx`** y nos copiamos la alerta o condicional `if (error) {` con la importación de `Swal` del rchivo **`src\supabase\crudCategories.tsx`**.
@@ -3447,7 +3447,7 @@ function Spinner() {
 ```
 
 
-### Maquetado de categorias (05:48:15)
+### 03.24. Maquetado de categorias (05:48:15)
 
 1. Abrimos el archivo **`src/components/templates/CategoriesTemplate.tsx`**.
 2. Agregamos ajuste al _css_ de `styled.div`:
@@ -3502,7 +3502,7 @@ const Container = styled.div`
 
 
 
-### Agregando btn (05:52:59)
+### 03.25. Agregando btn (05:52:59)
 
 1. Del archivo **`src\components\templates\CategoriesTemplate.tsx`** quitamos la línea de `width: 100%;`, para que se adapte al contenido que hay en pantalla.
 2. Borro `'area2' 100px`.
@@ -3606,7 +3606,7 @@ function CategoriesTemplate() {
 
 
 
-### Buscador (06:00:59)
+### 03.26. Buscador (06:00:59)
 
 1. Abrimos el archivo **`src/components/templates/CategoriesTemplate.tsx`**.
 2. En la parte del _css_ mejoramos el `height:` con un cálculo:
@@ -3730,7 +3730,7 @@ function Finder({
 ```
 
 
-### Editar Categorías (06:08:37)
+### 03.27. Editar Categorías (06:08:37)
 
 1. Abrimos el archivo **`src/supabase/crudCategories.tsx`**, creamos una función asíncrona para buscar las categorias, por el ID de la compañía y el nombre:
 ```js
@@ -3849,4 +3849,78 @@ COMMIT;
 5. Agrego esta misma función en el archivo **`src/db/sql/db_20250704.sql`**.
 6. Ejecuto el contenido de **`categoryUpdate.sql`** en `Supabase`.
 
+
+### 03.28. Actualizar imágenes (06:19:38)
+
+1. El `icon` en `Supbase` no debe editarse en la función `fnc_category_update()` </br> así que lo elimino de **`src/db/sql/functios/categoryUpdate.sql`** </br> Y de **`src/db/sql/db_20250704.sql`**</br> Luego ejecuto el primero en `Supabase`.
+2. Abrimos el archivo **`src/supabase/crudCategories.tsx`** verificamos los dos campos que son no obligatorios, para las rutas nuevas y viejas del `icon`, de nombres `imageFileOld` y `imageFileNew`:
+```js
+export async function UpdateCategory( 
+  category: {
+    id: number;
+    name: string;
+    color: string;
+    description: string;
+    id_company: number;
+  },
+  imageFileOld?: File | null, // Valores no obligatorios
+  imageFileNew?: File | null // Valores no obligatorios
+) {...}
+```
+3. En el método `UpdateCategory()`, ya tenemos que se modifican algunos datos del registro, luego si las rutas de imágenes son válidas, subo la nueva borro la vieja con `deleteImageStorage()`, :
+```js
+async function deleteImageStorage(category_id: string) {
+  const pathFile = 'categories/' + category_id;
+  const { error } = await supabase.storage.from('images').remove([pathFile]);
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return null;
+  }
+  return true;
+}
+```
+4. La otra opción es solo actualizar la imagen en el `supabase.storage`:
+```js
+async function changeImageStorage(category_id: string, imageFile: File) {
+  const pathFile = 'categories/' + category_id;
+  const { error } = await supabase.storage
+    .from('images')
+    .update(pathFile, imageFile, {
+      cacheControl: '0',
+      upsert: true,
+    });
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return null;
+  }
+}
+```
+5. En el método `UpdateCategory()`, uso la la primera:
+```js
+  if (imageFileOld && imageFileNew) {
+    let fileSize = imageFileNew.size;
+    if (fileSize != undefined) {
+      fileSize = imageFileOld.size;
+      if (fileSize !== 0) {
+        // Elimino la antigua
+        await deleteImageStorage(category.id.toString());
+      }
+      // Subo la nueva
+      await uploadImageStorage(category.id.toString(), imageFileNew);
+      /*
+      // * o actualizo la imagen en Storage
+      await changeImageStorage(category.id.toString(), imageFileNew);
+      */
+    }
+  }
+```
+6. 
 

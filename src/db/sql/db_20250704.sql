@@ -303,7 +303,6 @@ CREATE OR REPLACE FUNCTION fnc_category_update(
     _id INT,
     _name VARCHAR(100), 
     _color VARCHAR(20), 
-    _icon VARCHAR, 
     _description TEXT, 
     _id_company INT
 )
@@ -320,7 +319,6 @@ BEGIN
         UPDATE categories SET
             name = _name,
             color = _color,
-            icon = _icon,
             description = _description,
             id_company = _id_company,
             updated_at = CURRENT_TIMESTAMP
