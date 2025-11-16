@@ -1,4 +1,4 @@
-import { supabase } from '../index.ts';
+import { supabase, type categoryType } from '../index.ts';
 import Swal from 'sweetalert2';
 
 const tableName = 'categories';
@@ -63,6 +63,7 @@ async function uploadImageStorage(category_id: string, imageFile: File) {
   }
 }
 
+// Para ser llamada desde `UpdateCategory()` 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function changeImageStorage(category_id: string, imageFile: File) {
   const pathFile = 'categories/' + category_id;
@@ -150,7 +151,7 @@ export async function GetCategoriesByCompanyId_n_name(
   return data;
 }
 
-export async function DeleteCategory(id: number, icon: string) {
+export async function DeleteCategory(id: number, icon?: string) {
   // Elimina la categoría de la tabla
   const { error } = await supabase.from(tableName).delete().eq('id', id);
   if (error) {
@@ -163,7 +164,7 @@ export async function DeleteCategory(id: number, icon: string) {
   }
 
   // Elimina la imagen asociada si no es el icono por defecto '-'
-  if (icon != '-') {
+  if (icon != '-' && icon != undefined) {
     const pathFile = 'categories/' + id;
     const { error: storageError } = await supabase.storage
       .from('images')
@@ -181,13 +182,7 @@ export async function DeleteCategory(id: number, icon: string) {
 }
 
 export async function UpdateCategory(
-  category: {
-    id: number;
-    name: string;
-    color: string;
-    description: string;
-    id_company: number;
-  },
+  category: categoryType,
   imageFileOld?: File | null, // Valores no obligatorios
   imageFileNew?: File | null // Valores no obligatorios
 ) {

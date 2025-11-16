@@ -3922,5 +3922,196 @@ async function changeImageStorage(category_id: string, imageFile: File) {
     }
   }
 ```
-6. 
+
+
+
+### 03.29. useCategoriasStore (06:27:24)
+
+1. Empezamos creando el archivo **`src\store\CategoryStore.tsx`**.
+2. Similar al archivo **`src\store\CompanyStore.tsx`**, importamos el `create` de `'zustand'`, creamos un `categoryType`:
+```js
+import { create } from 'zustand';
+
+type categoryType = {
+  name: string;
+  color: string;
+  icon: string;
+  description: string;
+  id_company: number;
+};
+```
+3. Creamos la _interface_ de nombre `CategoryStore`, por ahora vacia y una función que se expota de nombre `useCategory`:
+```js
+interface CategoryStore {
+
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const useCategoryStore = create<CategoryStore>((set, get) => ({
+
+});
+```
+4. Agregamos en el `useCategoryStore` y en el `CategoryStore`, las propiedades y métodos que vamos a utilizar, empezando por el `finder` y el `setFinder()`:
+```js
+interface CategoryStore {
+  finder: string;
+  setFinder: (value: string) => void;
+}
+export const useCategoryStore = create<CategoryStore>((set, get) => ({
+  finder: '',
+  setFinder: (value: string) => set({ finder: value }),
+}
+```
+5. Dos arreglos de nombre `dataCategory` y `categoryItemSelected`, del tipo por definir de nombre `categoryType`:
+```js
+type categoryType = {
+  id?: number;
+  name: string;
+  color: string;
+  icon: string;
+  description: string;
+  id_company: number;
+};
+
+interface CategoryStore {
+  ...
+  dataCategory: categoryType[];
+  categoryItemSelected?: categoryType[];
+}
+
+export const useCategoryStore = create<CategoryStore>((set, get) => ({
+  ...
+  dataCategory: [],
+  categoryItemSelected: [],
+}
+```
+6. Definimos un objeto de nombre `parameters`:
+```js
+interface CategoryStore {
+  ...
+  parameterSelected?: { [key: string]: any };
+}
+
+export const useCategoryStore = create<CategoryStore>((set, get) => ({
+  ...
+  parameterSelected: {},
+}
+```
+7. llamo el método `showCategory()` y dentro de este llamo la función de **`crudCategories.tsx`** de nombre `GetCategoriesByCompanyId()`, que debo importar de **`index.ts`**:
+```js
+import { GetCategoriesByCompanyId} from '../index.ts'; //crudCategories.tsx
+...
+
+interface CategoryStore {
+  ...
+  showCategory: (id_Compomy: number) => void;
+}
+
+export const useCategoryStore = create<CategoryStore>((set, get) => ({
+  ...
+  showCategory: async (id_Company: number) => {
+    const data = await GetCategoriesByCompanyId(id_Company);
+    if (data) {
+      set({ dataCategory: data });
+      set({ parameterSelected: { id_company: id_Company } });
+      set({ categoryItemSelected: data[0] });
+      return data;
+    }
+    return null;
+  },
+}
+```
+8. Complementamos el _selector_ para seleccionar una categoría:
+```js
+  selectCategory: (category: categoryType) => {
+    set({ categoryItemSelected: [category] });
+  },
+```
+9. Procedemos a insertar el dato de categorías:
+```js
+  insertCategory: async (category: categoryType, imageFile: File) => {
+    await InsertCategory(category, imageFile);
+    const {showCategory, parameterSelected} = get();
+    if (parameterSelected?.id_company) {
+      await showCategory(parameterSelected.id_company);
+    }
+  },
+```
+10. Agregamos para eliminar categrorías:
+```js
+  deleteCategory: async (id: number) => {
+    // // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // const response: any = await fetch(
+    //   import.meta.env.VITE_API_URL + '/categories/' + id,
+    //   {
+    //     method: 'DELETE',
+    //   }
+    // );
+    // const data = await response.json();
+    // if (data) {
+    //   const {showCategory, parameterSelected} = get();
+    //   if (parameterSelected?.id_company) {
+    //     await showCategory(parameterSelected.id_company);
+    //   }
+    //   return data;
+    // }
+    // return null;
+    await  DeleteCategory(id);
+      const {showCategory, parameterSelected} = get();
+      if (await parameterSelected?.id_company) {
+        await showCategory(parameterSelected?.id_company);
+      }
+  },
+```
+11. Creamos el archivo **`src/types/CategoryType.ts`**, y luego actualizamos el **`index.ts`**:
+```js
+export type categoryType = {
+  id: number;
+  name: string;
+  color: string;
+  icon: string;
+  description: string;
+  id_company: number;
+};
+```
+12. Seguimos con editar Categorías:
+```js
+  updateCategory: async (category: categoryType) => {
+    // // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // const response: any = await fetch(
+    //   import.meta.env.VITE_API_URL + '/categories/' + category.id,
+    //   {
+    //     method: 'PUT',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(category),
+    //   }
+    // );
+    // const data = await response.json();
+    // if (data) {
+    //   const {showCategory, parameterSelected} = get();
+    //   if (parameterSelected?.id_company) {
+    //     await showCategory(parameterSelected.id_company);
+    //   }
+    //   return data;
+    // }
+    // return null;
+        await  UpdateCategory(category);
+      const {showCategory, parameterSelected} = get();
+      if (await parameterSelected?.id_company) {
+        await showCategory(parameterSelected?.id_company);
+      }
+  }
+```
+13. Hacemos la consecución de una categiría por el `ID`:
+```js
+  GetCategory: async (id: number) => {
+    const data = await GetCategoriesByCompanyId(id);
+    set({ dataCategory: data });
+    return data;
+  },
+```
+
+
 
