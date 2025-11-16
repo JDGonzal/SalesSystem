@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { InsertCompany } from '../index.ts';
+import { InsertCompany } from '../index.ts'; //crudCompanies.tsx
+
 type companyType = {
   name: string;
   tax_id: string;
