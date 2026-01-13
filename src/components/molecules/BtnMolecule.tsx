@@ -5,7 +5,7 @@ import type { JSX } from 'react';
 
 interface BtnMoleculeProps {  
   funcion?: ()=> void; // Optional, to pass a function on click
-  title: string;
+  title?: string;  // Optional, since step 03.30 `Tabla categorías`
   bgcolor?: string; // Optional, to set the background color of the button|
   icon?: JSX.Element; // Optional, import type { JSX } from 'react';
   url?: string; // Optional, if you want to use it as a link
