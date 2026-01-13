@@ -444,7 +444,7 @@ function App() {
 ```js
 
 ```
-10. Actualizamos el `Auto Barrel` o el archivo **`index.ts`**.
+10. Actualizo el `Auto Barrel` o el archivo **`index.ts`**.
 11. Y en el archivo **`src/App.tsx`**, añado a la importación del `'index'`, el de `Sidebar` y lo renderizo en la `classname` de nombre `'leftSidebar'`:
 ```js
 function App() {
@@ -588,7 +588,7 @@ function App() {
   );
 }
 ```
-8. Actualizamos el `Auto Barrel` o el archivo **`index.ts`**.
+8. Actualizo el `Auto Barrel` o el archivo **`index.ts`**.
 9. En el archivo **`src/App.tsx`** usamos un _hook_ de `Zustand`, que lo bautizamos como `useThemeStore`, con la respectiva importación:
 ```js
 ...
@@ -616,7 +616,7 @@ function App() {
 3. Creamos el archivo **`src\styles\variables.ts`** y copiamos el contenido de [`variables.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/styles/variables.jsx).
 4. En el archivo de **`variables.ts`**, correjimos el logo por el que tenemos en la carpeta **"assets"**: </br> `import logo from '../assets/poss2_32x32.png';`
 5. Creamos el archivo **`src/utils/dataEstatica.ts`** y copiamos el contenido de [`dataEstatica.jsx`](https://github.com/Franklin369/pos-react-login/blob/main/src/utils/dataEstatica.jsx)
-6. Actualizao el `Auto Barrel` o el archivo **`index.ts`**.
+6. Actualizo el `Auto Barrel` o el archivo **`index.ts`**.
 7. Hago correcciones de _TypeScript_ en el archivo **`src/components/organisms/sidebar/Sidebar.tsx`**:
 ```js
 ...
@@ -4114,4 +4114,588 @@ export type categoryType = {
 ```
 
 
+### 03.30 Tabla categorías
+
+1. De la página [`tanstack.com`](https://tanstack.com/) y hacemos login , en este caso con [<svg viewBox="0 0 496 512" fill="currentColor" width="1em" height="1em" role="img" aria-hidden="true" class="inline-block mr-2 -mt-0.5" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>`Sign in with GitHub`].
+2. Seleccionamos `TanStack TABLE` y nos lleva a esta página [`TANSTACK TABLE`](https://tanstack.com/table/latest) <br/> "Esto es una herramienta muy potente, la verdad, ya que nos permite mostrar datos en una tabla pero de una forma más eficiente. <br/>Esa es la diferencia con otras tablas que lo hagamos sin stack. <br/>La verdad es una forma muy eficiente porque espera que los datos vengan del servidor. <br/>Además de eso nos otorga paginado, nos otorga filtrados, o sea, es completo."
+3. Damos clic al botón [`Get Started`](https://tanstack.com/table/latest/docs)
+4. Selceccionamos del menú de la izquierda [`Get Started`](https://tanstack.com/table/latest/docs/installation).
+5. Ejecutamos en una `TERMINAL` el comando: <br/> `pnpm add @tanstack/react-table -E`
+6. Vamos a otra página para otra instalación, algo así como un cargador de imágenes _peresozo_ en [`React Lazy Load Image Component`](https://www.npmjs.com/package/react-lazy-load-image-component), para ejecutar en una `TERMINAL` este comando: <br/> `pnpm add react-lazy-load-image-component -E`
+7. Tamvbien ds debe instalar l componente para el `TypeScript`, con este comando en una `TERMINAL`: <br/>`pnpm i --save-dev @types/react-lazy-load-image-component`
+8. Creamos el archivo **`src\components\molecules\ImageContent.tsx`**, y copiamos el contenido de [ImagenContent.jsx](https://github.com/Franklin369/pos-react-curso-hasta-seccion-categorias/blob/main/src/components/moleculas/ImagenContent.jsx), con algunos ajustes:
+```js
+import styled from 'styled-components';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import { v } from '../../styles/variables';
+
+interface ImageContentProps {
+  imagen: string;
+}
+
+export function ImageContent({ imagen }: ImageContentProps) {
+  return (
+    <Container>
+      {/* placeholderSrc={<v.iconoreact/>} */}
+      <LazyLoadImage
+        placeholder={<v.iconoreact />}
+        effect='blur'
+        src={imagen}
+        width={50}
+        height={50}
+      ></LazyLoadImage>
+    </Container>
+  );
+}
+const Container = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 10%;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+  }
+`;
+```
+9. Creamos en la carpeta **"src\components\organisms"**, una nuava carpeta de nombere **"tables"**.
+10. Copiamos el contenido de la carpeta [`tablas`](https://github.com/Franklin369/pos-react-curso-hasta-seccion-categorias/tree/main/src/components/organismos/tablas), y ahacemoslos ajustes necesario.
+11. Empezamos con **`src\components\organisms\tables\TableActions.tsx`**:
+```js
+import styled from 'styled-components';
+import type { ReactNode } from 'react';
+
+interface TableActionsProps {
+  icono: ReactNode | string;
+  funcion: () => void;
+  color: string;
+  fontSize?: string | number;
+}
+
+function TableActions({ icono, funcion, color, fontSize }: TableActionsProps) {
+  return (
+    <Container onClick={funcion} color={color} $fontSize={fontSize}>
+      {icono}
+    </Container>
+  );
+}
+
+const Container = styled.span<{ color: string; $fontSize?: string | number }>`
+  cursor: pointer;
+  color: ${({ color }) => color};
+  font-size: ${({ $fontSize }) =>
+    typeof $fontSize === 'number' ? `${$fontSize}px` : $fontSize || '1rem'};
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+export default TableActions;
+```
+12. Actualizo el `Auto Barrel` o el archivo **`index.ts`**.
+13. Sigo con  **`src\components\organisms\tables\TableActionsContent.tsx`**:
+```js
+import styled from 'styled-components';
+import { TableActions } from '../../../index';
+import { v } from '../../../styles/variables';
+import { Icon } from '@iconify/react';
+
+interface TableActionsContentProps {
+  funcionEditar: () => void;
+  funcionEliminar: () => void;
+}
+
+export function ContentAccionesTabla({
+  funcionEditar,
+  funcionEliminar,
+}: TableActionsContentProps) {
+  return (
+    <Container>
+      <TableActions
+        funcion={funcionEditar}
+        fontSize='18px'
+        color='#7d7d7d'
+        icono={<v.iconeditarTabla />}
+      />
+      <TableActions
+        funcion={funcionEliminar}
+        fontSize='20px'
+        color='#f76e8e'
+        icono={<Icon icon='fluent-emoji-high-contrast:skull' />}
+      />
+    </Container>
+  );
+}
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  @media (max-width: 48em) {
+    justify-content: end;
+  }
+`;
+```
+14. Sigo el archivo **`src\components\organisms\tables\TablePagination.tsx`**:
+```js
+import { v } from '../../../styles/variables';
+import styled from 'styled-components';
+import { BtnMolecule } from '../../../index';
+
+interface TablePaginationProps<TData> {
+  table: Table<TData>;
+}
+
+export const TablePagination = <TData,>({ table }: TablePaginationProps<TData>) 
+  return (
+    <Container>
+      <BtnMolecule
+        disabled={!table.getCanPreviousPage()}
+        funcion={() => table.setPageIndex(0)}
+        bgcolor='#F3D20C'
+        icon={<v.iconotodos />}
+      />
+
+      <BtnMolecule
+        disabled={!table.getCanPreviousPage()}
+        funcion={() => table.previousPage()}
+        bgcolor='#F3D20C'
+        icon={<v.iconoflechaizquierda />}
+      />
+
+      <span>{table.getState().pagination.pageIndex + 1}</span>
+      <p> de {table.getPageCount()} </p>
+
+      <BtnMolecule
+        disabled={!table.getCanNextPage()}
+        funcion={() => table.nextPage()}
+        bgcolor='#F3D20C'
+        icon={<v.iconoflechaderecha />}
+      />
+    </Container>
+  );
+};
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+`;
+```
+15. Hacer un cambio en **`src\components\molecules\BtnMolecule.tsx`**, que el título sea opcional: <br/> `title?: string;`
+16. Actualizo el `Auto Barrel` o el archivo **`index.ts`**.
+17. Completo con **`src\components\organisms\tables\CategoryTable.tsx`**:
+```js
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import styled from 'styled-components';
+import {
+  ContentAccionesTabla,
+  useCategoryStore,
+  TablePagination,
+  ImageContent,
+  Icono,
+} from '../../../index';
+import Swal from 'sweetalert2';
+import { v } from '../../../styles/variables';
+import { useState, type JSX } from 'react';
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+  type ColumnDef,
+} from '@tanstack/react-table';
+import { FaArrowsAltV } from 'react-icons/fa';
+
+interface CategoryTableProps {
+  data: any;
+  setOpenRecord: any;
+  setDataSelected: any;
+  setAction: any;
+}
+
+export function CategoryTable({
+  data,
+  setOpenRecord,
+  setDataSelected,
+  setAction,
+}: CategoryTableProps) {
+  if (data === null || !data) return;
+  const [pagina, setPagina] = useState<number>(1);
+  const [datas, setData] = useState<any>(data);
+  const [columnFilters, setColumnFilters] = useState<any[]>([]);
+
+  const { deleteCategory } = useCategoryStore();
+  function eliminar(p:any) {
+    if (p.nombre === 'General') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Este registro no se permite modificar ya que es valor por defecto.',
+        footer: '<a href="">...</a>',
+      });
+      return;
+    }
+    Swal.fire({
+      title: '¿Estás seguro(a)(e)?',
+      text: 'Una vez eliminado, ¡no podrá recuperar este registro!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        if(deleteCategory)await deleteCategory(p.id as number);
+      }
+    });
+  }
+  function editar(data:any) {
+    if (data.nombre === 'General') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Este registro no se permite modificar ya que es valor por defecto.',
+        footer: '<a href="">...</a>',
+      });
+      return;
+    }
+    setOpenRecord(true);
+    setDataSelected(data);
+    setAction('Editar');
+  }
+  const columns: ColumnDef<any>[] = [
+    {
+      accessorKey: 'icono',
+      header: 'Icono',
+      enableSorting: false,
+      cell: (info:any) => (
+        <td data-title='Color' className='ContentCell'>
+          {info.getValue() != '-' ? (
+            <ImageContent imagen={info.getValue()} />
+          ) : (
+            <Icono $color='blue'>{<v.iconoimagenvacia/>}</Icono>
+          )}
+        </td>
+      ),
+
+      enableColumnFilter: true,
+      filterFn: (row:any, columnId:string, filterStatuses:any) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+
+    {
+      accessorKey: 'nombre',
+      header: 'Descripcion',
+      cell: (info:any) => <span>{info.getValue()}</span>,
+      enableColumnFilter: true,
+      filterFn: (row:any, columnId:string, filterStatuses:any) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+
+    {
+      accessorKey: 'color',
+      header: 'Color',
+      enableSorting: false,
+      cell: (info:any) => (
+        <td data-title='Color' className='ContentCell'>
+          <ColorContent color={info.getValue()} $alto='25px' $ancho='25px' />
+        </td>
+      ),
+
+      enableColumnFilter: true,
+      filterFn: (row:any, columnId:string, filterStatuses:any) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: 'acciones',
+      header: '',
+      enableSorting: false,
+      cell: (info:any) => (
+        <td data-title='Acciones' className='ContentCell'>
+          <ContentAccionesTabla
+            funcionEditar={() => editar(info.row.original)}
+            funcionEliminar={() => eliminar(info.row.original)}
+          />
+        </td>
+      ),
+      enableColumnFilter: true,
+      filterFn: (row:any, columnId:string, filterStatuses:any) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+  ];
+
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      columnFilters,
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    columnResizeMode: 'onChange',
+    meta: {
+      updateData: (rowIndex:number, columnId:number, value:any) =>
+        setData((prev:any) =>
+          prev.map((row:number, index:number) =>
+            index === rowIndex
+              ? {
+                  ...prev[rowIndex],
+                  [columnId]: value,
+                }
+              : row
+          )
+        ),
+    },
+  });
+  return (
+    <>
+      <Container>
+        <table className='responsive-table'>
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id}>
+                    {header.column.columnDef.header as unknown as JSX.Element}
+                    {header.column.getCanSort() && (
+                      <span
+                        style={{ cursor: 'pointer' }}
+                        onClick={header.column.getToggleSortingHandler()}
+                      >
+                        <FaArrowsAltV />
+                      </span>
+                    )}
+                    {header.column.getIsSorted() && (
+                      {
+                        asc: ' 🔼',
+                        desc: ' 🔽',
+                      }[header.column.getIsSorted() as 'asc' | 'desc']
+                    )}
+                    <div
+                      onMouseDown={header.getResizeHandler()}
+                      onTouchStart={header.getResizeHandler()}
+                      className={`resizer ${
+                        header.column.getIsResizing() ? 'isResizing' : ''
+                      }`}
+                    />
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((item) => (
+              <tr key={item.id}>
+                {item.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <TablePagination table={table} />
+      </Container>
+    </>
+  );
+}
+const Container = styled.div`
+  position: relative;
+
+  margin: 5% 3%;
+  @media (min-width: ${v.bpbart}) {
+    margin: 2%;
+  }
+  @media (min-width: ${v.bphomer}) {
+    margin: 2em auto;
+    /* max-width: ${v.bphomer}; */
+  }
+  .responsive-table {
+    width: 100%;
+    margin-bottom: 1.5em;
+    border-spacing: 0;
+    @media (min-width: ${v.bpbart}) {
+      font-size: 0.9em;
+    }
+    @media (min-width: ${v.bpmarge}) {
+      font-size: 1em;
+    }
+    thead {
+      position: absolute;
+
+      padding: 0;
+      border: 0;
+      height: 1px;
+      width: 1px;
+      overflow: hidden;
+
+      @media (min-width: ${v.bpbart}) {
+        position: relative;
+        height: auto;
+        width: auto;
+        overflow: auto;
+      }
+      th {
+        border-bottom: 2px solid ${({ theme }) => theme.color2};
+        font-weight: 700;
+        text-align: center;
+        color: ${({ theme }) => theme.text};
+        &:first-of-type {
+          text-align: center;
+        }
+      }
+    }
+    tbody,
+    tr,
+    th,
+    td {
+      display: block;
+      padding: 0;
+      text-align: left;
+      white-space: normal;
+    }
+    tr {
+      @media (min-width: ${v.bpbart}) {
+        display: table-row;
+      }
+    }
+
+    th,
+    td {
+      padding: 0.5em;
+      vertical-align: middle;
+      @media (min-width: ${v.bplisa}) {
+        padding: 0.75em 0.5em;
+      }
+      @media (min-width: ${v.bpbart}) {
+        display: table-cell;
+        padding: 0.5em;
+      }
+      @media (min-width: ${v.bpmarge}) {
+        padding: 0.75em 0.5em;
+      }
+      @media (min-width: ${v.bphomer}) {
+        padding: 0.75em;
+      }
+    }
+    tbody {
+      @media (min-width: ${v.bpbart}) {
+        display: table-row-group;
+      }
+      tr {
+        margin-bottom: 1em;
+        @media (min-width: ${v.bpbart}) {
+          display: table-row;
+          border-width: 1px;
+        }
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+        &:nth-of-type(even) {
+          @media (min-width: ${v.bpbart}) {
+          }
+        }
+      }
+      th[scope='row'] {
+        @media (min-width: ${v.bplisa}) {
+          border-bottom: 1px solid rgba(161, 161, 161, 0.32);
+        }
+        @media (min-width: ${v.bpbart}) {
+          background-color: transparent;
+          text-align: center;
+          color: ${({ theme }) => theme.text};
+        }
+      }
+      .ContentCell {
+        text-align: right;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+
+        border-bottom: 1px solid rgba(161, 161, 161, 0.32);
+        @media (min-width: ${v.bpbart}) {
+          justify-content: center;
+          border-bottom: none;
+        }
+      }
+      td {
+        text-align: right;
+        @media (min-width: ${v.bpbart}) {
+          /* border-bottom: 1px solid rgba(161, 161, 161, 0.32); */
+          text-align: center;
+        }
+      }
+      td[data-title]:before {
+        content: attr(data-title);
+        float: left;
+        font-size: 0.8em;
+        @media (min-width: ${v.bplisa}) {
+          font-size: 0.9em;
+        }
+        @media (min-width: ${v.bpbart}) {
+          content: none;
+        }
+      }
+    }
+  }
+`;
+interface ColorContentProps {
+  color: string;
+  $alto: string;
+  $ancho: string;
+}
+
+const ColorContent = styled.div<ColorContentProps>`
+  justify-content: center;
+  min-height: ${(props) => props.$alto};
+  width: ${(props) => props.$ancho};
+  display: flex;
+  background-color: ${(props) => props.color};
+  border-radius: 50%;
+  text-align: center;
+`;
+```
+18. El principal es **`CategoryTable.tsx`**, la paginación estará en **`TablePagination.tsx`**, los procesos de Editar, borrar y otros dentro de **`TableActionsCategory.tsx`** y por último las acciones diseñadas están en **`TableActions.tsx`**.
+19. Abrimos el archivo **`src\pages\Categories.tsx`** y agregamos a la función principal un _hook_ de `useCategoryStore` y `useQuery`:
+```js
+import { useQuery } from '@tanstack/react-query';
+import { CategoriesTemplate, useCategoryStore, useCompanyStore } from '../index.ts';
+
+function Categories() {
+  const {getCategory} = useCategoryStore()
+  const {}= useCompanyStore();
+  const {} = useQuery({queryKey:["GetCategoriesByCompanyId",]});
+
+  return <CategoriesTemplate />;
+}
+...
+```
+20. Abrimos el archivo **`src\store\CompanyStore.tsx`** , pero antes debemos editar el archivo **`src\supabase\crudCompanies.tsx`**, para añadir esto el `getCompanyById` y el instructor sugiere el uso de _RPC_ (_RemoteProcedure Call_) <br/> Esto dse verá en el siguinte capítulo.
 
