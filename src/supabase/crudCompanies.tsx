@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { supabase } from '../index.ts';
 
 const tableName = 'companies';
@@ -22,10 +23,29 @@ export async function InsertCompany(company: {
   email: string;
   id_auth: string;
 }) {
-  const { data, error } = await supabase.from(tableName).insert(company).select().maybeSingle();
+  const { data, error } = await supabase
+    .from(tableName)
+    .insert(company)
+    .select()
+    .maybeSingle();
   if (error) {
     console.error('Error inserting company:', error);
     return null;
   }
   return data as CompanyInterface;
+}
+
+export async function GetCompanyByIdUser(id_user: number) {
+  const { data, error } = await supabase
+    .rpc('fnc_company_get_by_id_user', id_user)
+    .maybeSingle();
+  if (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error.message,
+    });
+    return [];
+  }
+  return data;
 }
